@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="416.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="C195.Controller.AddApptController">
+   <children>
+      <GridPane layoutX="32.0" layoutY="43.0" prefHeight="315.0" prefWidth="537.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="216.18603515625" minWidth="10.0" prefWidth="113.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="420.7754211425781" minWidth="10.0" prefWidth="194.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="420.7754211425781" minWidth="10.0" prefWidth="102.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="420.7754211425781" minWidth="10.0" prefWidth="162.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="42.0" minHeight="10.0" prefHeight="42.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="42.0" minHeight="10.0" prefHeight="42.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Label alignment="CENTER_RIGHT" text="User:">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <Label text="Title:" GridPane.rowIndex="1">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <Label text="Description:" GridPane.rowIndex="2">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <Label text="Location:" GridPane.rowIndex="3">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <Label text="Contact:" GridPane.rowIndex="4">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <Label text="Date:" GridPane.rowIndex="5">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <Label prefHeight="20.0" prefWidth="87.0" text="Start Time:" GridPane.rowIndex="6">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <Label text="  End Time:" GridPane.columnIndex="2" GridPane.rowIndex="6">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <TextField fx:id="addApptTitle" prefHeight="27.0" prefWidth="175.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <TextField fx:id="addApptDesc" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <TextField fx:id="addApptLocation" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <DatePicker fx:id="addApptDate" prefHeight="27.0" prefWidth="159.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+            <ComboBox fx:id="addApptStartTime" onAction="#addApptStartTime" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+            <ComboBox fx:id="addApptEndTime" onAction="#addApptEndTime" prefWidth="150.0" GridPane.columnIndex="3" GridPane.rowIndex="6" />
+            <Label alignment="CENTER_RIGHT" text="Appt ID:" GridPane.rowIndex="7">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER_RIGHT" text="Customer ID:" GridPane.rowIndex="8">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <ComboBox fx:id="addApptContact" onAction="#addApptContact" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <Label GridPane.columnIndex="2" GridPane.rowIndex="1" />
+            <Label alignment="CENTER_RIGHT" text="  Type:" GridPane.columnIndex="2" GridPane.rowIndex="1">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <ComboBox fx:id="addApptType" onAction="#addApptType" prefWidth="150.0" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+            <TextField fx:id="addApptID" editable="false" promptText="Auto Generated" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+            <ComboBox fx:id="addApptCustID" onAction="#addApptCustID" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+            <TextField fx:id="addApptUser" editable="false" GridPane.columnIndex="1" />
+         </children>
+      </GridPane>
+      <Button layoutX="206.0" layoutY="370.0" mnemonicParsing="false" onAction="#addApptSubmitBtn" prefHeight="32.0" prefWidth="165.0" text="Add Appointment">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Button>
+      <Button layoutX="475.0" layoutY="370.0" mnemonicParsing="false" onAction="#addApptCancelBtn" text="Cancel">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>
