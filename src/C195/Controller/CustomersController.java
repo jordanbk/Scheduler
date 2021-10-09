@@ -40,7 +40,7 @@ public class CustomersController implements Initializable {
 
     @FXML
     public void customersAddCustBtn(ActionEvent event) throws IOException {
-        Parent parent = FXMLLoader.load(getClass().getResource("/Views/AddCustomer.fxml"));
+        Parent parent = FXMLLoader.load(getClass().getResource("../Views/AddCustomer.fxml"));
         Scene scene = new Scene(parent);
         Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
         window.setScene(scene);
@@ -91,7 +91,7 @@ public class CustomersController implements Initializable {
             Stage stage;
             Parent root;
             stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Views/UpdateCustomer.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("../Views/UpdateCustomer.fxml"));
             root = loader.load();
             Scene scene = new Scene(root);
             stage.setScene(scene);
@@ -112,7 +112,7 @@ public class CustomersController implements Initializable {
 
     @FXML
     public void customersMainMenuBtn(ActionEvent event) throws IOException {
-        Parent parent = FXMLLoader.load(getClass().getResource("/Views/MainMenu.fxml"));
+        Parent parent = FXMLLoader.load(getClass().getResource("../Views/MainMenu.fxml"));
         Scene scene = new Scene(parent);
         Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
         window.setScene(scene);

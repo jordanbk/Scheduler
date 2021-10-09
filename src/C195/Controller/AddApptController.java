@@ -58,7 +58,7 @@ public class AddApptController implements Initializable {
 
         Optional<ButtonType> result = alert.showAndWait();
         if (result.get() == ButtonType.OK) {
-            Parent parent = FXMLLoader.load(getClass().getResource("/Views/Calendar.fxml"));
+            Parent parent = FXMLLoader.load(getClass().getResource("../Views/Calendar.fxml"));
             Scene scene = new Scene(parent);
 
             Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
@@ -117,7 +117,7 @@ public class AddApptController implements Initializable {
                 AppointmentDAO.addAppointment(title, description, location, type, startTimestamp, endTimestamp, customerId, userId, contactId);
 
                 stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
-                scene = FXMLLoader.load(getClass().getResource("/Views/Calendar.fxml"));
+                scene = FXMLLoader.load(getClass().getResource("../Views/Calendar.fxml"));
                 stage.setScene(new Scene(scene));
                 stage.setResizable(false);
                 stage.show();

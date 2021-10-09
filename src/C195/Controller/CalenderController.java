@@ -28,6 +28,8 @@ import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+import static javafx.fxml.FXMLLoader.load;
+
 public class CalenderController implements Initializable {
     Stage stage;
     Parent root;
@@ -47,7 +49,7 @@ public class CalenderController implements Initializable {
 
     @FXML
     public void calAddApptBtn(ActionEvent event) throws IOException {
-        Parent parent = FXMLLoader.load(getClass().getResource("/Views/AddAppointment.fxml"));
+        Parent parent = load(getClass().getResource("C195/Views/AddAppointment.fxml"));
         Scene scene = new Scene(parent);
         Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
         window.setScene(scene);
@@ -97,7 +99,7 @@ public class CalenderController implements Initializable {
     public void calEditApptBtn(ActionEvent event) throws Exception {
         appointmentSelected = calendarTableMain.getSelectionModel().getSelectedItem();
         if (appointmentSelected != null) {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Views/UpdateAppointment.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("../Views/UpdateAppointment.fxml"));
             Parent parent = loader.load();
             Scene scene = new Scene(parent);
             Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -118,7 +120,7 @@ public class CalenderController implements Initializable {
 
     @FXML
     public void calMainMenuBtn(ActionEvent event) throws IOException {
-        Parent parent = FXMLLoader.load(getClass().getResource("/Views/MainMenu.fxml"));
+        Parent parent = load(getClass().getResource("../Views/MainMenu.fxml"));
         Scene scene = new Scene(parent);
         Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
         window.setScene(scene);

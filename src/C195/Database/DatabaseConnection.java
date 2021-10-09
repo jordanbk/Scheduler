@@ -55,7 +55,7 @@ public class DatabaseConnection {
         if (preparedStatement != null)
             return preparedStatement;
         else System.out.println("Null reference to Prepared Statement");
-        return null;
+        return ;
     }*/
 
 

@@ -123,7 +123,7 @@ public class UpdateApptController implements Initializable {
                 AppointmentDAO.updateAppointment(title, description, location, type, startTimestamp, endTimestamp, customer.getId(), userId, contactId);
 
                 stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
-                scene = FXMLLoader.load(getClass().getResource("/Views/Calendar.fxml"));
+                scene = FXMLLoader.load(getClass().getResource("../Views/Calendar.fxml"));
                 stage.setScene(new Scene(scene));
                 stage.setResizable(false);
                 stage.show();
@@ -172,7 +172,7 @@ public class UpdateApptController implements Initializable {
 
         Optional<ButtonType> result = alert.showAndWait();
         if (result.get() == ButtonType.OK) {
-            Parent parent = FXMLLoader.load(getClass().getResource("/Views/Calendar.fxml"));
+            Parent parent = FXMLLoader.load(getClass().getResource("../Views/Calendar.fxml"));
             Scene scene = new Scene(parent);
 
             Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();

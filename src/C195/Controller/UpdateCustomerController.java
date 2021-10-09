@@ -122,7 +122,7 @@ public class UpdateCustomerController implements Initializable {
             updateCustomerDAO.updateCustomer(id, customerName, customerAddress, customerZip, customerPhone, customerDivisionID);
 
             stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
-            scene = FXMLLoader.load(getClass().getResource("/Views/Customers.fxml"));
+            scene = FXMLLoader.load(getClass().getResource("../Views/Customers.fxml"));
             stage.setScene(new Scene(scene));
             stage.setResizable(false);
             stage.show();
@@ -138,7 +138,7 @@ public class UpdateCustomerController implements Initializable {
         Optional<ButtonType> result = alert.showAndWait();
 
         if (result.get() == ButtonType.OK) {
-            Parent parent = FXMLLoader.load(getClass().getResource("/Views/Customers.fxml"));
+            Parent parent = FXMLLoader.load(getClass().getResource("../Views/Customers.fxml"));
             Scene scene = new Scene(parent);
 
             Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();

@@ -5,6 +5,7 @@ import C195.Model.User;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -23,7 +24,7 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class LoginController implements Initializable {
-
+    Parent parent;
     @FXML private PasswordField passwordTxt;
     @FXML private TextField usernameTxt;
     @FXML private Label loginMessageLabel;
@@ -48,10 +49,15 @@ public class LoginController implements Initializable {
         String password = passwordTxt.getText();
         loginMessageLabel.setText("You tried to login");
         //int userID = getUserID(username);
-        //User user = new User();
 
-        if(validateLogin(username, password)){
-        int UserID = getUserID(username);
+        if (!validateLogin(username, password)) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Error");
+            alert.setHeaderText("Incorrect Username and/or Password");
+            alert.setContentText("Enter valid Username and Password");
+            Optional<ButtonType> result = alert.showAndWait();
+        } else {
+        //int UserID = getUserID(username);
 
             root = FXMLLoader.load(getClass().getResource("../Views/MainMenu.fxml"));
             stage = (Stage) usernameTxt.getScene().getWindow();
@@ -59,12 +65,6 @@ public class LoginController implements Initializable {
             stage.setScene(scene);
             stage.show();
 
-        } else {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("");
-            alert.setHeaderText("Incorrect Username and/or Password");
-            alert.setContentText("Enter valid Username and Password");
-            Optional<ButtonType> result = alert.showAndWait();
         }
     }
 
@@ -72,10 +72,13 @@ public class LoginController implements Initializable {
 
         try{
             DatabaseConnection.openConnection();
-            PreparedStatement pst = DatabaseConnection.conn.prepareStatement("SELECT * FROM users WHERE User_Name=? AND Password=?");
-            pst.setString(1, username);
-            pst.setString(2, password);
-            ResultSet rs = pst.executeQuery();
+            String searchStatement = "SELECT * FROM users WHERE User_Name=? AND Password=?";
+            PreparedStatement ps = DatabaseConnection.getConnection().prepareStatement(searchStatement);
+
+            //PreparedStatement pst = DatabaseConnection.conn.prepareStatement("SELECT * FROM users WHERE User_Name=? AND Password=?");
+            ps.setString(1, username);
+            ps.setString(2, password);
+            ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 return true;
             }
@@ -92,22 +95,19 @@ public class LoginController implements Initializable {
     }
 
 
-    private int getUserID(String username) throws SQLException {
+ /*   private int getUserID(String username) throws SQLException {
         int userID = -1;
 
-        //create statement object
         Statement statement = DatabaseConnection.conn.createStatement();
 
-        //write SQL statement
         String sqlStatement = "SELECT User_ID FROM users WHERE User_Name ='" + username + "'";
 
-        //create resultset object
         ResultSet result = statement.executeQuery(sqlStatement);
 
         while (result.next()) {
             userID = result.getInt("User_ID");
         }
         return userID;
-    }
+    }*/
 
 }
