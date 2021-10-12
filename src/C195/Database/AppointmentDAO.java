@@ -56,44 +56,83 @@ public class AppointmentDAO {
         ps.execute();
     }
 
-    public static void addAppointment(String title, String description, String location, String type, Timestamp start, Timestamp end, Integer customerId, int userId, int contactId) throws SQLException {
+    public static void addAppointment(String title, String description, String location,
+                                      String type, LocalDateTime start, LocalDateTime end, Integer customerId,
+                                      Integer userId, String contactName) throws SQLException {
 
-        String insertStatement = "INSERT INTO appointments(Title, Description, Location, Type, Start, End, Customer_ID, User_ID, Contact_ID)\n" +
-                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);";
-
-        PreparedStatement ps = DatabaseConnection.getConnection().prepareStatement(insertStatement);
-
-        ps.setString(1, title);
-        ps.setString(2, description);
-        ps.setString(3, location);
-        ps.setString(4, type);
-        ps.setTimestamp(5, start);
-        ps.setTimestamp(6, end);
-        ps.setInt(7, customerId);
-        ps.setInt(8, userId);
-        ps.setInt(9, contactId);
-
-        ps.execute();
-    }
-
-    public static void updateAppointment(String title, String description, String location, String type, Timestamp start, Timestamp end, Integer customerId, int userId, int contactId) throws SQLException {
-
-        String insertStatement = "UPDATE appointments(Title, Description, Location, Type, Start, End, Customer_ID, User_ID, Contact_ID)\n" +
-                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);";
+        String insertStatement = "UPDATE appointments(Appointment_ID, Title, Description, Location, Contact_Name, Type," +
+                " Start, End, Customer_ID, User_ID)\n" + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
 
         PreparedStatement ps = DatabaseConnection.getConnection().prepareStatement(insertStatement);
 
         ps.setString(1, title);
         ps.setString(2, description);
         ps.setString(3, location);
-        ps.setString(4, type);
-        ps.setTimestamp(5, start);
-        ps.setTimestamp(6, end);
-        ps.setInt(7, customerId);
-        ps.setInt(8, userId);
-        ps.setInt(9, contactId);
+        ps.setString(4, contactName);
+        ps.setString(5, type);
+        ps.setTimestamp(6, Timestamp.valueOf(start));
+        ps.setTimestamp(7, Timestamp.valueOf(end));
+        ps.setInt(8, customerId);
+        ps.setInt(9, userId);
 
         ps.execute();
     }
+/*    public static Appointment getApptByID(int apptID) throws SQLException {
+        String insertStatement = "SELECT * FROM appointments AS a INNER JOIN contacts AS c ON a.Contact_ID=c.Contact_ID WHERE Appointment_ID=?";
+        PreparedStatement ps = DatabaseConnection.getConnection().prepareStatement(insertStatement);
+
+        ps.setInt(1, apptID);
+
+        try {
+            ps.execute();
+            ResultSet rs = ps.getResultSet();
+
+            while(rs.next()){
+                Appointment newAppt = new Appointment(
+                  rs.getInt("Appointment_ID"),
+                  rs.getString("Title"),
+                  rs.getString("Description"),
+                  rs.getString("Location"),
+                  rs.getString("Type"),
+                        rs.getDate("Start").toLocalDate(),
+                        rs.getTimestamp("Start").toLocalDateTime(),
+                        rs.getDate("End").toLocalDate(),
+                        rs.getTimestamp("End").toLocalDateTime(),
+                        rs.getInt("Customer_ID"),
+                        rs.getInt("User_ID"),
+                        rs.getInt("Contact_ID"),
+                        rs.getString("Contact_Name")
+                );
+            }
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+    }*/
+    public static void updateAppointment(Integer apptId, String title, String description, String location,
+                                         String type, LocalDateTime start, LocalDateTime end, Integer customerId,
+                                         Integer userId, Integer contactId, String contactName) throws SQLException {
+
+        String insertStatement = "UPDATE appointments SET Appointment_ID = ?, Title = ?, Description = ?, " +
+                "Location = ?, Contact_Name = ?, Type = ?, Start = ?, End = ? " +
+                "Customer_ID = ?, User_ID = ? WHERE Appointment_ID = ?";
+
+        PreparedStatement ps = DatabaseConnection.getConnection().prepareStatement(insertStatement);
+
+        ps.setInt(1, apptId);
+        ps.setString(2, title);
+        ps.setString(3, description);
+        ps.setString(4, location);
+        ps.setString(5, contactName);
+        ps.setString(6, type);
+        ps.setTimestamp(7, Timestamp.valueOf(start));
+        ps.setTimestamp(8, Timestamp.valueOf(end));
+        ps.setInt(9, customerId);
+        ps.setInt(10, userId);
+
+        ps.execute();
+    }
+
 
 }

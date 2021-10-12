@@ -49,11 +49,12 @@ public class CalenderController implements Initializable {
 
     @FXML
     public void calAddApptBtn(ActionEvent event) throws IOException {
-        Parent parent = load(getClass().getResource("C195/Views/AddAppointment.fxml"));
+        Parent parent = load(getClass().getResource("../Views/AddAppointment.fxml"));
         Scene scene = new Scene(parent);
         Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
         window.setScene(scene);
         window.show();
+
     }
 
     public static Appointment getAppointmentSelected(){
@@ -101,13 +102,13 @@ public class CalenderController implements Initializable {
         if (appointmentSelected != null) {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../Views/UpdateAppointment.fxml"));
             Parent parent = loader.load();
+            UpdateApptController controller = loader.getController();
+            controller.populateFields(appointmentSelected);
             Scene scene = new Scene(parent);
             Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
             window.setScene(scene);
             window.show();
-/*            Appointment appt = calendarTableMain.getSelectionModel().getSelectedItem();
-            UpdateApptController controller = loader.getController();
-            controller.populateFields(appt);*/
+
         }
         else {
             Alert alert = new Alert(Alert.AlertType.WARNING);

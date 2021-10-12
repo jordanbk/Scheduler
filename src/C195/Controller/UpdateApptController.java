@@ -2,8 +2,6 @@ package C195.Controller;
 
 import C195.Database.*;
 import C195.Model.*;
-import com.sun.javafx.charts.Legend;
-import javafx.beans.Observable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -19,7 +17,6 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDate;
@@ -28,14 +25,26 @@ import java.time.LocalTime;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+import static C195.Controller.CalenderController.getAppointmentSelected;
+
+/**
+ *
+ * The UpdateApptController is a controller for the UpdateAppointment.fxml
+ * @author Jordan Burke
+ *
+ */
 public class UpdateApptController implements Initializable {
 
     AppointmentDAO appointmentDAO = new AppointmentDAO();
+    //private static AppointmentDAO apptSelected;
     ContactDAO contactDAO = new ContactDAO();
     UserDAO userDAO = new UserDAO();
     CustomerDAO customerDAO = new CustomerDAO();
+    private Appointment selectedAppointment = null;
+    Customer customer;
     Stage stage;
     Parent scene;
+    private boolean overlapping;
 
     private int appointmentID;
     @FXML private ComboBox<Contact> updateApptContact;
@@ -49,7 +58,7 @@ public class UpdateApptController implements Initializable {
     @FXML private ComboBox<Customer> updateApptCustID;
     @FXML private TextField updateApptID;
     @FXML private ComboBox<String> updateApptType;
-    private Appointment appointment;
+
 
     @FXML void updateApptContact(ActionEvent event) {
 
@@ -84,9 +93,31 @@ public class UpdateApptController implements Initializable {
     void updateApptStartTime(ActionEvent event) {
 
     }
+/*    Integer apptId, String title, String description, String location,
+    String type, LocalDateTime start, LocalDateTime end, Integer customerId,
+    Integer userId, Integer contactId, String contactName) throws SQLException {
 
+        String insertStatement = "UPDATE appointments(Appointment_ID, Title, Description, Location, Contact_Name, Type," +
+                " Start, End, Customer_ID, User_ID)\n" + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+
+        PreparedStatement ps = DatabaseConnection.getConnection().prepareStatement(insertStatement);
+
+        ps.setInt(1, apptId);
+        ps.setString(2, title);
+        ps.setString(3, description);
+        ps.setString(4, location);
+        ps.setString(5, contactName);
+        ps.setString(6, type);
+        ps.setTimestamp(7, Timestamp.valueOf(start));
+        ps.setTimestamp(8, Timestamp.valueOf(end));
+        ps.setInt(9, customerId);
+        ps.setInt(10, userId);
+
+        ps.execute();
+    }*/
     @FXML
     void updateApptSubmitBtn(ActionEvent event) throws SQLException, IOException {
+        //
         if (inputIsEmpty()){
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
@@ -109,18 +140,18 @@ public class UpdateApptController implements Initializable {
                 alert.showAndWait();
             }
             else {
+                //String id = updateApptID.getId();
                 String title = updateApptTitle.getText();
                 String description = updateApptDesc.getText();
                 String location = updateApptLocation.getText();
                 Contact contact = updateApptContact.getSelectionModel().getSelectedItem();
-                int contactId = contact.getId();
+                int customerId = customer.getId();
                 String type = updateApptType.getValue();
                 Timestamp startTimestamp = Timestamp.valueOf(startDateTime);
                 Timestamp endTimestamp = Timestamp.valueOf(endDateTime);
                 Customer customer = updateApptCustID.getSelectionModel().getSelectedItem();
                 int userId = updateApptUser.getSelectionModel().getSelectedItem().getUserId();
 
-                AppointmentDAO.updateAppointment(title, description, location, type, startTimestamp, endTimestamp, customer.getId(), userId, contactId);
 
                 stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
                 scene = FXMLLoader.load(getClass().getResource("../Views/Calendar.fxml"));
@@ -185,34 +216,34 @@ public class UpdateApptController implements Initializable {
         ObservableList<User> users = UserDAO.getAllUsers();
         User userSelected = null;
 
-        for(User u : users){
-            if(id == u.getUserId()){
+        for (User u : users) {
+            if (id == u.getUserId()) {
                 userSelected = u;
             }
         }
         return userSelected;
     }
 
-    public void populateFields(Appointment apt) throws Exception {
 
+
+    public void populateFields(Appointment appointment) throws SQLException {
+        selectedAppointment = appointment;
         Contact contactSelected = null;
         Customer customerSelected = null;
         User userSelected = null;
-        this.appointment = apt;
 
         ObservableList<Contact> displayAllContacts = ContactDAO.getAllContacts();
-        ObservableList<Customer> displayAllCustomers = CustomerDAO.getAllCustomers();
         ObservableList<User> displayAllUsers = UserDAO.getAllUsers();
         ObservableList<Integer> displayAllCustIds = FXCollections.observableArrayList();
-        //ObservableList<String> displayAllTypes = Appointment.getType();
-
+        ObservableList<Customer> displayAllCustomers = CustomerDAO.getAllCustomers();
 
         for (Contact c : displayAllContacts)
-            if (c.getId() == apt.getContactId()) {
+            if (c.getId() == appointment.getId()) {
                 contactSelected = c;
             }
+
         for (Customer c : displayAllCustomers) {
-            if (c.getId() == apt.getCustomerId()){
+            if (c.getId() == appointment.getId()){
                 customerSelected = c;
             }
         }
@@ -230,23 +261,28 @@ public class UpdateApptController implements Initializable {
             }
         }*/
 
-        updateApptID.setText(Integer.toString(apt.getId()));
-        updateApptTitle.setText(apt.getTitle());
+        updateApptID.setText(Integer.toString(selectedAppointment.getId()));
+        updateApptTitle.setText(selectedAppointment.getTitle());
         updateApptContact.setItems(displayAllContacts);
         updateApptContact.setValue(contactSelected);
         updateApptCustID.setItems(displayAllCustomers);
         updateApptCustID.setValue(customerSelected);
-        updateApptDesc.setText(apt.getDescription());
-        updateApptLocation.setText(apt.getLocation());
-        updateApptType.setValue(this.appointment.getType());
+        updateApptDesc.setText(selectedAppointment.getDescription());
+        updateApptLocation.setText(selectedAppointment.getLocation());
+        updateApptType.setValue(selectedAppointment.getType());
         updateApptUser.setItems(displayAllUsers);
         updateApptUser.setValue(userSelected);
+        updateApptStartDate.setValue(selectedAppointment.getStart().toLocalDate());
+        updateApptStartTime.setValue(selectedAppointment.getStart().toLocalTime());
+        updateApptEndTime.setValue(selectedAppointment.getEnd().toLocalTime());
 
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
+            //Appointment appointment = Appointment.getApptByID(apptSelected.getApptID());
+
             ObservableList<Customer> allCustomers = CustomerDAO.getAllCustomers();
             ObservableList<Integer> allCustomerIds = FXCollections.observableArrayList();
             for (Customer c : allCustomers){
@@ -258,9 +294,13 @@ public class UpdateApptController implements Initializable {
             ObservableList<Contact> contactList = ContactDAO.getAllContacts();
             ObservableList<User> userList = UserDAO.getAllUsers();
             updateApptContact.setItems(contactList);
-            //updateApptCustID.setItems(allCustomerIds);
+            //updateApptCustID.getSelectionModel().select(Integer.valueOf(appointment.getCustomerId()));
             updateApptUser.setItems(userList);
             updateApptType.setItems(Appointment.types);
+            //updateApptDesc.setText(appointment.getDescription());
+            //updateApptLocation.setText(appointment.getLocation());
+            //updateApptTitle.setText(appointment.getTitle());
+            //updateApptUser.getSelectionModel().select(Integer.valueOf(appointment.getUserId()));
 
         } catch (SQLException e) {
             e.printStackTrace();

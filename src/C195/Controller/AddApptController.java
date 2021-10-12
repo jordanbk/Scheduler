@@ -78,7 +78,7 @@ public class AddApptController implements Initializable {
 
     }
 
-    @FXML
+/*    @FXML
     void addApptSubmitBtn(ActionEvent event) throws Exception {
         if (inputIsEmpty()){
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -103,18 +103,19 @@ public class AddApptController implements Initializable {
             }
 
             else {
+                //Integer apptId = addApptID.getText(Integer.parseInt(apptId));
                 String title = addApptTitle.getText();
                 String description = addApptDesc.getText();
                 String location = addApptLocation.getText();
-                Contact contact = addApptContact.getSelectionModel().getSelectedItem();
-                int contactId = contact.getId();
-                String type = addApptType.getValue();
+                //Contact contact = addApptContact.getValue();
+                String type = addApptType.getSelectionModel().getSelectedItem();
                 Timestamp startTimestamp = Timestamp.valueOf(startDateTime);
                 Timestamp endTimestamp = Timestamp.valueOf(endDateTime);
                 Integer customerId = addApptCustID.getSelectionModel().getSelectedItem();
                 int userId = addApptUser.getSelectionModel().getSelectedItem().getUserId();
-
-                AppointmentDAO.addAppointment(title, description, location, type, startTimestamp, endTimestamp, customerId, userId, contactId);
+                String contactName = addApptContact.getSelectionModel().getSelectedItem().getName();
+                AppointmentDAO.addAppointment(title, description, location, contactName,
+                        type, startTimestamp, endTimestamp, customerId, userId);
 
                 stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
                 scene = FXMLLoader.load(getClass().getResource("../Views/Calendar.fxml"));
@@ -123,7 +124,8 @@ public class AddApptController implements Initializable {
                 stage.show();
             }
         }
-    }
+    }  */
+
 
     @FXML
     public void comboBoxes(){

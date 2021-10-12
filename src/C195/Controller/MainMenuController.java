@@ -28,9 +28,7 @@ public class MainMenuController implements Initializable {
     public void handleAppointments(ActionEvent event) throws IOException {
         Parent parent = FXMLLoader.load(getClass().getResource("../Views/Calendar.fxml"));
         Scene scene = new Scene(parent);
-
-        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
-
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.setScene(scene);
         window.show();
     }
@@ -38,9 +36,7 @@ public class MainMenuController implements Initializable {
     public void handleCustomers(ActionEvent event) throws IOException {
         Parent parent = FXMLLoader.load(getClass().getResource("../Views/Customers.fxml"));
         Scene scene = new Scene(parent);
-
         Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
-
         window.setScene(scene);
         window.show();
     }

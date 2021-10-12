@@ -6,6 +6,7 @@ import javafx.collections.ObservableList;
 import java.time.LocalDateTime;
 
 public class Appointment {
+    //private static String type;
     private int id;
     private String title;
     private String description;
@@ -22,9 +23,11 @@ public class Appointment {
     private int contactId;
     private String contactName;
 
-    public static ObservableList<String> types = FXCollections.observableArrayList("Taming", "Feeding", "Playing", "Bathing");
+    public static ObservableList<String> types = FXCollections.observableArrayList("Taming", "Feeding", "Playing",
+            "Bathing");
 
-    public Appointment(int id, String title, String description, String location, String type, LocalDateTime start, LocalDateTime end, int customerId, int userId, int contactId, String contactName) {
+    public Appointment(int id, String title, String description, String location, String type, LocalDateTime start,
+                       LocalDateTime end, int customerId, int userId, int contactId, String contactName) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -128,13 +131,13 @@ public class Appointment {
         this.userId = userId;
     }
 
-    public int getContactId() {
+/*    public Contact getContactId() {
         return contactId;
     }
 
     public void setContactId(int contactId) {
         this.contactId = contactId;
-    }
+    }*/
 
     public String getContactName() {
         return contactName;
