@@ -37,7 +37,7 @@ public class CalenderController implements Initializable {
     @FXML private TableColumn<Appointment, String> calTitleCol;
     @FXML private TableColumn<Appointment, String> calDescriptionCol;
     @FXML private TableColumn<Appointment, String> calLocationCol;
-    @FXML private TableColumn<Appointment, String> calContactCol;
+    @FXML private TableColumn<Appointment, Integer> calContactCol;
     @FXML private TableColumn<Appointment, String> calStartTimeDateCol;
     @FXML private TableColumn<Appointment, String> calEndTimeDateCol;
     @FXML private TableColumn<Appointment, String> calCustomerNameCol;
@@ -100,7 +100,7 @@ public class CalenderController implements Initializable {
     public void calEditApptBtn(ActionEvent event) throws Exception {
         appointmentSelected = calendarTableMain.getSelectionModel().getSelectedItem();
         if (appointmentSelected != null) {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("../Views/UpdateAppointment.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/C195/Views/UpdateAppointment.fxml"));
             Parent parent = loader.load();
             UpdateApptController controller = loader.getController();
             controller.populateFields(appointmentSelected);
@@ -108,7 +108,6 @@ public class CalenderController implements Initializable {
             Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
             window.setScene(scene);
             window.show();
-
         }
         else {
             Alert alert = new Alert(Alert.AlertType.WARNING);
@@ -182,7 +181,7 @@ public class CalenderController implements Initializable {
             calTitleCol.setCellValueFactory(new PropertyValueFactory<>("title"));
             calDescriptionCol.setCellValueFactory(new PropertyValueFactory<>("description"));
             calLocationCol.setCellValueFactory(new PropertyValueFactory<>("location"));
-            calContactCol.setCellValueFactory(new PropertyValueFactory<>("contactName"));
+            calContactCol.setCellValueFactory(new PropertyValueFactory<>("contactId"));
             calStartTimeDateCol.setCellValueFactory(new PropertyValueFactory<>("start"));
             calEndTimeDateCol.setCellValueFactory(new PropertyValueFactory<>("end"));
             calCustIDCol.setCellValueFactory(new PropertyValueFactory<>("customerId"));

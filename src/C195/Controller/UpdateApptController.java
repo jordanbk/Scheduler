@@ -25,8 +25,6 @@ import java.time.LocalTime;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-import static C195.Controller.CalenderController.getAppointmentSelected;
-
 /**
  *
  * The UpdateApptController is a controller for the UpdateAppointment.fxml
@@ -36,7 +34,6 @@ import static C195.Controller.CalenderController.getAppointmentSelected;
 public class UpdateApptController implements Initializable {
 
     AppointmentDAO appointmentDAO = new AppointmentDAO();
-    //private static AppointmentDAO apptSelected;
     ContactDAO contactDAO = new ContactDAO();
     UserDAO userDAO = new UserDAO();
     CustomerDAO customerDAO = new CustomerDAO();
@@ -47,30 +44,57 @@ public class UpdateApptController implements Initializable {
     private boolean overlapping;
 
     private int appointmentID;
-    @FXML private ComboBox<Contact> updateApptContact;
-    @FXML private TextField updateApptTitle;
-    @FXML private TextField updateApptDesc;
-    @FXML private TextField updateApptLocation;
-    @FXML private DatePicker updateApptStartDate;
-    @FXML private ComboBox<LocalTime> updateApptStartTime;
-    @FXML private ComboBox<LocalTime> updateApptEndTime;
-    @FXML private ComboBox<User> updateApptUser;
-    @FXML private ComboBox<Customer> updateApptCustID;
-    @FXML private TextField updateApptID;
-    @FXML private ComboBox<String> updateApptType;
+    @FXML
+    private ComboBox<Contact> updateApptContact;
+    @FXML
+    private TextField updateApptTitle;
+    @FXML
+    private TextField updateApptDesc;
+    @FXML
+    private TextField updateApptLocation;
+    @FXML
+    private DatePicker updateApptStartDate;
+    @FXML
+    private ComboBox<LocalTime> updateApptStartTime;
+    @FXML
+    private ComboBox<LocalTime> updateApptEndTime;
+    @FXML
+    private ComboBox<User> updateApptUser;
+    @FXML
+    private ComboBox<Customer> updateApptCustID;
+    @FXML
+    private TextField updateApptID;
+    @FXML
+    private ComboBox<String> updateApptType;
+
+    @FXML
+    void updateApptTitle(ActionEvent event) {
+
+    }
+
+    @FXML
+    void updateApptType(ActionEvent event) {
+
+    }
+
+    @FXML
+    void updateApptUser(ActionEvent event) {
+
+    }
+
+    @FXML
+    void updateApptCustID(ActionEvent event) {
+
+    }
 
 
-    @FXML void updateApptContact(ActionEvent event) {
+    @FXML
+    void updateApptContact(ActionEvent event) {
 
     }
 
     @FXML
     void updateApptDesc(ActionEvent event) {
-
-    }
-
-    @FXML
-    void updateApptEndTime(ActionEvent event) {
 
     }
 
@@ -93,44 +117,54 @@ public class UpdateApptController implements Initializable {
     void updateApptStartTime(ActionEvent event) {
 
     }
-/*    Integer apptId, String title, String description, String location,
-    String type, LocalDateTime start, LocalDateTime end, Integer customerId,
-    Integer userId, Integer contactId, String contactName) throws SQLException {
 
-        String insertStatement = "UPDATE appointments(Appointment_ID, Title, Description, Location, Contact_Name, Type," +
-                " Start, End, Customer_ID, User_ID)\n" + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+    @FXML
+    void updateApptEndTime(ActionEvent event) {
+        updateApptEndTime.getItems().clear();
 
-        PreparedStatement ps = DatabaseConnection.getConnection().prepareStatement(insertStatement);
+    }
 
-        ps.setInt(1, apptId);
-        ps.setString(2, title);
-        ps.setString(3, description);
-        ps.setString(4, location);
-        ps.setString(5, contactName);
-        ps.setString(6, type);
-        ps.setTimestamp(7, Timestamp.valueOf(start));
-        ps.setTimestamp(8, Timestamp.valueOf(end));
-        ps.setInt(9, customerId);
-        ps.setInt(10, userId);
+    private LocalDateTime createStartLocaleDateTime() {
 
-        ps.execute();
-    }*/
+        LocalDate startDate = updateApptStartDate.getValue();
+        LocalTime startTime = updateApptStartTime.getValue();
+        LocalDateTime start = LocalDateTime.of(startDate, startTime);
+        return start;
+    }
+
+    private LocalDateTime createEndLocaleDateTime() {
+
+        LocalDate endDate = updateApptStartDate.getValue();
+        LocalTime endTime = updateApptEndTime.getValue();
+        LocalDateTime end = LocalDateTime.of(endDate, endTime);
+        return end;
+    }
+
     @FXML
     void updateApptSubmitBtn(ActionEvent event) throws SQLException, IOException {
-        //
-        if (inputIsEmpty()){
+/*        updateAppointment(String contactName, String title, String description, String location, String contact, String type, LocalDateTime start, LocalDateTime end, int customerId, int userId, int apptId)
+        int rowsAffected = AppointmentDAO.updateAppointment("Jordan", "Title", "Desc", "loc", "contact", "type", LocalDateTime.now(), LocalDateTime.now(), 1, 1, 1, 1);
+        if (rowsAffected > 0) {
+            selectedAppointment.setContactName(updateApptTitle.getText());
+            selectedAppointment.setTitle(updateApptTitle.getText());
+            selectedAppointment.setDescription(updateApptDesc.getText());
+            selectedAppointment.setLocation(updateApptLocation.getText());
+        System.out.println(rowsAffected);
+        }
+        */
+        if (inputIsEmpty()) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
             alert.setHeaderText("Empty Field");
             alert.setContentText("Complete all fields to add appointment");
             alert.showAndWait();
-        }
-        else {
+        } else {
             LocalDate selectedDate = updateApptStartDate.getValue();
             LocalTime selectedStart = updateApptStartTime.getValue();
             LocalTime selectedEnd = updateApptEndTime.getValue();
             LocalDateTime startDateTime = LocalDateTime.of(selectedDate, selectedStart);
             LocalDateTime endDateTime = LocalDateTime.of(selectedDate, selectedEnd);
+            System.out.println("startdatetime=" + startDateTime);
 
             if (startDateTime.isBefore(LocalDateTime.now()) || endDateTime.isBefore(LocalDateTime.now())) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -138,29 +172,37 @@ public class UpdateApptController implements Initializable {
                 alert.setHeaderText("The time selected is before current time");
                 alert.setContentText("Select a time and date in the future.");
                 alert.showAndWait();
-            }
-            else {
-                //String id = updateApptID.getId();
+            } else {
+                int appId = Integer.parseInt(updateApptID.getText());
                 String title = updateApptTitle.getText();
                 String description = updateApptDesc.getText();
                 String location = updateApptLocation.getText();
                 Contact contact = updateApptContact.getSelectionModel().getSelectedItem();
-                int customerId = customer.getId();
+                //int customerId = updateApptCustID.getValue().getId();
+                int customerId = ((Customer) updateApptCustID.getValue()).getId();
                 String type = updateApptType.getValue();
+                LocalDateTime start = createStartLocaleDateTime();
+                LocalDateTime end = createEndLocaleDateTime();
                 Timestamp startTimestamp = Timestamp.valueOf(startDateTime);
                 Timestamp endTimestamp = Timestamp.valueOf(endDateTime);
                 Customer customer = updateApptCustID.getSelectionModel().getSelectedItem();
                 int userId = updateApptUser.getSelectionModel().getSelectedItem().getUserId();
+                //int contactId = updateApptContact.getSelectionModel().getSelectedItem();
 
+                Appointment appointment = new Appointment(appId, title, description, location, type,
+                        startDateTime, endDateTime, customerId, userId, contact.getId());
+                AppointmentDAO.updateAppointment(appointment);
 
                 stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
                 scene = FXMLLoader.load(getClass().getResource("../Views/Calendar.fxml"));
                 stage.setScene(new Scene(scene));
                 stage.setResizable(false);
                 stage.show();
+
             }
         }
     }
+
 
     private boolean inputIsEmpty() {
         return (updateApptTitle.getText().isEmpty()
@@ -172,27 +214,9 @@ public class UpdateApptController implements Initializable {
                 || updateApptEndTime.getValue() == null
                 || updateApptCustID.getValue() == null
         );
-    }
-
-    @FXML
-    void updateApptTitle(ActionEvent event) {
 
     }
 
-    @FXML
-    void updateApptType(ActionEvent event) {
-
-    }
-
-    @FXML
-    void updateApptUser(ActionEvent event) {
-
-    }
-
-    @FXML
-    void updateApptCustID(ActionEvent event) {
-
-    }
     @FXML
     void updateApptCancelBtn(ActionEvent event) throws IOException {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -206,12 +230,13 @@ public class UpdateApptController implements Initializable {
             Parent parent = FXMLLoader.load(getClass().getResource("../Views/Calendar.fxml"));
             Scene scene = new Scene(parent);
 
-            Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
             window.setScene(scene);
             window.show();
         }
     }
+
     public User getUsernameFromUser(int id) throws Exception {
         ObservableList<User> users = UserDAO.getAllUsers();
         User userSelected = null;
@@ -223,7 +248,6 @@ public class UpdateApptController implements Initializable {
         }
         return userSelected;
     }
-
 
 
     public void populateFields(Appointment appointment) throws SQLException {
@@ -243,46 +267,56 @@ public class UpdateApptController implements Initializable {
             }
 
         for (Customer c : displayAllCustomers) {
-            if (c.getId() == appointment.getId()){
+            if (c.getId() == appointment.getId()) {
                 customerSelected = c;
             }
         }
-        for (Customer c : displayAllCustomers){
+        for (Customer c : displayAllCustomers) {
             displayAllCustIds.add(c.getId());
         }
         for (User u : displayAllUsers) {
-                if (u.getUserId() == appointment.getUserId()) {
-                    userSelected = u;
-                }
-        }
-/*       for (String t : displayAllTypes) {
-            if (t.equals(Appointment.getType())) {
-                typeSelected = t;
+            if (u.getUserId() == appointment.getUserId()) {
+                userSelected = u;
             }
-        }*/
+        }
 
-        updateApptID.setText(Integer.toString(selectedAppointment.getId()));
-        updateApptTitle.setText(selectedAppointment.getTitle());
         updateApptContact.setItems(displayAllContacts);
         updateApptContact.setValue(contactSelected);
+
         updateApptCustID.setItems(displayAllCustomers);
         updateApptCustID.setValue(customerSelected);
+
+        updateApptUser.setItems(displayAllUsers);
+        updateApptUser.setValue(userSelected);
+
         updateApptDesc.setText(selectedAppointment.getDescription());
         updateApptLocation.setText(selectedAppointment.getLocation());
         updateApptType.setValue(selectedAppointment.getType());
-        updateApptUser.setItems(displayAllUsers);
-        updateApptUser.setValue(userSelected);
+        updateApptID.setText(Integer.toString(selectedAppointment.getId()));
+        updateApptTitle.setText(selectedAppointment.getTitle());
         updateApptStartDate.setValue(selectedAppointment.getStart().toLocalDate());
         updateApptStartTime.setValue(selectedAppointment.getStart().toLocalTime());
         updateApptEndTime.setValue(selectedAppointment.getEnd().toLocalTime());
 
     }
 
+    private void populateTimeComboBox() {
+
+        LocalTime start = LocalTime.of(0, 0);
+
+        for (int i = 0; i < 100; i++) {
+            updateApptStartTime.getItems().add(start);
+            updateApptEndTime.getItems().add(start);
+            start = start.plusMinutes(15);
+        }
+    }
+
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        try {
-            //Appointment appointment = Appointment.getApptByID(apptSelected.getApptID());
 
+       try {
+            populateTimeComboBox();
             ObservableList<Customer> allCustomers = CustomerDAO.getAllCustomers();
             ObservableList<Integer> allCustomerIds = FXCollections.observableArrayList();
             for (Customer c : allCustomers){
@@ -294,17 +328,17 @@ public class UpdateApptController implements Initializable {
             ObservableList<Contact> contactList = ContactDAO.getAllContacts();
             ObservableList<User> userList = UserDAO.getAllUsers();
             updateApptContact.setItems(contactList);
-            //updateApptCustID.getSelectionModel().select(Integer.valueOf(appointment.getCustomerId()));
             updateApptUser.setItems(userList);
             updateApptType.setItems(Appointment.types);
-            //updateApptDesc.setText(appointment.getDescription());
-            //updateApptLocation.setText(appointment.getLocation());
-            //updateApptTitle.setText(appointment.getTitle());
-            //updateApptUser.getSelectionModel().select(Integer.valueOf(appointment.getUserId()));
+            updateApptID.setDisable(true);
+
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
+        LocalDateTime currentDateTime = LocalDateTime.now();
+        updateApptStartDate.setValue(LocalDate.from(currentDateTime));
 
         LocalTime startEST = LocalTime.of(8, 0);
         LocalTime endEST = LocalTime.of(22, 0);
@@ -321,19 +355,17 @@ public class UpdateApptController implements Initializable {
     public void addApptStartTime(ActionEvent actionEvent) {
         updateApptEndTime.getItems().clear();
 
-        //Decouples Date from ZonedDateTime and uses the selected date as part of localEnd
         LocalTime localEndTime = Time.getLocalEndTime();
 
         LocalTime selectedStart = updateApptStartTime.getSelectionModel().getSelectedItem();
         LocalTime selectedStartDate = selectedStart;
 
-        updateApptEndTime.setValue(selectedStart.plusHours(1));
+        updateApptEndTime.setValue(selectedStart);
 
-        while (selectedStartDate.isBefore(localEndTime.plusSeconds(1))) {
-            updateApptEndTime.getItems().add(LocalTime.from(selectedStartDate.plusHours(1)));
-            selectedStartDate = selectedStartDate.plusHours(1);
-        }
+       while (selectedStartDate.isBefore(localEndTime.plusSeconds(1))) {
+           updateApptEndTime.getItems().add(LocalTime.from(selectedStartDate.plusHours(1)));
+           selectedStartDate = selectedStartDate.plusHours(1);
+       }
     }
-
 }
 

@@ -6,7 +6,6 @@ import javafx.collections.ObservableList;
 import java.time.LocalDateTime;
 
 public class Appointment {
-    //private static String type;
     private int id;
     private String title;
     private String description;
@@ -14,20 +13,15 @@ public class Appointment {
     private String type;
     private LocalDateTime start;
     private LocalDateTime end;
-    //private LocalDate createDate;
-    //private String createdBy;
-    //private LocalDateTime lastUpdate;
-    //private String lastUpdatedBy;
     private int customerId;
     private int userId;
     private int contactId;
-    private String contactName;
 
     public static ObservableList<String> types = FXCollections.observableArrayList("Taming", "Feeding", "Playing",
             "Bathing");
 
     public Appointment(int id, String title, String description, String location, String type, LocalDateTime start,
-                       LocalDateTime end, int customerId, int userId, int contactId, String contactName) {
+                       LocalDateTime end, int customerId, int userId, int contactId) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -35,13 +29,12 @@ public class Appointment {
         this.type = type;
         this.start = start;
         this.end = end;
-        //this.createDate = createDate;
-        //this.createdBy = createdBy;
         this.customerId = customerId;
         this.userId = userId;
         this.contactId = contactId;
-        this.contactName = contactName;
     }
+
+
 
     public int getId() {
         return id;
@@ -99,22 +92,6 @@ public class Appointment {
         this.end = end;
     }
 
-   /* public LocalDate getCreateDate() {
-        return createDate;
-    }
-
-    public void setCreateDate(LocalDate createDate) {
-        this.createDate = createDate;
-    }
-
-    public String getCreatedBy() {
-        return createdBy;
-    }
-
-    public void setCreatedBy(String createdBy) {
-        this.createdBy = createdBy;
-    }*/
-
     public int getCustomerId() {
         return customerId;
     }
@@ -131,20 +108,12 @@ public class Appointment {
         this.userId = userId;
     }
 
-/*    public Contact getContactId() {
+    public int getContactId() {
         return contactId;
     }
 
     public void setContactId(int contactId) {
         this.contactId = contactId;
-    }*/
-
-    public String getContactName() {
-        return contactName;
-    }
-
-    public void setContactName(String contactName) {
-        this.contactName = contactName;
     }
 
     public LocalDateTime getStartTime() {

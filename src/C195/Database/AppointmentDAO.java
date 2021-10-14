@@ -1,8 +1,6 @@
 package C195.Database;
 
 import C195.Model.Appointment;
-import C195.Model.Appointment;
-import C195.Model.Customer;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -10,7 +8,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class AppointmentDAO {
@@ -20,28 +17,24 @@ public class AppointmentDAO {
         ObservableList<Appointment> allAppointments = FXCollections.observableArrayList();
 
         DatabaseConnection.openConnection();
-        String sqlStatement = "SELECT Appointment_ID, Title, Description, Location, Type, Start, End, customers.Customer_ID, users.User_ID, contacts.Contact_ID, " +
-                "contacts.Contact_Name FROM appointments, customers, users, contacts WHERE appointments.Customer_ID = customers.Customer_ID AND " +
-                "appointments.User_ID = users.User_ID AND appointments.Contact_ID = contacts.Contact_ID";
+        String sqlStatement = "SELECT Appointment_ID, Title, Description, Location, Type, Start, End, Customer_ID, User_ID, Contact_ID FROM appointments ";
         PreparedStatement ps = DatabaseConnection.getConnection().prepareStatement(sqlStatement);
         ResultSet result = ps.executeQuery();
 
         while (result.next()){
             int id = result.getInt("Appointment_ID");
             int customerId = result.getInt("Customer_ID");
-            int contactId = result.getInt("Contact_ID");
+            //int contactId = result.getInt("Contact_ID");
             String title = result.getString("Title");
             String description = result.getString("Description");
             String location = result.getString("Location");
-            String contactName = result.getString("Contact_Name");
+            int contactId = result.getInt("Contact_ID");
             String type = result.getString("Type");
             LocalDateTime start = result.getTimestamp("Start").toLocalDateTime();
             LocalDateTime end = result.getTimestamp("End").toLocalDateTime();
-            //LocalDate createDate = result.getDate("Create_Date").toLocalDate();
-            //String createdBy = result.getString("Created_By");
             int userId = result.getInt("User_ID");
 
-            Appointment appointmentResult = new Appointment(id, title, description, location, type, start, end, customerId, userId, contactId, contactName);
+            Appointment appointmentResult = new Appointment(id, title, description, location, type, start, end, customerId, userId, contactId);
             allAppointments.add(appointmentResult);
         }
         return allAppointments;
@@ -57,10 +50,10 @@ public class AppointmentDAO {
     }
 
     public static void addAppointment(String title, String description, String location,
-                                      String type, LocalDateTime start, LocalDateTime end, Integer customerId,
-                                      Integer userId, String contactName) throws SQLException {
+                                      String type, LocalDateTime start, LocalDateTime end, int customerId,
+                                      int userId, int contactId) throws SQLException {
 
-        String insertStatement = "UPDATE appointments(Appointment_ID, Title, Description, Location, Contact_Name, Type," +
+        String insertStatement = "UPDATE appointments(Appointment_ID, Title, Description, Location, Contact_ID, Type," +
                 " Start, End, Customer_ID, User_ID)\n" + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
 
         PreparedStatement ps = DatabaseConnection.getConnection().prepareStatement(insertStatement);
@@ -68,7 +61,7 @@ public class AppointmentDAO {
         ps.setString(1, title);
         ps.setString(2, description);
         ps.setString(3, location);
-        ps.setString(4, contactName);
+        ps.setInt(4, contactId);
         ps.setString(5, type);
         ps.setTimestamp(6, Timestamp.valueOf(start));
         ps.setTimestamp(7, Timestamp.valueOf(end));
@@ -77,62 +70,52 @@ public class AppointmentDAO {
 
         ps.execute();
     }
-/*    public static Appointment getApptByID(int apptID) throws SQLException {
-        String insertStatement = "SELECT * FROM appointments AS a INNER JOIN contacts AS c ON a.Contact_ID=c.Contact_ID WHERE Appointment_ID=?";
+
+    public static int updateAppointment(String title, String description, String location, String type, LocalDateTime start, LocalDateTime end, int contactId, int customerId, int userId, int apptId) throws SQLException {
+
+        String insertStatement = "UPDATE appointments SET Title=?, Description=?, Location=?, Type=?, Start=?, End=?," +
+                " Customer_ID=?, Contact_ID=?, User_ID=? WHERE Appointment_ID = ?;";
         PreparedStatement ps = DatabaseConnection.getConnection().prepareStatement(insertStatement);
 
-        ps.setInt(1, apptID);
 
-        try {
-            ps.execute();
-            ResultSet rs = ps.getResultSet();
+        ps.setString(1, title);
+        ps.setString(2, description);
+        ps.setString(3, location);
+        ps.setString(4, type);
+        ps.setTimestamp(5, Timestamp.valueOf(start));
+        ps.setTimestamp(6, Timestamp.valueOf(end));
+        ps.setInt(7, customerId);
+        ps.setInt(8, contactId);
+        ps.setInt(9, userId);
+        ps.setInt(10, apptId);
 
-            while(rs.next()){
-                Appointment newAppt = new Appointment(
-                  rs.getInt("Appointment_ID"),
-                  rs.getString("Title"),
-                  rs.getString("Description"),
-                  rs.getString("Location"),
-                  rs.getString("Type"),
-                        rs.getDate("Start").toLocalDate(),
-                        rs.getTimestamp("Start").toLocalDateTime(),
-                        rs.getDate("End").toLocalDate(),
-                        rs.getTimestamp("End").toLocalDateTime(),
-                        rs.getInt("Customer_ID"),
-                        rs.getInt("User_ID"),
-                        rs.getInt("Contact_ID"),
-                        rs.getString("Contact_Name")
-                );
-            }
 
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-
-    }*/
-    public static void updateAppointment(Integer apptId, String title, String description, String location,
-                                         String type, LocalDateTime start, LocalDateTime end, Integer customerId,
-                                         Integer userId, Integer contactId, String contactName) throws SQLException {
-
-        String insertStatement = "UPDATE appointments SET Appointment_ID = ?, Title = ?, Description = ?, " +
-                "Location = ?, Contact_Name = ?, Type = ?, Start = ?, End = ? " +
-                "Customer_ID = ?, User_ID = ? WHERE Appointment_ID = ?";
-
-        PreparedStatement ps = DatabaseConnection.getConnection().prepareStatement(insertStatement);
-
-        ps.setInt(1, apptId);
-        ps.setString(2, title);
-        ps.setString(3, description);
-        ps.setString(4, location);
-        ps.setString(5, contactName);
-        ps.setString(6, type);
-        ps.setTimestamp(7, Timestamp.valueOf(start));
-        ps.setTimestamp(8, Timestamp.valueOf(end));
-        ps.setInt(9, customerId);
-        ps.setInt(10, userId);
-
-        ps.execute();
+        return ps.executeUpdate();
     }
 
 
+    public static void updateAppointment(Appointment appointment) {
+
+        String sql = "UPDATE appointments SET Title=?, Description=?, Location=?, Type=?, Start=?, End=?, Customer_ID=?, Contact_ID=?, User_ID=? WHERE Appointment_ID = ?;";
+
+        try(PreparedStatement ps = DatabaseConnection.getConnection().prepareStatement(sql)) {
+
+
+            ps.setString(1, appointment.getTitle());
+            ps.setString(2, appointment.getDescription());
+            ps.setString(3, appointment.getLocation());
+            ps.setString(4, appointment.getType());
+            ps.setTimestamp(5, Timestamp.valueOf(appointment.getStart()));
+            ps.setTimestamp(6, Timestamp.valueOf(appointment.getEnd()));
+            ps.setInt(7, appointment.getCustomerId());
+            ps.setInt(8, appointment.getContactId());
+            ps.setInt(9, appointment.getUserId());
+            ps.setInt(10, appointment.getId());
+
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        }
+    }
 }
