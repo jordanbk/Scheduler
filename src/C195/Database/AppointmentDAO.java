@@ -23,16 +23,16 @@ public class AppointmentDAO {
 
         while (result.next()){
             int id = result.getInt("Appointment_ID");
-            int customerId = result.getInt("Customer_ID");
             //int contactId = result.getInt("Contact_ID");
             String title = result.getString("Title");
             String description = result.getString("Description");
             String location = result.getString("Location");
-            int contactId = result.getInt("Contact_ID");
             String type = result.getString("Type");
             LocalDateTime start = result.getTimestamp("Start").toLocalDateTime();
             LocalDateTime end = result.getTimestamp("End").toLocalDateTime();
+            int customerId = result.getInt("Customer_ID");
             int userId = result.getInt("User_ID");
+            int contactId = result.getInt("Contact_ID");
 
             Appointment appointmentResult = new Appointment(id, title, description, location, type, start, end, customerId, userId, contactId);
             allAppointments.add(appointmentResult);
@@ -51,23 +51,23 @@ public class AppointmentDAO {
 
     public static void addAppointment(String title, String description, String location,
                                       String type, LocalDateTime start, LocalDateTime end, int customerId,
-                                      int userId, int contactId) throws SQLException {
+                                      int contactId, int userId, int apptId) throws SQLException {
 
-        String insertStatement = "UPDATE appointments(Appointment_ID, Title, Description, Location, Contact_ID, Type," +
-                " Start, End, Customer_ID, User_ID)\n" + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+        String insertStatement = "UPDATE appointments(Title, Description, Location, Type, " +
+                "Start, End, Customer_ID, Contact_ID, User_ID, Appointment_ID)\n" + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
 
         PreparedStatement ps = DatabaseConnection.getConnection().prepareStatement(insertStatement);
 
         ps.setString(1, title);
         ps.setString(2, description);
         ps.setString(3, location);
-        ps.setInt(4, contactId);
-        ps.setString(5, type);
-        ps.setTimestamp(6, Timestamp.valueOf(start));
-        ps.setTimestamp(7, Timestamp.valueOf(end));
-        ps.setInt(8, customerId);
+        ps.setString(4, type);
+        ps.setTimestamp(5, Timestamp.valueOf(start));
+        ps.setTimestamp(6, Timestamp.valueOf(end));
+        ps.setInt(7, customerId);
+        ps.setInt(8, contactId);
         ps.setInt(9, userId);
-
+        ps.setInt(10, apptId);
         ps.execute();
     }
 

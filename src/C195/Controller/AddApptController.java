@@ -77,8 +77,22 @@ public class AddApptController implements Initializable {
     void addApptCustomer(ActionEvent event) {
 
     }
+    private LocalDateTime createStartLocaleDateTime() {
 
-/*    @FXML
+        LocalDate startDate = addApptDate.getValue();
+        LocalTime startTime = addApptStartTime.getValue();
+        LocalDateTime start = LocalDateTime.of(startDate, startTime);
+        return start;
+    }
+
+    private LocalDateTime createEndLocaleDateTime() {
+
+        LocalDate endDate = addApptDate.getValue();
+        LocalTime endTime = addApptEndTime.getValue();
+        LocalDateTime end = LocalDateTime.of(endDate, endTime);
+        return end;
+    }
+    @FXML
     void addApptSubmitBtn(ActionEvent event) throws Exception {
         if (inputIsEmpty()){
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -103,28 +117,28 @@ public class AddApptController implements Initializable {
             }
 
             else {
-                //Integer apptId = addApptID.getText(Integer.parseInt(apptId));
+
+                int apptId = Integer.parseInt(addApptID.getText());
                 String title = addApptTitle.getText();
                 String description = addApptDesc.getText();
                 String location = addApptLocation.getText();
                 //Contact contact = addApptContact.getValue();
                 String type = addApptType.getSelectionModel().getSelectedItem();
-                Timestamp startTimestamp = Timestamp.valueOf(startDateTime);
-                Timestamp endTimestamp = Timestamp.valueOf(endDateTime);
+                LocalDateTime start = createStartLocaleDateTime();
+                LocalDateTime end = createEndLocaleDateTime();
                 Integer customerId = addApptCustID.getSelectionModel().getSelectedItem();
                 int userId = addApptUser.getSelectionModel().getSelectedItem().getUserId();
-                String contactName = addApptContact.getSelectionModel().getSelectedItem().getName();
-                AppointmentDAO.addAppointment(title, description, location, contactName,
-                        type, startTimestamp, endTimestamp, customerId, userId);
+                int contactId = addApptContact.getSelectionModel().getSelectedItem().getId();
+                AppointmentDAO.addAppointment(title, description, location, type, start, end, customerId, userId, contactId, apptId);
 
                 stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
-                scene = FXMLLoader.load(getClass().getResource("../Views/Calendar.fxml"));
+                scene = FXMLLoader.load(getClass().getResource("C195/Views/Calendar.fxml"));
                 stage.setScene(new Scene(scene));
                 stage.setResizable(false);
                 stage.show();
             }
         }
-    }  */
+    }
 
 
     @FXML

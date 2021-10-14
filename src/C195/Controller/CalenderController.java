@@ -40,7 +40,6 @@ public class CalenderController implements Initializable {
     @FXML private TableColumn<Appointment, Integer> calContactCol;
     @FXML private TableColumn<Appointment, String> calStartTimeDateCol;
     @FXML private TableColumn<Appointment, String> calEndTimeDateCol;
-    @FXML private TableColumn<Appointment, String> calCustomerNameCol;
     @FXML private TableColumn<Appointment, Integer> calCustIDCol;
     @FXML private TableColumn<Appointment, String> calTypeCol;
     @FXML private TableView<Appointment> calendarTableMain;

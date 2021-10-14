@@ -98,7 +98,7 @@
             <ComboBox fx:id="addApptType" onAction="#addApptType" prefWidth="150.0" GridPane.columnIndex="3" GridPane.rowIndex="1" />
             <TextField fx:id="addApptID" editable="false" promptText="Auto Generated" GridPane.columnIndex="1" GridPane.rowIndex="7" />
             <ComboBox fx:id="addApptCustID" onAction="#addApptCustID" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="8" />
-            <TextField fx:id="addApptUser" editable="false" GridPane.columnIndex="1" />
+            <ComboBox fx:id="addApptUser" editable="false" GridPane.columnIndex="1" />
          </children>
       </GridPane>
       <Button layoutX="206.0" layoutY="370.0" mnemonicParsing="false" onAction="#addApptSubmitBtn" prefHeight="32.0" prefWidth="165.0" text="Add Appointment">
