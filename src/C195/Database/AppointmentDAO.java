@@ -53,7 +53,7 @@ public class AppointmentDAO {
                                       String type, LocalDateTime start, LocalDateTime end, int customerId,
                                       int contactId, int userId, int apptId) throws SQLException {
 
-        String insertStatement = "UPDATE appointments(Title, Description, Location, Type, " +
+        String insertStatement = "INSERT appointments(Title, Description, Location, Type, " +
                 "Start, End, Customer_ID, Contact_ID, User_ID, Appointment_ID)\n" + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
 
         PreparedStatement ps = DatabaseConnection.getConnection().prepareStatement(insertStatement);
