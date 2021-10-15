@@ -118,7 +118,7 @@ public class AddApptController implements Initializable {
 
             else {
 
-                int apptId = Integer.parseInt(addApptID.getText());
+                //int apptId = Integer.parseInt(addApptID.getText());
                 String title = addApptTitle.getText();
                 String description = addApptDesc.getText();
                 String location = addApptLocation.getText();
@@ -129,10 +129,10 @@ public class AddApptController implements Initializable {
                 Integer customerId = addApptCustID.getSelectionModel().getSelectedItem();
                 int userId = addApptUser.getSelectionModel().getSelectedItem().getUserId();
                 int contactId = addApptContact.getSelectionModel().getSelectedItem().getId();
-                AppointmentDAO.addAppointment(title, description, location, type, start, end, customerId, userId, contactId, apptId);
+                AppointmentDAO.addAppointment(title, description, location, type, start, end, customerId, userId, contactId);
 
                 stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
-                scene = FXMLLoader.load(getClass().getResource("C195/Views/Calendar.fxml"));
+                scene = FXMLLoader.load(getClass().getResource("/C195/Views/Calendar.fxml"));
                 stage.setScene(new Scene(scene));
                 stage.setResizable(false);
                 stage.show();
@@ -164,8 +164,8 @@ public class AddApptController implements Initializable {
     }
 
     @FXML
-    void addApptEndTime(ActionEvent event) {
-        addApptEndTime.getItems().clear();
+    void addApptEndTimeA(ActionEvent event) {
+       /* addApptEndTime.getItems().clear();
 
         //Decouples Date from ZonedDateTime and uses the selected date as part of localEnd
         LocalTime localEndTime = Time.getLocalEndTime();
@@ -178,7 +178,8 @@ public class AddApptController implements Initializable {
         while (selectedStartDate.isBefore(localEndTime.plusSeconds(1))) {
             addApptEndTime.getItems().add(LocalTime.from(selectedStartDate.plusHours(1)));
             selectedStartDate = selectedStartDate.plusHours(1);
-        }
+        }*/
+
     }
 
 
@@ -209,32 +210,31 @@ public class AddApptController implements Initializable {
             e.printStackTrace();
         }
 
-        LocalTime startEST = LocalTime.of(8, 0);
-        LocalTime endEST = LocalTime.of(22, 0);
-        LocalTime start = startEST;
-        LocalTime end = endEST;
+        LocalTime startEST = Time.getLocalStartTime();
+        LocalTime endEST = Time.getLocalEndTime();
 
-        while (startEST.isBefore(endEST.plusSeconds(1))){
+        while (startEST.isBefore(endEST)){
             addApptStartTime.getItems().add(LocalTime.from(startEST));
             startEST = startEST.plusHours(1);
         }
     }
     @FXML
-    public void addApptStartTime(ActionEvent actionEvent) {
+    public void addApptStartTimeA(ActionEvent actionEvent) {
         addApptEndTime.getItems().clear();
 
         //Decouples Date from ZonedDateTime and uses the selected date as part of localEnd
         LocalTime localEndTime = Time.getLocalEndTime();
 
         LocalTime selectedStart = addApptStartTime.getSelectionModel().getSelectedItem();
-        LocalTime selectedStartDate = selectedStart;
+        LocalTime selectedStartDate = selectedStart.plusHours(1);
 
-        addApptEndTime.setValue(selectedStart.plusHours(1));
+        //addApptEndTime.setValue(selectedStart.plusHours(1));
 
         while (selectedStartDate.isBefore(localEndTime.plusSeconds(1))) {
-            addApptEndTime.getItems().add(LocalTime.from(selectedStartDate.plusHours(1)));
+            addApptEndTime.getItems().add(LocalTime.from(selectedStartDate));
             selectedStartDate = selectedStartDate.plusHours(1);
         }
+        addApptEndTime.getSelectionModel().selectFirst();
     }
     public void addApptUser(ActionEvent actionEvent) {
     }

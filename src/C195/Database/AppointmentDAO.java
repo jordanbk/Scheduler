@@ -51,10 +51,10 @@ public class AppointmentDAO {
 
     public static void addAppointment(String title, String description, String location,
                                       String type, LocalDateTime start, LocalDateTime end, int customerId,
-                                      int contactId, int userId, int apptId) throws SQLException {
+                                      int contactId, int userId) throws SQLException {
 
         String insertStatement = "INSERT appointments(Title, Description, Location, Type, " +
-                "Start, End, Customer_ID, Contact_ID, User_ID, Appointment_ID)\n" + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+                "Start, End, Customer_ID, Contact_ID, User_ID, Appointment_ID)\n" + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, null);";
 
         PreparedStatement ps = DatabaseConnection.getConnection().prepareStatement(insertStatement);
 
@@ -67,7 +67,7 @@ public class AppointmentDAO {
         ps.setInt(7, customerId);
         ps.setInt(8, contactId);
         ps.setInt(9, userId);
-        ps.setInt(10, apptId);
+
         ps.execute();
     }
 
