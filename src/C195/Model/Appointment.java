@@ -34,6 +34,9 @@ public class Appointment {
         this.contactId = contactId;
     }
 
+    public Appointment() {
+
+    }
 
 
     public int getId() {
