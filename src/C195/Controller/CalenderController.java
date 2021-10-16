@@ -127,8 +127,12 @@ public class CalenderController implements Initializable {
     }
 
     @FXML
-    void calReportBtn(ActionEvent event) {
-
+    void calReportBtn(ActionEvent event) throws IOException {
+        Parent parent = load(getClass().getResource("../Views/Reports.fxml"));
+        Scene scene = new Scene(parent);
+        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+        window.setScene(scene);
+        window.show();
     }
 
     @FXML

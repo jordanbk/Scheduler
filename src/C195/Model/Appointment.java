@@ -3,6 +3,7 @@ package C195.Model;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 public class Appointment {
@@ -17,8 +18,8 @@ public class Appointment {
     private int userId;
     private int contactId;
 
-    public static ObservableList<String> types = FXCollections.observableArrayList("Taming", "Feeding", "Playing",
-            "Bathing");
+    public static ObservableList<String> types = FXCollections.observableArrayList("Stand Up", "All Hands", "Demos",
+            "Brain Storm");
 
     public Appointment(int id, String title, String description, String location, String type, LocalDateTime start,
                        LocalDateTime end, int customerId, int userId, int contactId) {
@@ -37,6 +38,7 @@ public class Appointment {
     public Appointment() {
 
     }
+
 
 
     public int getId() {

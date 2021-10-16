@@ -43,8 +43,12 @@ public class MainMenuController implements Initializable {
 
 
     @FXML
-    void handleReports(ActionEvent event){
-
+    void handleReports(ActionEvent event) throws IOException {
+        Parent parent = FXMLLoader.load(getClass().getResource("../Views/Reports.fxml"));
+        Scene scene = new Scene(parent);
+        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+        window.setScene(scene);
+        window.show();
     }
 
 
