@@ -1,7 +1,9 @@
 package C195.Controller;
 
+import C195.Database.ContactDAO;
 import C195.Model.Appointment;
 import C195.Model.Contact;
+import C195.Model.Customer;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -12,6 +14,7 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TableColumn;
 
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 import static javafx.fxml.FXMLLoader.load;
@@ -43,7 +46,7 @@ public class ReportsController implements Initializable {
     private Tab tabApptByCustomer;
 
     @FXML
-    private ComboBox<?> tab2Customer;
+    private ComboBox<Customer> tab2Customer;
 
     @FXML
     private TableColumn<Appointment, Integer> apptIdCol;
@@ -98,54 +101,7 @@ public class ReportsController implements Initializable {
 
     @FXML
     private Button tab3MainMenu;
-
-/*
-    @FXML
-    void mainMenuBtn1(ActionEvent event) throws IOException {
-        Parent parent = load(getClass().getResource("../Views/MainMenu.fxml"));
-        Scene scene = new Scene(parent);
-        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
-        window.setScene(scene);
-        window.show();
-    }
-
-    @FXML
-    void mainMenuBtn2(ActionEvent event) throws IOException {
-        Parent parent = load(getClass().getResource("../Views/MainMenu.fxml"));
-        Scene scene = new Scene(parent);
-        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
-        window.setScene(scene);
-        window.show();
-    }
-
-    @FXML
-    void mainMenuBtn3(ActionEvent event) throws IOException {
-        Parent parent = load(getClass().getResource("../Views/MainMenu.fxml"));
-        Scene scene = new Scene(parent);
-        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
-        window.setScene(scene);
-        window.show();
-    }
-
-    @FXML
-    void monthComboBox(ActionEvent event) {
-
-    }
-
-    @FXML
-    void typeComboBox(ActionEvent event) {
-
-    }
-
-    @FXML
-    void contactComboBox(ActionEvent event) {
-
-    }*/
-
- /*   @FXML
-    void customerComboBox(ActionEvent event) {
-
-    }*/
+    
  public void setComboBoxes() {
      ObservableList<String> Months = FXCollections.observableArrayList("January", "February", "March",
              "April", "May", "June", "July", "August", "September", "October", "November", "December");
@@ -180,5 +136,13 @@ public class ReportsController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         setComboBoxes();
+        try {
+            ObservableList<Contact> contacts = ContactDAO.getAllContacts();
+            tab3Contact.setItems(contacts);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+
     }
 }
