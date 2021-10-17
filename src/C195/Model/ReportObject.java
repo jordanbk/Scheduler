@@ -1,14 +1,18 @@
 package C195.Model;
 
 public class ReportObject {
-    String type;
-    String month;
     int count;
+    String month;
+    String type;
 
-    public ReportObject(String type, String month, int count) {
-        this.type = type;
-        this.month = month;
+    public ReportObject(int count, String month, String type) {
         this.count = count;
+        this.month = month;
+        this.type = type;
+    }
+
+    public ReportObject() {
+
     }
 
     public String getType() {

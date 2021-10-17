@@ -70,7 +70,7 @@
                         </TableView>
                         <ComboBox fx:id="tab3Contact" layoutX="23.0" layoutY="14.0" onAction="#contactComboBox" prefWidth="150.0" promptText="Contact" />
                         <Button fx:id="tab3MainMenu" layoutX="496.0" layoutY="14.0" mnemonicParsing="false" onAction="#mainMenuBtn3" text="Main Menu" />
-                        <Button fx:id="tab2ReportGen" layoutX="409.0" layoutY="14.0" mnemonicParsing="false" onAction="#generateReportActionBtn3" text="Button" />
+                        <Button fx:id="tab3ReportGen" layoutX="409.0" layoutY="14.0" mnemonicParsing="false" onAction="#generateReportActionBtn3" text="Button" />
                      </children>
                   </AnchorPane>
                </content>

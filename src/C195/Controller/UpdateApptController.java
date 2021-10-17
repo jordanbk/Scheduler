@@ -142,16 +142,7 @@ public class UpdateApptController implements Initializable {
 
     @FXML
     void updateApptSubmitBtn(ActionEvent event) throws SQLException, IOException {
-/*        updateAppointment(String contactName, String title, String description, String location, String contact, String type, LocalDateTime start, LocalDateTime end, int customerId, int userId, int apptId)
-        int rowsAffected = AppointmentDAO.updateAppointment("Jordan", "Title", "Desc", "loc", "contact", "type", LocalDateTime.now(), LocalDateTime.now(), 1, 1, 1, 1);
-        if (rowsAffected > 0) {
-            selectedAppointment.setContactName(updateApptTitle.getText());
-            selectedAppointment.setTitle(updateApptTitle.getText());
-            selectedAppointment.setDescription(updateApptDesc.getText());
-            selectedAppointment.setLocation(updateApptLocation.getText());
-        System.out.println(rowsAffected);
-        }
-        */
+
         if (inputIsEmpty()) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
