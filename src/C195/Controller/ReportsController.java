@@ -2,6 +2,7 @@ package C195.Controller;
 
 import C195.Database.AppointmentDAO;
 import C195.Database.ContactDAO;
+import C195.Database.CustomerDAO;
 import C195.Model.Appointment;
 import C195.Model.Contact;
 import C195.Model.Customer;
@@ -15,6 +16,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -134,6 +136,12 @@ public class ReportsController implements Initializable {
      tab1Month.setItems(Months);
      tab1Type.setItems(Types);
  }
+
+    public void tab2Customer() throws SQLException {
+     ObservableList<Customer> allCustomers = CustomerDAO.getAllCustomers();
+     tab2Customer.setItems(allCustomers);
+
+    }
     public void setComboBoxesTab3() throws SQLException {
 
         ObservableList<Contact> allContacts = ContactDAO.getAllContacts();
@@ -223,11 +231,15 @@ public class ReportsController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         setComboBoxesTab1();
+
         try {
             setComboBoxesTab3();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
+        countCol.setCellValueFactory(new PropertyValueFactory<>("Count"));
+        MonthCol.setCellValueFactory(new PropertyValueFactory<>("Month"));
+        tab1TypeCol.setCellValueFactory(new PropertyValueFactory<>("Type"));
 
 
     }

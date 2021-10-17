@@ -125,18 +125,19 @@ public class AppointmentDAO {
 
         ObservableList<ReportObject> generateMonthTypeReport = FXCollections.observableArrayList();
 
-        String appointment = "SELECT COUNT(*) FROM appointments where type = ? AND monthname(start) = ";
+        String appointment = "SELECT COUNT(*) FROM appointments where type = ? AND monthname(start) = ?";
         PreparedStatement ps = DatabaseConnection.getConnection().prepareStatement(appointment);
+
+        ps.setString(1, selectedType);
+        ps.setString(2, selectedMonth);
+
         ResultSet resultSet = ps.executeQuery();
 
         while (resultSet.next()) {
 
-            int count = resultSet.getInt("Count");
-            String monthname = resultSet.getString("Month");
-            String type = resultSet.getString("Type");
+            int count = resultSet.getInt(1);
 
-
-            ReportObject reportobject = new ReportObject(count, monthname, type);
+            ReportObject reportobject = new ReportObject(count, selectedMonth, selectedType);
             generateMonthTypeReport.add(reportobject);
 
         }
