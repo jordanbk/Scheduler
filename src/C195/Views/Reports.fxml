@@ -8,7 +8,6 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="C195.Controller.ReportsController">
    <children>
       <TabPane prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE">
@@ -17,16 +16,17 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <TableView layoutY="45.0" prefHeight="325.0" prefWidth="600.0">
+                        <TableView fx:id="tab1Table" layoutY="45.0" prefHeight="325.0" prefWidth="600.0">
                           <columns>
                             <TableColumn fx:id="countCol" prefWidth="75.0" text="Count" />
                             <TableColumn fx:id="MonthCol" prefWidth="75.0" text="Month" />
                               <TableColumn fx:id="tab1TypeCol" prefWidth="75.0" text="Type" />
                           </columns>
                         </TableView>
-                        <ComboBox fx:id="tab1Type" layoutX="25.0" layoutY="14.0" onAction="#typeComboBox" prefWidth="150.0" promptText="Type" />
-                        <ComboBox fx:id="tab1Month" layoutX="211.0" layoutY="14.0" onAction="#monthComboBox" prefWidth="150.0" promptText="Month" />
+                        <ComboBox fx:id="tab1Type" layoutX="14.0" layoutY="14.0" onAction="#typeComboBox" prefWidth="150.0" promptText="Type" />
+                        <ComboBox fx:id="tab1Month" layoutX="176.0" layoutY="14.0" onAction="#monthComboBox" prefWidth="150.0" promptText="Month" />
                         <Button fx:id="tab1MainMenu" layoutX="516.0" layoutY="14.0" mnemonicParsing="false" onAction="#mainMenuBtn1" text="Main Menu" />
+                        <Button fx:id="tab1ReportGen" layoutX="403.0" layoutY="14.0" mnemonicParsing="false" onAction="#generateReportActionBtn1" text="Generate Report" />
                      </children>
                   </AnchorPane>
             </content>
@@ -35,7 +35,7 @@
             <content>
               <AnchorPane fx:id="" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <TableView layoutY="45.0" prefHeight="326.0" prefWidth="600.0">
+                        <TableView fx:id="tab2Table" layoutY="45.0" prefHeight="326.0" prefWidth="600.0">
                           <columns>
                             <TableColumn fx:id="apptIdCol" prefWidth="115.0" text="Appt ID" />
                             <TableColumn fx:id="titleCol" prefWidth="81.0" text="Title" />
@@ -48,6 +48,7 @@
                         </TableView>
                         <ComboBox fx:id="tab2Customer" layoutX="26.0" layoutY="14.0" onAction="#customerComboBox" prefWidth="150.0" promptText="Customer" />
                         <Button fx:id="tab2MainMenu" layoutX="497.0" layoutY="14.0" mnemonicParsing="false" onAction="#mainMenuBtn2" text="Main Menu" />
+                        <Button fx:id="tab2ReportGen" layoutX="370.0" layoutY="14.0" mnemonicParsing="false" onAction="#generateReportActionBtn2" text="Generate Report" />
                      </children>
                   </AnchorPane>
             </content>
@@ -56,7 +57,7 @@
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="334.0" prefWidth="600.0">
                      <children>
-                        <TableView layoutY="45.0" prefHeight="326.0" prefWidth="600.0">
+                        <TableView fx:id="tab3Table" layoutY="45.0" prefHeight="326.0" prefWidth="600.0">
                            <columns>
                               <TableColumn fx:id="apptIdCol1" prefWidth="115.0" text="Appt ID" />
                               <TableColumn fx:id="titleCol1" prefWidth="81.0" text="Title" />
@@ -69,6 +70,7 @@
                         </TableView>
                         <ComboBox fx:id="tab3Contact" layoutX="23.0" layoutY="14.0" onAction="#contactComboBox" prefWidth="150.0" promptText="Contact" />
                         <Button fx:id="tab3MainMenu" layoutX="496.0" layoutY="14.0" mnemonicParsing="false" onAction="#mainMenuBtn3" text="Main Menu" />
+                        <Button fx:id="tab3ReportGen" layoutX="409.0" layoutY="14.0" mnemonicParsing="false" onAction="#generateReportActionBtn3" text="Button" />
                      </children>
                   </AnchorPane>
                </content>

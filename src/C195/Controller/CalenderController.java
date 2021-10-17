@@ -192,8 +192,6 @@ public class CalenderController implements Initializable {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-
     }
 
 }

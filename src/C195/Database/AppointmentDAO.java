@@ -1,6 +1,7 @@
 package C195.Database;
 
 import C195.Model.Appointment;
+import C195.Model.ReportObject;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -21,7 +22,7 @@ public class AppointmentDAO {
         PreparedStatement ps = DatabaseConnection.getConnection().prepareStatement(sqlStatement);
         ResultSet result = ps.executeQuery();
 
-        while (result.next()){
+        while (result.next()) {
             int id = result.getInt("Appointment_ID");
             //int contactId = result.getInt("Contact_ID");
             String title = result.getString("Title");
@@ -98,7 +99,7 @@ public class AppointmentDAO {
 
         String sql = "UPDATE appointments SET Title=?, Description=?, Location=?, Type=?, Start=?, End=?, Customer_ID=?, Contact_ID=?, User_ID=? WHERE Appointment_ID = ?;";
 
-        try(PreparedStatement ps = DatabaseConnection.getConnection().prepareStatement(sql)) {
+        try (PreparedStatement ps = DatabaseConnection.getConnection().prepareStatement(sql)) {
 
 
             ps.setString(1, appointment.getTitle());
@@ -120,69 +121,27 @@ public class AppointmentDAO {
     }
 
 
+    public static ObservableList<ReportObject> getAppointmentByMonthAndType(String selectedMonth, String selectedType) throws SQLException {
 
-/*    public static ObservableList<Appointment> getApptsByMonthAndType(String monthName, String typeName)
-    {
-        ObservableList<Appointment> appointmentList = FXCollections.observableArrayList();
+        ObservableList<ReportObject> generateMonthTypeReport = FXCollections.observableArrayList();
 
-        try
-        {
-            String sql = "SELECT COUNT(*) FROM appointments WHERE type = ? AND monthname(start) = ?";
+        String appointment = "SELECT COUNT(*) FROM Appointments where type = ? AND monthname(start) = ?";
+        PreparedStatement ps = DatabaseConnection.getConnection().prepareStatement(appointment);
 
-            PreparedStatement ps = DatabaseConnection.getConnection().prepareStatement(sql);
 
-            ps.setString(1, typeName);
-            ps.setString(2, monthName);
-            ResultSet rs = ps.executeQuery();
+        ResultSet resultSet = ps.executeQuery();
 
-            while(rs.next())
-            {
-                if(monthName.equals(rs.getTimestamp("Start").toLocalDateTime().getMonth().toString()))
-                {
-                    int apptID = rs.getInt("Appointment_ID");
-                    String title = rs.getString("Title");
-                    String description = rs.getString("Description");
-                    String location = rs.getString("Location");
-                    String type = rs.getString("Type");
-                    Timestamp start = rs.getTimestamp("Start");
-                    Timestamp end = rs.getTimestamp("End");
-                    int customerID = rs.getInt("Customer_ID");
-                    int userID = rs.getInt("User_ID");
-                    int contactID = rs.getInt("Contact_ID");
-                    Appointment appt = new Appointment(apptID, title, description, location, type, start, end, customerID,
-                            userID, contactID);
-                    appointmentList.add(appt);
-                }
-            }
+        while (resultSet.next()) {
+
+            String month = resultSet.getString("Month");
+            String type = resultSet.getString("Type");
+            int count = resultSet.getInt("Count");
+
+            ReportObject reportobject = new ReportObject(month, type, count);
+            generateMonthTypeReport.add(reportobject);
+
         }
-            //public Appointment(int id, String title, String description, String location, String type, LocalDateTime start,
-            //LocalDateTime end, int customerId, int userId, int contactId) {
-        catch(SQLException throwables)
-        {
-            throwables.printStackTrace();
-        }
-
-        return appointmentList;
-    }*/
-
-    public static int getAppointmentByMonthAndType(String month, String type) throws SQLException {
-        //incremented for each appointment found
-        int appointmentCount = 0;
-
-        String selectStatement = "SELECT * FROM appointments WHERE Type = ?";
-        PreparedStatement ps = DatabaseConnection.getConnection().prepareStatement(selectStatement);
-
-        ps.setString(1, type);
-
-        ResultSet rs = ps.executeQuery();
-
-        while (rs.next()) {
-            LocalDateTime startTime = rs.getTimestamp("Start").toLocalDateTime();
-            if(month.equals(startTime.getMonth().toString())) {
-                appointmentCount++;
-            }
-        }
-        return appointmentCount;
+        return generateMonthTypeReport;
     }
 }
 
