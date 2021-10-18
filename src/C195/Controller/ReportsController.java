@@ -241,7 +241,18 @@ public class ReportsController implements Initializable {
         MonthCol.setCellValueFactory(new PropertyValueFactory<>("Month"));
         tab1TypeCol.setCellValueFactory(new PropertyValueFactory<>("Type"));
 
-
+        apptIdCol.setCellValueFactory(new PropertyValueFactory<>("Appointment Id"));
+        apptIdCol1.setCellValueFactory(new PropertyValueFactory<>("Appointment Id"));
+        typeCol.setCellValueFactory(new PropertyValueFactory<>("Type"));
+        typeCol1.setCellValueFactory(new PropertyValueFactory<>("Type"));
+        descCol.setCellValueFactory(new PropertyValueFactory<>("Type"));
+        descCol1.setCellValueFactory(new PropertyValueFactory<>("Type"));
+        startCol.setCellValueFactory(new PropertyValueFactory<>("Start"));
+        startCol1.setCellValueFactory(new PropertyValueFactory<>("Start"));
+        endCol.setCellValueFactory(new PropertyValueFactory<>("end"));
+        endCol1.setCellValueFactory(new PropertyValueFactory<>("end"));
+        custIdCol.setCellValueFactory(new PropertyValueFactory<>("Customer Id"));
+        custIdCol1.setCellValueFactory(new PropertyValueFactory<>("Customer Id"));
     }
 
 }

@@ -1,5 +1,6 @@
 package C195.Database;
 
+import C195.Model.Appointment;
 import C195.Model.Customer;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -76,7 +77,18 @@ public class CustomerDAO implements Initializable  {
         ps.setInt(1, customerID);
         ps.execute();
     }
+    public static ObservableList<Appointment> getCustomerAppt(int custID) throws Exception {
 
+        ObservableList<Appointment> customerAppts = FXCollections.observableArrayList();
+        AppointmentDAO appt = new AppointmentDAO();
+
+        for (Appointment appointments : AppointmentDAO.getAllAppointments()){
+            if (appointments.getCustomerId() == custID){
+                customerAppts.add(appointments);
+            }
+        }
+        return customerAppts;
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {

@@ -1,6 +1,7 @@
 package C195.Database;
 
 import C195.Model.Appointment;
+import C195.Model.Customer;
 import C195.Model.ReportObject;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -120,7 +121,6 @@ public class AppointmentDAO {
         }
     }
 
-
     public static ObservableList<ReportObject> getAppointmentByMonthAndType(String selectedMonth, String selectedType) throws SQLException {
 
         ObservableList<ReportObject> generateMonthTypeReport = FXCollections.observableArrayList();
@@ -142,6 +142,27 @@ public class AppointmentDAO {
 
         }
         return generateMonthTypeReport;
+    }
+
+    public static ObservableList<Appointment> getApptByCustomerId(int id) throws SQLException {
+        ObservableList<Appointment> generateReportByCustId = FXCollections.observableArrayList();
+
+        String statement = "select * from appointments where Customer_ID = ?;";
+        PreparedStatement ps = DatabaseConnection.getConnection().prepareStatement(statement);
+
+        ps.setInt(1, id);
+
+        ResultSet resultSet = ps.executeQuery();
+        while (resultSet.next()) {
+
+            int count = resultSet.getInt(1);
+
+            Appointment apptObject = new Appointment();
+            generateReportByCustId.add(apptObject);
+
+        }
+        return generateReportByCustId;
+
     }
 }
 
