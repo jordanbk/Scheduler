@@ -3,10 +3,8 @@ package C195.Controller;
 import C195.Database.AppointmentDAO;
 import C195.Database.ContactDAO;
 import C195.Database.CustomerDAO;
-import C195.Model.Appointment;
-import C195.Model.Contact;
-import C195.Model.Customer;
-import C195.Model.ReportObject;
+import C195.Database.UserDAO;
+import C195.Model.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -37,7 +35,7 @@ public class ReportsController implements Initializable {
     private TableView<ReportObject> tab1Table;
 
     @FXML
-    private TableView<ReportObject> tab2Table;
+    private TableView<Appointment> tab2Table;
 
     @FXML
     private TableView<ReportObject> tab3Table;
@@ -67,7 +65,7 @@ public class ReportsController implements Initializable {
     private Tab tabApptByCustomer;
 
     @FXML
-    private ComboBox<Customer> tab2Customer;
+    private ComboBox<Integer> tab2Customer;
 
     @FXML
     private TableColumn<Appointment, Integer> apptIdCol;
@@ -138,8 +136,7 @@ public class ReportsController implements Initializable {
  }
 
     public void tab2Customer() throws SQLException {
-     ObservableList<Customer> allCustomers = CustomerDAO.getAllCustomers();
-     tab2Customer.setItems(allCustomers);
+
 
     }
     public void setComboBoxesTab3() throws SQLException {
@@ -148,7 +145,22 @@ public class ReportsController implements Initializable {
         tab3Contact.setItems(allContacts);
 
     }
-    public void customerComboBox(javafx.event.ActionEvent actionEvent) {
+    public void setComboBoxesTab2() throws SQLException {
+        ObservableList<Customer> allCustomers = CustomerDAO.getAllCustomers();
+        ObservableList<Integer> allCustomerIds = FXCollections.observableArrayList();
+
+        for (Customer c : allCustomers){
+            if (c.getId() != 0){
+                int customerId = c.getId();
+                allCustomerIds.add(customerId);
+            }
+        }
+
+        tab2Customer.setItems(allCustomerIds);
+
+    }
+    public void customerComboBox(javafx.event.ActionEvent actionEvent) throws SQLException {
+
     }
 
     public void contactComboBox(javafx.event.ActionEvent actionEvent) {
@@ -193,45 +205,47 @@ public class ReportsController implements Initializable {
             alert.showAndWait();
         }
         else {*/
-            System.out.println("View month button clicked");
+
             String selectedMonth = tab1Month.getValue();
             String selectedType = tab1Type.getValue();
 
-
-        //tab1Table.setItems(AppointmentDAO.getAppointmentByMonthAndType(month, type));
         ObservableList<ReportObject> appointments = AppointmentDAO.getAppointmentByMonthAndType(selectedMonth, selectedType);
         tab1Table.setItems(appointments);
 
     }
 
     @FXML
-    void generateReportActionBtn2(javafx.event.ActionEvent event) {
+    void generateReportActionBtn2(javafx.event.ActionEvent event) throws SQLException {
+     /*        if (inputIsEmpty()){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Empty Field");
+            alert.setContentText("Complete all fields to add appointment");
+            alert.showAndWait();
+        }
+        else {*/
+        //System.out.println("View month button clicked");
+        int selectedCustomer = tab2Customer.getValue();
+
+        //tab1Table.setItems(AppointmentDAO.getAppointmentByMonthAndType(month, type));
+        ObservableList<Appointment> appointments = AppointmentDAO.getApptByCustomerId(selectedCustomer);
+        tab2Table.setItems(appointments);
 
     }
+
+
     @FXML
     public void generateReportActionBtn3(javafx.event.ActionEvent actionEvent) {
     }
 
-/*    private void loadAppointments() throws Exception {
-        try {
-            calendarTableMain.setItems(AppointmentDAO.getAllAppointments());
-            calendarIDCol.setCellValueFactory(new PropertyValueFactory<>("id"));
-            calTitleCol.setCellValueFactory(new PropertyValueFactory<>("title"));
-            calDescriptionCol.setCellValueFactory(new PropertyValueFactory<>("description"));
-            calLocationCol.setCellValueFactory(new PropertyValueFactory<>("location"));
-            calContactCol.setCellValueFactory(new PropertyValueFactory<>("contactId"));
-            calStartTimeDateCol.setCellValueFactory(new PropertyValueFactory<>("start"));
-            calEndTimeDateCol.setCellValueFactory(new PropertyValueFactory<>("end"));
-            calCustIDCol.setCellValueFactory(new PropertyValueFactory<>("customerId"));
-            calTypeCol.setCellValueFactory(new PropertyValueFactory<>("type"));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }*/
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         setComboBoxesTab1();
-
+        try {
+            setComboBoxesTab2();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
         try {
             setComboBoxesTab3();
         } catch (SQLException throwables) {
@@ -241,18 +255,18 @@ public class ReportsController implements Initializable {
         MonthCol.setCellValueFactory(new PropertyValueFactory<>("Month"));
         tab1TypeCol.setCellValueFactory(new PropertyValueFactory<>("Type"));
 
-        apptIdCol.setCellValueFactory(new PropertyValueFactory<>("Appointment Id"));
-        apptIdCol1.setCellValueFactory(new PropertyValueFactory<>("Appointment Id"));
-        typeCol.setCellValueFactory(new PropertyValueFactory<>("Type"));
-        typeCol1.setCellValueFactory(new PropertyValueFactory<>("Type"));
-        descCol.setCellValueFactory(new PropertyValueFactory<>("Type"));
-        descCol1.setCellValueFactory(new PropertyValueFactory<>("Type"));
-        startCol.setCellValueFactory(new PropertyValueFactory<>("Start"));
-        startCol1.setCellValueFactory(new PropertyValueFactory<>("Start"));
+        apptIdCol.setCellValueFactory(new PropertyValueFactory<>("id"));
+        apptIdCol1.setCellValueFactory(new PropertyValueFactory<>("id"));
+        typeCol.setCellValueFactory(new PropertyValueFactory<>("type"));
+        typeCol1.setCellValueFactory(new PropertyValueFactory<>("type"));
+        descCol.setCellValueFactory(new PropertyValueFactory<>("description"));
+        descCol1.setCellValueFactory(new PropertyValueFactory<>("description"));
+        startCol.setCellValueFactory(new PropertyValueFactory<>("start"));
+        startCol1.setCellValueFactory(new PropertyValueFactory<>("start"));
         endCol.setCellValueFactory(new PropertyValueFactory<>("end"));
         endCol1.setCellValueFactory(new PropertyValueFactory<>("end"));
-        custIdCol.setCellValueFactory(new PropertyValueFactory<>("Customer Id"));
-        custIdCol1.setCellValueFactory(new PropertyValueFactory<>("Customer Id"));
+        custIdCol.setCellValueFactory(new PropertyValueFactory<>("customerId"));
+        custIdCol1.setCellValueFactory(new PropertyValueFactory<>("customerId"));
     }
 
 }

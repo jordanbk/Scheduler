@@ -77,7 +77,7 @@ public class AddApptController implements Initializable {
     void addApptCustomer(ActionEvent event) {
 
     }
-    private LocalDateTime createStartLocaleDateTime() {
+    private LocalDateTime generateStartDateTime() {
 
         LocalDate startDate = addApptDate.getValue();
         LocalTime startTime = addApptStartTime.getValue();
@@ -85,7 +85,7 @@ public class AddApptController implements Initializable {
         return start;
     }
 
-    private LocalDateTime createEndLocaleDateTime() {
+    private LocalDateTime generateEndDateTime() {
 
         LocalDate endDate = addApptDate.getValue();
         LocalTime endTime = addApptEndTime.getValue();
@@ -124,8 +124,8 @@ public class AddApptController implements Initializable {
                 String location = addApptLocation.getText();
                 //Contact contact = addApptContact.getValue();
                 String type = addApptType.getSelectionModel().getSelectedItem();
-                LocalDateTime start = createStartLocaleDateTime();
-                LocalDateTime end = createEndLocaleDateTime();
+                LocalDateTime start = generateStartDateTime();
+                LocalDateTime end = generateEndDateTime();
                 Integer customerId = addApptCustID.getSelectionModel().getSelectedItem();
                 int userId = addApptUser.getSelectionModel().getSelectedItem().getUserId();
                 int contactId = addApptContact.getSelectionModel().getSelectedItem().getId();

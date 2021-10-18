@@ -25,7 +25,6 @@ public class AppointmentDAO {
 
         while (result.next()) {
             int id = result.getInt("Appointment_ID");
-            //int contactId = result.getInt("Contact_ID");
             String title = result.getString("Title");
             String description = result.getString("Description");
             String location = result.getString("Location");
@@ -144,18 +143,23 @@ public class AppointmentDAO {
         return generateMonthTypeReport;
     }
 
-    public static ObservableList<Appointment> getApptByCustomerId(int id) throws SQLException {
+    public static ObservableList<Appointment> getApptByCustomerId(Integer customer) throws SQLException {
         ObservableList<Appointment> generateReportByCustId = FXCollections.observableArrayList();
 
         String statement = "select * from appointments where Customer_ID = ?;";
         PreparedStatement ps = DatabaseConnection.getConnection().prepareStatement(statement);
-
-        ps.setInt(1, id);
-
+        ps.setInt(1, customer);
         ResultSet resultSet = ps.executeQuery();
         while (resultSet.next()) {
 
-            int count = resultSet.getInt(1);
+            int apptId = resultSet.getInt("Appointment_ID");
+            String title = resultSet.getString("Title");
+            String description = resultSet.getString("Description");
+            String location = resultSet.getString("Location");
+            String type = resultSet.getString("Type");
+            LocalDateTime start = resultSet.getTimestamp("Start").toLocalDateTime();
+            LocalDateTime end = resultSet.getTimestamp("End").toLocalDateTime();
+            int contactId = resultSet.getInt("Contact_ID");
 
             Appointment apptObject = new Appointment();
             generateReportByCustId.add(apptObject);

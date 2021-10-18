@@ -43,7 +43,7 @@
                               <TableColumn fx:id="descCol" prefWidth="81.0" text="Desc" />
                               <TableColumn fx:id="startCol" prefWidth="81.0" text="Start" />
                               <TableColumn fx:id="endCol" prefWidth="81.0" text="End" />
-                              <TableColumn fx:id="custIdCol" prefWidth="81.0" text="Cust ID" />
+                              <TableColumn fx:id="custIdCol" prefWidth="81.0" text="Customer ID" />
                           </columns>
                         </TableView>
                         <ComboBox fx:id="tab2Customer" layoutX="26.0" layoutY="14.0" onAction="#customerComboBox" prefWidth="150.0" promptText="Customer" />
@@ -65,12 +65,12 @@
                               <TableColumn fx:id="descCol1" prefWidth="81.0" text="Desc" />
                               <TableColumn fx:id="startCol1" prefWidth="81.0" text="Start" />
                               <TableColumn fx:id="endCol1" prefWidth="81.0" text="End" />
-                              <TableColumn fx:id="custIdCol1" prefWidth="81.0" text="Cust ID" />
+                              <TableColumn fx:id="custIdCol1" prefWidth="81.0" text="Customer ID" />
                            </columns>
                         </TableView>
                         <ComboBox fx:id="tab3Contact" layoutX="23.0" layoutY="14.0" onAction="#contactComboBox" prefWidth="150.0" promptText="Contact" />
                         <Button fx:id="tab3MainMenu" layoutX="496.0" layoutY="14.0" mnemonicParsing="false" onAction="#mainMenuBtn3" text="Main Menu" />
-                        <Button fx:id="tab3ReportGen" layoutX="409.0" layoutY="14.0" mnemonicParsing="false" onAction="#generateReportActionBtn3" text="Button" />
+                        <Button fx:id="tab3ReportGen" layoutX="409.0" layoutY="14.0" mnemonicParsing="false" onAction="#generateReportActionBtn3" text="Generate Report" />
                      </children>
                   </AnchorPane>
                </content>
