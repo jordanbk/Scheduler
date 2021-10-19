@@ -224,10 +224,8 @@ public class ReportsController implements Initializable {
             alert.showAndWait();
         }
         else {*/
-        //System.out.println("View month button clicked");
         int selectedCustomer = tab2Customer.getValue();
 
-        //tab1Table.setItems(AppointmentDAO.getAppointmentByMonthAndType(month, type));
         ObservableList<Appointment> appointments = AppointmentDAO.getApptByCustomerId(selectedCustomer);
         tab2Table.setItems(appointments);
 

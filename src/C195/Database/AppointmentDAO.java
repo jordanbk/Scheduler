@@ -143,12 +143,12 @@ public class AppointmentDAO {
         return generateMonthTypeReport;
     }
 
-    public static ObservableList<Appointment> getApptByCustomerId(Integer customer) throws SQLException {
+    public static ObservableList<Appointment> getApptByCustomerId(int customerId) throws SQLException {
         ObservableList<Appointment> generateReportByCustId = FXCollections.observableArrayList();
 
         String statement = "select * from appointments where Customer_ID = ?;";
         PreparedStatement ps = DatabaseConnection.getConnection().prepareStatement(statement);
-        ps.setInt(1, customer);
+        ps.setInt(1, customerId);
         ResultSet resultSet = ps.executeQuery();
         while (resultSet.next()) {
 
