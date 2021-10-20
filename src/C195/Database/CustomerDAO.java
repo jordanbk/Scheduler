@@ -13,12 +13,18 @@ import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class CustomerDAO implements Initializable  {
-//get individual customer
-    //get all customers
-    //insert
-    //delete
-    //update
 
+    /**
+     *  Update customer based on updated customer attributes
+     *  Using sql UPDATE statement with question marks
+     * @param customerID
+     * @param customerName
+     * @param customerAddress
+     * @param customerZip
+     * @param customerPhone
+     * @param divisionID
+     * @throws SQLException
+     */
     public void updateCustomer(int customerID, String customerName, String customerAddress, String customerZip, String customerPhone, int divisionID) throws SQLException {
         String updateCustomer = ("UPDATE customers SET Customer_Name = ?, Address = ?, Postal_Code = ?, Phone = ?, Division_ID = ? WHERE Customer_ID = ?");
         PreparedStatement ps = DatabaseConnection.getConnection().prepareStatement(updateCustomer);
@@ -32,6 +38,13 @@ public class CustomerDAO implements Initializable  {
 
         ps.execute();
     }
+
+    /**
+     *  Retrieve all customer details from the database by connecting to database
+     *   and inserting values retrieved from app fields
+     * @return all customers
+     * @throws SQLException
+     */
     public static ObservableList<Customer> getAllCustomers() throws SQLException{
         ObservableList <Customer> allCustomers = FXCollections.observableArrayList();
 
@@ -54,6 +67,16 @@ public class CustomerDAO implements Initializable  {
         return allCustomers;
     }
 
+    /**
+     *  Inserting new customer with customer attributes by connecting to database
+     *  and inserting values retrieved from app fields with sql statement
+     * @param customerName
+     * @param customerAddress
+     * @param customerZip
+     * @param customerPhone
+     * @param divisionID
+     * @throws SQLException
+     */
     public void addCustomer(String customerName, String customerAddress, String customerZip, String customerPhone, int divisionID) throws SQLException {
 
         String addCustomer = ("INSERT INTO customers(Customer_Name, Address, Postal_Code, Phone, Created_By, Last_Updated_By, Division_ID) VALUES (?, ?, ?, ?, ?, ?, ?)");
@@ -70,6 +93,11 @@ public class CustomerDAO implements Initializable  {
         preparedStmt.execute();
     }
 
+    /**
+     *  Removing customer by connecting to the database and using the Delete statement in sql
+     * @param customerID
+     * @throws SQLException
+     */
     public static void deleteCustomer(int customerID) throws SQLException {
         String deleteCustomerPs = "DELETE FROM customers WHERE Customer_ID = ?";
 
@@ -77,7 +105,8 @@ public class CustomerDAO implements Initializable  {
         ps.setInt(1, customerID);
         ps.execute();
     }
-    public static ObservableList<Appointment> getCustomerAppt(int custID) throws Exception {
+
+ /*   public static ObservableList<Appointment> getCustomerAppt(int custID) throws Exception {
 
         ObservableList<Appointment> customerAppts = FXCollections.observableArrayList();
         AppointmentDAO appt = new AppointmentDAO();
@@ -89,7 +118,7 @@ public class CustomerDAO implements Initializable  {
         }
         return customerAppts;
     }
-
+*/
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 

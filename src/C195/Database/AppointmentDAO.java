@@ -1,7 +1,6 @@
 package C195.Database;
 
 import C195.Model.Appointment;
-import C195.Model.Customer;
 import C195.Model.ReportObject;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -13,7 +12,12 @@ import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 public class AppointmentDAO {
-
+    /**
+     *  Connects to the database and uses SQL statement to select all appointment attributes
+     *  create new appointment object and add to observable array list
+     * @return
+     * @throws Exception
+     */
     public static ObservableList<Appointment> getAllAppointments() throws Exception {
 
         ObservableList<Appointment> allAppointments = FXCollections.observableArrayList();
@@ -41,6 +45,11 @@ public class AppointmentDAO {
         return allAppointments;
     }
 
+    /**
+     * Connecs to database and uses SQL DELETE statement to remove an Appointment by the Appointment ID
+     * @param appointmentId
+     * @throws SQLException
+     */
     public static void deleteAppointment(int appointmentId) throws SQLException {
         String deleteStatement = "DELETE FROM appointments WHERE Appointment_ID = ?";
 
@@ -50,6 +59,19 @@ public class AppointmentDAO {
         ps.execute();
     }
 
+    /**
+     * Connects to database and uses SQL INSERT statement to add an Appointment to
+     * @param title
+     * @param description
+     * @param location
+     * @param type
+     * @param start
+     * @param end
+     * @param customerId
+     * @param contactId
+     * @param userId
+     * @throws SQLException
+     */
     public static void addAppointment(String title, String description, String location,
                                       String type, LocalDateTime start, LocalDateTime end, int customerId,
                                       int contactId, int userId) throws SQLException {
@@ -199,5 +221,22 @@ public class AppointmentDAO {
         }
         return generateReportByContactId;
     }
+
+    public static boolean getOverlappingAppt(LocalDateTime newApptStart, LocalDateTime newApptEnd, int customerID, int id) throws Exception {
+
+        ObservableList<Appointment> appointments = AppointmentDAO.getApptByCustomerId(customerID);
+
+        for (Appointment appt : appointments) {
+            if(appt.getId() == id){
+                continue;
+            }
+            (newApptStart >=  && newApptStart <= appt.getEnd()) ||
+
+            //check for overlap (3 conditions) use webinar
+
+        }
+        return false;
+    }
+
 }
 

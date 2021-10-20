@@ -32,10 +32,10 @@ public class LoginController implements Initializable {
     @FXML private Label loginMessageLabel;
     @FXML private Label zone;
     @FXML private Label loginPassword;
-    //public static User user = new User();
-
+    private ResourceBundle myBundleTranslator = ResourceBundle.getBundle("Bundle/lang");
     @Override
     public void initialize(URL url, ResourceBundle resourcebundle){
+        loginMessageLabel.setText(myBundleTranslator.getString("USERNAME"));
         System.out.println(ZoneId.systemDefault());
         zone.setText(ZoneId.systemDefault().toString());
         loginPassword.setText("Password");
@@ -56,7 +56,7 @@ public class LoginController implements Initializable {
         if (!validateLogin(username, password)) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Error");
-            alert.setHeaderText("Incorrect Username and/or Password");
+            alert.setHeaderText(myBundleTranslator.getString("USERNAME") + "Incorrect Username and/or Password");
             alert.setContentText("Enter valid Username and Password");
             Optional<ButtonType> result = alert.showAndWait();
 

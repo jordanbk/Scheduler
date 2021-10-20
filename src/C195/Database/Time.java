@@ -4,31 +4,30 @@ import java.time.*;
 import java.util.TimeZone;
 
 public class Time {
-    static LocalDate date = LocalDate.now();
-    static ZoneId estId = ZoneId.of("America/New_York");
+    static LocalDate localdate = LocalDate.now();
+    static ZoneId estID = ZoneId.of("America/New_York");
     static ZoneId localZone = ZoneId.of(TimeZone.getDefault().getID());
 
     /**
-     * @return LocalDateTime object representing business open at 8:00AM EST
+     * @return business hours (start)
      */
     public static LocalTime getLocalStartTime(){
-        LocalTime start = LocalTime.of( 8, 0 );
-        ZonedDateTime businessStartEst = ZonedDateTime.of(date, start, estId);
-        ZonedDateTime businessStartLocal = businessStartEst.withZoneSameInstant(localZone);
+        LocalTime startTime = LocalTime.of( 8, 0 );
+        ZonedDateTime startEst = ZonedDateTime.of(localdate, startTime, estID);
+        ZonedDateTime startLocal = startEst.withZoneSameInstant(localZone);
 
-        return businessStartLocal.toLocalTime();
+        return startLocal.toLocalTime();
     }
 
     /**
-     * @return LocalDateTime object representing business close at 10:00PM EST
+     * @return Business hours (end)
      */
     public static LocalTime getLocalEndTime(){
-        //making end time one hour less so the last appointment that can be scheduled is 7PMEST for 1 hour which would end at 8PMEST which is the close of business hours
-        LocalTime end = LocalTime.of(22, 0 );
-        ZonedDateTime businessEndEst = ZonedDateTime.of(date, end, estId);
-        ZonedDateTime businessEndLocal = businessEndEst.withZoneSameInstant(localZone);
+        LocalTime endTime = LocalTime.of(22, 0 );
+        ZonedDateTime endEst = ZonedDateTime.of(localdate, endTime, estID);
+        ZonedDateTime endLocal = endEst.withZoneSameInstant(localZone);
 
-        return businessEndLocal.toLocalTime();
+        return endLocal.toLocalTime();
     }
 
 }

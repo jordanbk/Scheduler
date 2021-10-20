@@ -71,32 +71,6 @@ public class UpdateApptController implements Initializable {
     }
 
     /**
-     *  Get start date and start time
-     *  Convert to LocalDateTime "start"
-     * @return
-     */
-    private LocalDateTime createStartLocaleDateTime() {
-
-        LocalDate startDate = updateApptStartDate.getValue();
-        LocalTime startTime = updateApptStartTime.getValue();
-        LocalDateTime start = LocalDateTime.of(startDate, startTime);
-        return start;
-    }
-
-    /**
-     *  Get end date and end time from input
-     *  Convert to LocalDateTime "end"
-     * @return
-     */
-    private LocalDateTime createEndLocaleDateTime() {
-
-        LocalDate endDate = updateApptStartDate.getValue();
-        LocalTime endTime = updateApptEndTime.getValue();
-        LocalDateTime end = LocalDateTime.of(endDate, endTime);
-        return end;
-    }
-
-    /**
      *
      * @param event if any field is empty, throw an alert
      *              Get time/date and check if they are in the future
@@ -105,7 +79,7 @@ public class UpdateApptController implements Initializable {
      * @throws IOException
      */
     @FXML
-    void updateApptSubmitBtn(ActionEvent event) throws SQLException, IOException {
+    void updateApptSubmitBtn(ActionEvent event) throws Exception {
 
         if (inputIsEmpty()) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -127,7 +101,17 @@ public class UpdateApptController implements Initializable {
                 alert.setHeaderText("The time selected is before current time");
                 alert.setContentText("Select a time and date in the future.");
                 alert.showAndWait();
-            } else {
+            }
+            else if (AppointmentDAO.getOverlappingAppt(startDateTime, endDateTime,
+                    updateApptCustID.getSelectionModel().getSelectedItem().getId(),
+                    Integer.parseInt(updateApptID.getText()))){
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText("The appointment is overlapping");
+                alert.setContentText("Appointment is overlapping.");
+                alert.showAndWait();
+            }
+            else {
                 int appId = Integer.parseInt(updateApptID.getText());
                 String title = updateApptTitle.getText();
                 String description = updateApptDesc.getText();
@@ -135,11 +119,6 @@ public class UpdateApptController implements Initializable {
                 Contact contact = updateApptContact.getSelectionModel().getSelectedItem();
                 int customerId = ((Customer) updateApptCustID.getValue()).getId();
                 String type = updateApptType.getValue();
-                LocalDateTime start = createStartLocaleDateTime();
-                LocalDateTime end = createEndLocaleDateTime();
-                Timestamp startTimestamp = Timestamp.valueOf(startDateTime);
-                Timestamp endTimestamp = Timestamp.valueOf(endDateTime);
-                Customer customer = updateApptCustID.getSelectionModel().getSelectedItem();
                 int userId = updateApptUser.getSelectionModel().getSelectedItem().getUserId();
 
                 Appointment appointment = new Appointment(appId, title, description, location, type,

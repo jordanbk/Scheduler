@@ -115,18 +115,22 @@ public class AddApptController implements Initializable {
                 alert.setContentText("Select a time and date in the future.");
                 alert.showAndWait();
             }
-
+            else if (AppointmentDAO.getOverlappingAppt(startDateTime, endDateTime, addApptCustID.getSelectionModel().getSelectedItem(), -1)){
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText("The appointment is overlapping");
+                alert.setContentText("Appointment is overlapping.");
+                alert.showAndWait();
+            }
             else {
 
-                //int apptId = Integer.parseInt(addApptID.getText());
                 String title = addApptTitle.getText();
                 String description = addApptDesc.getText();
                 String location = addApptLocation.getText();
-                //Contact contact = addApptContact.getValue();
                 String type = addApptType.getSelectionModel().getSelectedItem();
                 LocalDateTime start = generateStartDateTime();
                 LocalDateTime end = generateEndDateTime();
-                Integer customerId = addApptCustID.getSelectionModel().getSelectedItem();
+                int customerId = addApptCustID.getSelectionModel().getSelectedItem();
                 int userId = addApptUser.getSelectionModel().getSelectedItem().getUserId();
                 int contactId = addApptContact.getSelectionModel().getSelectedItem().getId();
                 AppointmentDAO.addAppointment(title, description, location, type, start, end, customerId, userId, contactId);
@@ -165,20 +169,6 @@ public class AddApptController implements Initializable {
 
     @FXML
     void addApptEndTimeA(ActionEvent event) {
-       /* addApptEndTime.getItems().clear();
-
-        //Decouples Date from ZonedDateTime and uses the selected date as part of localEnd
-        LocalTime localEndTime = Time.getLocalEndTime();
-
-        LocalTime selectedStart = addApptStartTime.getSelectionModel().getSelectedItem();
-        LocalTime selectedStartDate = selectedStart;
-
-        addApptEndTime.setValue(selectedStart.plusHours(1));
-
-        while (selectedStartDate.isBefore(localEndTime.plusSeconds(1))) {
-            addApptEndTime.getItems().add(LocalTime.from(selectedStartDate.plusHours(1)));
-            selectedStartDate = selectedStartDate.plusHours(1);
-        }*/
 
     }
 
