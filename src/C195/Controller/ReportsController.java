@@ -3,7 +3,6 @@ package C195.Controller;
 import C195.Database.AppointmentDAO;
 import C195.Database.ContactDAO;
 import C195.Database.CustomerDAO;
-import C195.Database.UserDAO;
 import C195.Model.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -195,39 +194,41 @@ public class ReportsController implements Initializable {
         window.setScene(scene);
         window.show();
     }
+
     @FXML
     void generateReportActionBtn1(javafx.event.ActionEvent event) throws SQLException {
-/*        if (inputIsEmpty()){
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setHeaderText("Empty Field");
-            alert.setContentText("Complete all fields to add appointment");
-            alert.showAndWait();
-        }
-        else {*/
 
+        if (tab1Month.getSelectionModel().getSelectedItem() != null || tab1Type.getSelectionModel().getSelectedItem() != null) {
             String selectedMonth = tab1Month.getValue();
             String selectedType = tab1Type.getValue();
 
-        ObservableList<ReportObject> appointments = AppointmentDAO.getAppointmentByMonthAndType(selectedMonth, selectedType);
-        tab1Table.setItems(appointments);
+            ObservableList<ReportObject> appointments = AppointmentDAO.getAppointmentByMonthAndType(selectedMonth, selectedType);
+            tab1Table.setItems(appointments);
+        }
+        else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Empty Field");
+            alert.setContentText("Complete all fields to generate report");
+            alert.showAndWait();
+        }
 
     }
 
     @FXML
     void generateReportActionBtn2(javafx.event.ActionEvent event) throws SQLException {
-     /*        if (inputIsEmpty()){
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setHeaderText("Empty Field");
-            alert.setContentText("Complete all fields to add appointment");
-            alert.showAndWait();
-        }
-        else {*/
-        int selectedCustomer = tab2Customer.getValue();
-
-        ObservableList<Appointment> appointments = AppointmentDAO.getApptByCustomerId(selectedCustomer);
-        tab2Table.setItems(appointments);
+         if (tab2Customer.getSelectionModel().getSelectedItem() != null) {
+             int selectedCustomer = tab2Customer.getValue();
+             ObservableList<Appointment> appointments = AppointmentDAO.getApptByCustomerId(selectedCustomer);
+             tab2Table.setItems(appointments);
+         }
+         else {
+             Alert alert = new Alert(Alert.AlertType.ERROR);
+             alert.setTitle("Error");
+             alert.setHeaderText("Empty Field");
+             alert.setContentText("Must choose a customer to generate report");
+             alert.showAndWait();
+         }
 
     }
 
@@ -253,18 +254,23 @@ public class ReportsController implements Initializable {
         MonthCol.setCellValueFactory(new PropertyValueFactory<>("Month"));
         tab1TypeCol.setCellValueFactory(new PropertyValueFactory<>("Type"));
 
+        // Get Appointment by Customer - Table
         apptIdCol.setCellValueFactory(new PropertyValueFactory<>("id"));
-        apptIdCol1.setCellValueFactory(new PropertyValueFactory<>("id"));
+        titleCol.setCellValueFactory(new PropertyValueFactory<>("title"));
         typeCol.setCellValueFactory(new PropertyValueFactory<>("type"));
-        typeCol1.setCellValueFactory(new PropertyValueFactory<>("type"));
         descCol.setCellValueFactory(new PropertyValueFactory<>("description"));
-        descCol1.setCellValueFactory(new PropertyValueFactory<>("description"));
         startCol.setCellValueFactory(new PropertyValueFactory<>("start"));
-        startCol1.setCellValueFactory(new PropertyValueFactory<>("start"));
         endCol.setCellValueFactory(new PropertyValueFactory<>("end"));
-        endCol1.setCellValueFactory(new PropertyValueFactory<>("end"));
         custIdCol.setCellValueFactory(new PropertyValueFactory<>("customerId"));
+        // Get appointment by Contact - Table
+        apptIdCol1.setCellValueFactory(new PropertyValueFactory<>("id"));
+        titleCol1.setCellValueFactory(new PropertyValueFactory<>("title"));
+        typeCol1.setCellValueFactory(new PropertyValueFactory<>("type"));
+        descCol1.setCellValueFactory(new PropertyValueFactory<>("description"));
+        startCol1.setCellValueFactory(new PropertyValueFactory<>("start"));
+        endCol1.setCellValueFactory(new PropertyValueFactory<>("end"));
         custIdCol1.setCellValueFactory(new PropertyValueFactory<>("customerId"));
+
     }
 
 }

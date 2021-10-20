@@ -148,7 +148,9 @@ public class AppointmentDAO {
 
         String statement = "select * from appointments where Customer_ID = ?;";
         PreparedStatement ps = DatabaseConnection.getConnection().prepareStatement(statement);
+
         ps.setInt(1, customerId);
+
         ResultSet resultSet = ps.executeQuery();
         while (resultSet.next()) {
 
@@ -160,8 +162,10 @@ public class AppointmentDAO {
             LocalDateTime start = resultSet.getTimestamp("Start").toLocalDateTime();
             LocalDateTime end = resultSet.getTimestamp("End").toLocalDateTime();
             int contactId = resultSet.getInt("Contact_ID");
+            int userId = resultSet.getInt("User_ID");
+            int custId = resultSet.getInt("Customer_ID");
 
-            Appointment apptObject = new Appointment();
+            Appointment apptObject = new Appointment(apptId, title, description, location, type, start, end, contactId, userId, custId);
             generateReportByCustId.add(apptObject);
 
         }

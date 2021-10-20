@@ -48,7 +48,7 @@
                         </TableView>
                         <ComboBox fx:id="tab2Customer" layoutX="26.0" layoutY="14.0" onAction="#customerComboBox" prefWidth="150.0" promptText="Customer" />
                         <Button fx:id="tab2MainMenu" layoutX="497.0" layoutY="14.0" mnemonicParsing="false" onAction="#mainMenuBtn2" text="Main Menu" />
-                        <Button fx:id="tab2ReportGen" layoutX="370.0" layoutY="14.0" mnemonicParsing="false" onAction="#generateReportActionBtn2" text="Generate Report" />
+                        <Button fx:id="tab2ReportGen" layoutX="376.0" layoutY="14.0" mnemonicParsing="false" onAction="#generateReportActionBtn2" text="Generate Report" />
                      </children>
                   </AnchorPane>
             </content>
@@ -70,7 +70,7 @@
                         </TableView>
                         <ComboBox fx:id="tab3Contact" layoutX="23.0" layoutY="14.0" onAction="#contactComboBox" prefWidth="150.0" promptText="Contact" />
                         <Button fx:id="tab3MainMenu" layoutX="496.0" layoutY="14.0" mnemonicParsing="false" onAction="#mainMenuBtn3" text="Main Menu" />
-                        <Button fx:id="tab3ReportGen" layoutX="409.0" layoutY="14.0" mnemonicParsing="false" onAction="#generateReportActionBtn3" text="Generate Report" />
+                        <Button fx:id="tab3ReportGen" layoutX="372.0" layoutY="14.0" mnemonicParsing="false" onAction="#generateReportActionBtn3" text="Generate Report" />
                      </children>
                   </AnchorPane>
                </content>
