@@ -139,13 +139,6 @@ public class CalenderController implements Initializable {
     public void filterAll(ActionEvent event) {
         try {
             ObservableList<Appointment> allAppts = AppointmentDAO.getAllAppointments();
-/*            ObservableList<Appointment> pendingAppointments = FXCollections.observableArrayList();
-
-            for (Appointment appts : allAppts) {
-                if (appts.getEnd().isAfter(LocalDateTime.now())) {
-                    pendingAppointments.add(appts);
-                }
-            }*/
 
             calendarTableMain.setItems(allAppts);
 

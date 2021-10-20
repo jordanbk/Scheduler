@@ -102,7 +102,7 @@ public class UpdateApptController implements Initializable {
                 alert.setContentText("Select a time and date in the future.");
                 alert.showAndWait();
             }
-            else if (AppointmentDAO.getOverlappingAppt(startDateTime, endDateTime,
+/*            else if (AppointmentDAO.getOverlappingAppt(startDateTime, endDateTime,
                     updateApptCustID.getSelectionModel().getSelectedItem().getId(),
                     Integer.parseInt(updateApptID.getText()))){
                 Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -110,7 +110,7 @@ public class UpdateApptController implements Initializable {
                 alert.setHeaderText("The appointment is overlapping");
                 alert.setContentText("Appointment is overlapping.");
                 alert.showAndWait();
-            }
+            }*/
             else {
                 int appId = Integer.parseInt(updateApptID.getText());
                 String title = updateApptTitle.getText();

@@ -227,13 +227,15 @@ public class AppointmentDAO {
         ObservableList<Appointment> appointments = AppointmentDAO.getApptByCustomerId(customerID);
 
         for (Appointment appt : appointments) {
-            if(appt.getId() == id){
+            if (appt.getId() == id) {
                 continue;
+            } else if (newApptEnd.isAfter(appt.getStart()) && newApptEnd.isBefore(appt.getEnd()) || newApptEnd.isEqual(appt.getEnd()) ||
+                    newApptStart.isBefore(appt.getStart()) || newApptStart.isEqual(appt.getStart()) &&
+                    newApptEnd.isAfter(appt.getEnd()) || newApptEnd.isEqual(appt.getEnd()) ||
+                    newApptStart.isBefore(appt.getStart()) || newApptStart.isEqual(appt.getStart()) &&
+                    newApptEnd.isAfter(appt.getEnd()) || newApptEnd.isEqual(appt.getEnd())) {
+                return false;
             }
-            (newApptStart >=  && newApptStart <= appt.getEnd()) ||
-
-            //check for overlap (3 conditions) use webinar
-
         }
         return false;
     }

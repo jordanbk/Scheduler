@@ -115,11 +115,11 @@ public class AddApptController implements Initializable {
                 alert.setContentText("Select a time and date in the future.");
                 alert.showAndWait();
             }
-            else if (AppointmentDAO.getOverlappingAppt(startDateTime, endDateTime, addApptCustID.getSelectionModel().getSelectedItem(), -1)){
+            else if (AppointmentDAO.getOverlappingAppt(startDateTime, endDateTime, addApptCustID.getSelectionModel().getSelectedItem(), -1 )){
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Error");
                 alert.setHeaderText("The appointment is overlapping");
-                alert.setContentText("Appointment is overlapping.");
+                alert.setContentText("Select a time and date in the future.");
                 alert.showAndWait();
             }
             else {
