@@ -9,8 +9,13 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.time.LocalDateTime;
 
-public class CountryDAO {
 
+public class CountryDAO {
+    /**
+     * Retrieve all Country details listed in the database
+     * @return all country objects in database
+     * @throws Exception
+     */
     public static ObservableList<Country> getAllCountries() throws Exception {
         ObservableList<Country> allCountries = FXCollections.observableArrayList();
 

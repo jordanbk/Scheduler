@@ -14,7 +14,11 @@ import java.time.LocalDateTime;
 
 public class DivisionDAO {
 
-
+    /**
+     *  Retrieve all Division details listed in the database
+     * @return All divisions objects in the database
+     * @throws Exception
+     */
     public static ObservableList<Division> getAllDivisions() throws Exception {
         ObservableList <Division> allDivisions = FXCollections.observableArrayList();
         DatabaseConnection.openConnection();

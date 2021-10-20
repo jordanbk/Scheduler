@@ -44,86 +44,37 @@ public class UpdateApptController implements Initializable {
     private boolean overlapping;
 
     private int appointmentID;
-    @FXML
-    private ComboBox<Contact> updateApptContact;
-    @FXML
-    private TextField updateApptTitle;
-    @FXML
-    private TextField updateApptDesc;
-    @FXML
-    private TextField updateApptLocation;
-    @FXML
-    private DatePicker updateApptStartDate;
-    @FXML
-    private ComboBox<LocalTime> updateApptStartTime;
-    @FXML
-    private ComboBox<LocalTime> updateApptEndTime;
-    @FXML
-    private ComboBox<User> updateApptUser;
-    @FXML
-    private ComboBox<Customer> updateApptCustID;
-    @FXML
-    private TextField updateApptID;
-    @FXML
-    private ComboBox<String> updateApptType;
-
-    @FXML
-    void updateApptTitle(ActionEvent event) {
-
-    }
-
-    @FXML
-    void updateApptType(ActionEvent event) {
-
-    }
-
-    @FXML
-    void updateApptUser(ActionEvent event) {
-
-    }
-
-    @FXML
-    void updateApptCustID(ActionEvent event) {
-
-    }
-
-
-    @FXML
-    void updateApptContact(ActionEvent event) {
-
-    }
-
-    @FXML
-    void updateApptDesc(ActionEvent event) {
-
-    }
-
-    @FXML
-    void updateApptID(ActionEvent event) {
-
-    }
-
-    @FXML
-    void updateApptLocation(ActionEvent event) {
-
-    }
-
-    @FXML
-    void updateApptStartDate(ActionEvent event) {
-
-    }
-
-    @FXML
-    void updateApptStartTime(ActionEvent event) {
-
-    }
-
+    @FXML private ComboBox<Contact> updateApptContact;
+    @FXML private TextField updateApptTitle;
+    @FXML private TextField updateApptDesc;
+    @FXML private TextField updateApptLocation;
+    @FXML private DatePicker updateApptStartDate;
+    @FXML private ComboBox<LocalTime> updateApptStartTime;
+    @FXML private ComboBox<LocalTime> updateApptEndTime;
+    @FXML private ComboBox<User> updateApptUser;
+    @FXML private ComboBox<Customer> updateApptCustID;
+    @FXML private TextField updateApptID;
+    @FXML private ComboBox<String> updateApptType;
+    @FXML void updateApptTitle(ActionEvent event) { }
+    @FXML void updateApptType(ActionEvent event) { }
+    @FXML void updateApptUser(ActionEvent event) { }
+    @FXML void updateApptCustID(ActionEvent event) { }
+    @FXML void updateApptContact(ActionEvent event) { }
+    @FXML void updateApptDesc(ActionEvent event) { }
+    @FXML void updateApptID(ActionEvent event) { }
+    @FXML void updateApptLocation(ActionEvent event) { }
+    @FXML void updateApptStartDate(ActionEvent event) { }
+    @FXML void updateApptStartTime(ActionEvent event) { }
     @FXML
     void updateApptEndTime(ActionEvent event) {
         updateApptEndTime.getItems().clear();
-
     }
 
+    /**
+     *  Get start date and start time
+     *  Convert to LocalDateTime "start"
+     * @return
+     */
     private LocalDateTime createStartLocaleDateTime() {
 
         LocalDate startDate = updateApptStartDate.getValue();
@@ -132,6 +83,11 @@ public class UpdateApptController implements Initializable {
         return start;
     }
 
+    /**
+     *  Get end date and end time from input
+     *  Convert to LocalDateTime "end"
+     * @return
+     */
     private LocalDateTime createEndLocaleDateTime() {
 
         LocalDate endDate = updateApptStartDate.getValue();
@@ -140,6 +96,14 @@ public class UpdateApptController implements Initializable {
         return end;
     }
 
+    /**
+     *
+     * @param event if any field is empty, throw an alert
+     *              Get time/date and check if they are in the future
+     *              Retrieve all input from user and send to updateAppointment method
+     * @throws SQLException
+     * @throws IOException
+     */
     @FXML
     void updateApptSubmitBtn(ActionEvent event) throws SQLException, IOException {
 
@@ -169,7 +133,6 @@ public class UpdateApptController implements Initializable {
                 String description = updateApptDesc.getText();
                 String location = updateApptLocation.getText();
                 Contact contact = updateApptContact.getSelectionModel().getSelectedItem();
-                //int customerId = updateApptCustID.getValue().getId();
                 int customerId = ((Customer) updateApptCustID.getValue()).getId();
                 String type = updateApptType.getValue();
                 LocalDateTime start = createStartLocaleDateTime();
@@ -178,7 +141,6 @@ public class UpdateApptController implements Initializable {
                 Timestamp endTimestamp = Timestamp.valueOf(endDateTime);
                 Customer customer = updateApptCustID.getSelectionModel().getSelectedItem();
                 int userId = updateApptUser.getSelectionModel().getSelectedItem().getUserId();
-                //int contactId = updateApptContact.getSelectionModel().getSelectedItem();
 
                 Appointment appointment = new Appointment(appId, title, description, location, type,
                         startDateTime, endDateTime, customerId, userId, contact.getId());
@@ -194,7 +156,10 @@ public class UpdateApptController implements Initializable {
         }
     }
 
-
+    /**
+     *
+     * @return method to check if fields are empty
+     */
     private boolean inputIsEmpty() {
         return (updateApptTitle.getText().isEmpty()
                 || updateApptDesc.getText().isEmpty()
@@ -205,9 +170,14 @@ public class UpdateApptController implements Initializable {
                 || updateApptEndTime.getValue() == null
                 || updateApptCustID.getValue() == null
         );
-
     }
 
+    /**
+     *
+     * @param event if button is clicked, alert user and seek confirmation with modal
+     *              if result is OK, switch screen to calendar fxml
+     * @throws IOException
+     */
     @FXML
     void updateApptCancelBtn(ActionEvent event) throws IOException {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -220,27 +190,19 @@ public class UpdateApptController implements Initializable {
         if (result.get() == ButtonType.OK) {
             Parent parent = FXMLLoader.load(getClass().getResource("../Views/Calendar.fxml"));
             Scene scene = new Scene(parent);
-
             Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-
             window.setScene(scene);
             window.show();
         }
     }
 
-    public User getUsernameFromUser(int id) throws Exception {
-        ObservableList<User> users = UserDAO.getAllUsers();
-        User userSelected = null;
-
-        for (User u : users) {
-            if (id == u.getUserId()) {
-                userSelected = u;
-            }
-        }
-        return userSelected;
-    }
-
-
+    /**
+     *
+     * @param appointment display all fields from the selected appointment
+     *                    Create objects & observable lists to store and retrieve ID's
+     *                    for combo boxes. Use get methods to set text in text fields
+     * @throws SQLException
+     */
     public void populateFields(Appointment appointment) throws SQLException {
         selectedAppointment = appointment;
         Contact contactSelected = null;
@@ -291,6 +253,9 @@ public class UpdateApptController implements Initializable {
 
     }
 
+    /**
+     * Adding time in increments of 15 minutes to the combo boxes
+     */
     private void populateTimeComboBox() {
 
         LocalTime start = LocalTime.of(0, 0);

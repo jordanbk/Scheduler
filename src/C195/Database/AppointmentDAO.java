@@ -167,10 +167,37 @@ public class AppointmentDAO {
 
             Appointment apptObject = new Appointment(apptId, title, description, location, type, start, end, contactId, userId, custId);
             generateReportByCustId.add(apptObject);
-
         }
         return generateReportByCustId;
+    }
 
+
+    public static ObservableList<Appointment> getApptByContactId(int contactId) throws SQLException {
+        ObservableList<Appointment> generateReportByContactId = FXCollections.observableArrayList();
+
+        String statement = "select * from appointments where Contact_ID = ?;";
+        PreparedStatement ps = DatabaseConnection.getConnection().prepareStatement(statement);
+
+        ps.setInt(1, contactId);
+
+        ResultSet resultSet = ps.executeQuery();
+        while (resultSet.next()) {
+
+            int apptId = resultSet.getInt("Appointment_ID");
+            String title = resultSet.getString("Title");
+            String description = resultSet.getString("Description");
+            String location = resultSet.getString("Location");
+            String type = resultSet.getString("Type");
+            LocalDateTime start = resultSet.getTimestamp("Start").toLocalDateTime();
+            LocalDateTime end = resultSet.getTimestamp("End").toLocalDateTime();
+            int contactID = resultSet.getInt("Contact_ID");
+            int userId = resultSet.getInt("User_ID");
+            int custId = resultSet.getInt("Customer_ID");
+
+            Appointment apptObject = new Appointment(apptId, title, description, location, type, start, end, contactId, userId, custId);
+            generateReportByContactId.add(apptObject);
+        }
+        return generateReportByContactId;
     }
 }
 

@@ -30,21 +30,22 @@ import java.util.ResourceBundle;
 public class UpdateCustomerController implements Initializable {
     Stage stage;
     Parent scene;
-    @FXML
-    private TextField updateCustAddress;
-    @FXML
-    private TextField updateCustZip;
-    @FXML
-    private TextField updateCustPhone;
-    @FXML
-    private TextField updateCustName;
-    @FXML
-    private ComboBox<Division> updateCustState;
-    @FXML
-    private ComboBox<Country> updateCustCountry;
-    @FXML
-    private TextField updateCustID;
+    @FXML private TextField updateCustAddress;
+    @FXML private TextField updateCustZip;
+    @FXML private TextField updateCustPhone;
+    @FXML private TextField updateCustName;
+    @FXML private ComboBox<Division> updateCustState;
+    @FXML private ComboBox<Country> updateCustCountry;
+    @FXML private TextField updateCustID;
+    public void stateOnAction(ActionEvent actionEvent) { }
+    private Customer customer = null;
 
+    /**
+     *
+     * @param id
+     * @return
+     * @throws Exception
+     */
     public Division getDivisionFromCustomer(int id) throws Exception {
         ObservableList<Division> divisions = DivisionDAO.getAllDivisions();
         Division divisionSelected = null;
@@ -68,7 +69,7 @@ public class UpdateCustomerController implements Initializable {
         }
         return countrySelected;
     }
-    private Customer customer = null;
+
     public void populateCustomer(Customer selectedCustomer) throws Exception {
         customer = selectedCustomer;
         Division divisionSelected = getDivisionFromCustomer(customer.getDivisionID());
@@ -151,61 +152,11 @@ public class UpdateCustomerController implements Initializable {
     private static ObservableList<Division> filterDivisions = FXCollections.observableArrayList();
 
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        Division divisionSelected = null;
-        Country countrySelected = null;
-        try {
-            divisionSelected = getDivisionFromCustomer(customer.getDivisionID());
-            countrySelected = getCountryFromCustomer(divisionSelected.getCountryID());
-            loadDivisions(countrySelected.getCountryID());
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-
-/*        final ObservableList<Division> filterDivisions = FXCollections.observableArrayList();
-
-        updateCustCountry.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
-                filterDivisions.clear();
-
-                Country country = updateCustCountry.getValue();
-                try {
-                    for (Division div: DivisionDAO.getAllDivisions()){
-                        if(div.getCountryID() == country.getCountryID()){
-                            filterDivisions.add(div);
-                        }
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });*/
-
-        DivisionDAO stateDAO = new DivisionDAO();
-        try {
-            updateCustState.setItems(filterDivisions);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-
-    }
-
-    public void onActionCountry(ActionEvent actionEvent) {
-        Country country = updateCustCountry.getSelectionModel().getSelectedItem();
-        loadDivisions(country.getCountryID());
-        updateCustState.setItems(filterDivisions);
-
-    }
-
-    public static ObservableList<Division> getDivisionList(){
-        return filterDivisions;
-    }
-
+    /**
+     *  Get country id's
+     *  Load country id's
+     * @param countryID
+     */
     public void loadDivisions(int countryID){
     filterDivisions = FXCollections.observableArrayList();
         try {
@@ -219,6 +170,37 @@ public class UpdateCustomerController implements Initializable {
         }
     }
 
-    public void stateOnAction(ActionEvent actionEvent) {
+    public void onActionCountry(ActionEvent actionEvent) {
+        Country country = updateCustCountry.getSelectionModel().getSelectedItem();
+        loadDivisions(country.getCountryID());
+        updateCustState.setItems(filterDivisions);
+
     }
+
+    public static ObservableList<Division> getDivisionList(){
+        return filterDivisions;
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        Division divisionSelected = null;
+        Country countrySelected = null;
+        try {
+            divisionSelected = getDivisionFromCustomer(customer.getDivisionID());
+            countrySelected = getCountryFromCustomer(divisionSelected.getCountryID());
+            loadDivisions(countrySelected.getCountryID());
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        DivisionDAO stateDAO = new DivisionDAO();
+        try {
+            updateCustState.setItems(filterDivisions);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
 }

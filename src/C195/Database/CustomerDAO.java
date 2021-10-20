@@ -93,8 +93,6 @@ public class CustomerDAO implements Initializable  {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-
-        //allCustomers.addCustomer(new Customer(11,"Jordan", "123 Grace Street", 11570, 513-563-9007, 12));
     }
 
 }
