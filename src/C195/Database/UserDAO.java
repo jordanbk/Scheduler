@@ -36,28 +36,4 @@ public class UserDAO {
         return allUsers;
     }
 
-  /*  private static User userResults(ResultSet rs) throws SQLException{
-        User user = new User();
-
-        user.setUserId(rs.getInt("User_ID"));
-        user.setUserName(rs.getString("User_Name"));
-        user.setPassword(rs.getString("Password"));
-
-        return user;
-    }
-    public static User getCurrentUser(Integer userID, Connection connection) throws SQLException {
-        User currentUser = new User();
-        String query = "SELECT * FROM users WHERE User_ID=?";
-        PreparedStatement ps = connection.prepareStatement(query);
-        ps.setInt(1, userID);
-        ps.execute();
-        ResultSet rs = ps.getResultSet();
-
-        if (rs.next()){
-            currentUser = userResults(rs);
-        }
-        return currentUser;
-    }*/
-
-
 }

@@ -221,6 +221,13 @@ public class AppointmentDAO {
         }
         return generateReportByContactId;
     }
+    public interface MyComparator {
+
+        public boolean getOverlappingAppt(LocalDateTime newApptStart, LocalDateTime newApptEnd, int customerID, int id);
+
+    }
+
+    //MyComparator myComparator = (LocalDateTime a, LocalDateTime b, int c, int d) ->
 
     public static boolean getOverlappingAppt(LocalDateTime newApptStart, LocalDateTime newApptEnd, int customerID, int id) throws Exception {
 
@@ -229,16 +236,27 @@ public class AppointmentDAO {
         for (Appointment appt : appointments) {
             if (appt.getId() == id) {
                 continue;
-            } else if (newApptEnd.isAfter(appt.getStart()) && newApptEnd.isBefore(appt.getEnd()) || newApptEnd.isEqual(appt.getEnd()) ||
-                    newApptStart.isBefore(appt.getStart()) || newApptStart.isEqual(appt.getStart()) &&
-                    newApptEnd.isAfter(appt.getEnd()) || newApptEnd.isEqual(appt.getEnd()) ||
-                    newApptStart.isBefore(appt.getStart()) || newApptStart.isEqual(appt.getStart()) &&
-                    newApptEnd.isAfter(appt.getEnd()) || newApptEnd.isEqual(appt.getEnd())) {
-                return false;
+            } else if ((newApptStart.isEqual(appt.getStart()) || newApptEnd.isEqual(appt.getEnd())) ||
+                    (newApptStart.isBefore(appt.getStart()) && newApptStart.isBefore(appt.getEnd())) ||
+                    (newApptStart.isAfter(appt.getStart()) && newApptStart.isBefore(appt.getEnd())) ||
+                    (newApptEnd.isAfter(appt.getStart()) && newApptEnd.isBefore(appt.getEnd())) ||
+                    (newApptStart.isAfter(appt.getStart()) && newApptEnd.isBefore(appt.getEnd()))){
+                System.out.println("overlapping appt id:" + appt.getId());
+                return true;
             }
+
         }
         return false;
     }
 
 }
+/*        appointments.forEach(appt -> {
+            if (newApptEnd.isAfter(appt.getStart()) && newApptEnd.isBefore(appt.getEnd()) || newApptEnd.isEqual(appt.getEnd()) ||
+                    newApptStart.isBefore(appt.getStart()) || newApptStart.isEqual(appt.getStart()) &&
+                    newApptEnd.isAfter(appt.getEnd()) || newApptEnd.isEqual(appt.getEnd()) ||
+                    newApptStart.isBefore(appt.getStart()) || newApptStart.isEqual(appt.getStart()) &&
+                    newApptEnd.isAfter(appt.getEnd()) || newApptEnd.isEqual(appt.getEnd())) {
+
+            }
+        });*/
 

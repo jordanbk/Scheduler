@@ -29,5 +29,10 @@ public class Time {
 
         return endLocal.toLocalTime();
     }
+    //Functional Interface
+    public interface fifteenMinuteNotification{
+        //int value returning abstract method
+        int calculate(int n);
+    }
 
 }

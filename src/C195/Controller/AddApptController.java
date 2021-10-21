@@ -5,7 +5,6 @@ import C195.Model.Appointment;
 import C195.Model.Contact;
 import C195.Model.Customer;
 import C195.Model.User;
-import javafx.beans.Observable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -22,7 +21,6 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -107,19 +105,19 @@ public class AddApptController implements Initializable {
             LocalTime selectedEnd = addApptEndTime.getValue();
             LocalDateTime startDateTime = LocalDateTime.of(selectedDate, selectedStart);
             LocalDateTime endDateTime = LocalDateTime.of(selectedDate, selectedEnd);
-
+/*
             if (startDateTime.isBefore(LocalDateTime.now()) || endDateTime.isBefore(LocalDateTime.now())) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Error");
                 alert.setHeaderText("The time selected is before current time");
                 alert.setContentText("Select a time and date in the future.");
                 alert.showAndWait();
-            }
-            else if (AppointmentDAO.getOverlappingAppt(startDateTime, endDateTime, addApptCustID.getSelectionModel().getSelectedItem(), -1 )){
+            }*/
+            if (AppointmentDAO.getOverlappingAppt(startDateTime, endDateTime, addApptCustID.getSelectionModel().getSelectedItem(), -1 )){
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Error");
-                alert.setHeaderText("The appointment is overlapping");
-                alert.setContentText("Select a time and date in the future.");
+                alert.setHeaderText("Scheduling Error");
+                alert.setContentText("This is an overlapping appointment.");
                 alert.showAndWait();
             }
             else {
@@ -144,10 +142,18 @@ public class AddApptController implements Initializable {
         }
     }
 
+    /**
+     * Adding time in increments of 15 minutes to the combo boxes
+     */
+    private void populateTimeComboBox() {
 
-    @FXML
-    public void comboBoxes(){
+        LocalTime start = LocalTime.of(0, 0);
 
+        for (int i = 0; i < 100; i++) {
+            addApptStartTime.getItems().add(start);
+            addApptEndTime.getItems().add(start);
+            start = start.plusMinutes(15);
+        }
     }
 
     public boolean inputIsEmpty(){
@@ -181,6 +187,7 @@ public class AddApptController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
+            populateTimeComboBox();
             ObservableList<Customer> allCustomers = CustomerDAO.getAllCustomers();
             ObservableList<Integer> allCustomerIds = FXCollections.observableArrayList();
             for (Customer c : allCustomers){
@@ -212,21 +219,15 @@ public class AddApptController implements Initializable {
     public void addApptStartTimeA(ActionEvent actionEvent) {
         addApptEndTime.getItems().clear();
 
-        //Decouples Date from ZonedDateTime and uses the selected date as part of localEnd
-        LocalTime localEndTime = Time.getLocalEndTime();
-
+        LocalTime localTimeEnd = Time.getLocalEndTime();
         LocalTime selectedStart = addApptStartTime.getSelectionModel().getSelectedItem();
         LocalTime selectedStartDate = selectedStart.plusHours(1);
 
-        //addApptEndTime.setValue(selectedStart.plusHours(1));
-
-        while (selectedStartDate.isBefore(localEndTime.plusSeconds(1))) {
+        while (selectedStartDate.isBefore(localTimeEnd.plusSeconds(1))) {
             addApptEndTime.getItems().add(LocalTime.from(selectedStartDate));
             selectedStartDate = selectedStartDate.plusHours(1);
         }
         addApptEndTime.getSelectionModel().selectFirst();
-    }
-    public void addApptUser(ActionEvent actionEvent) {
     }
 
 }

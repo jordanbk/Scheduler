@@ -1,8 +1,12 @@
 package C195.Controller;
 
+import C195.Database.AppointmentDAO;
 import C195.Database.DatabaseConnection;
+import C195.Model.Appointment;
 import C195.Model.User;
 import C195.Utils.Logger;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -16,10 +20,8 @@ import javafx.stage.Stage;
 import javafx.scene.control.PasswordField;
 import java.io.IOException;
 import java.net.URL;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
+import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Optional;
@@ -53,21 +55,35 @@ public class LoginController implements Initializable {
         boolean login = LoginController.validateLogin(username, password);
         Logger.AuditLogger(username, login);
 
-        if (!validateLogin(username, password)) {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Error");
-            alert.setHeaderText(myBundleTranslator.getString("USERNAME") + "Incorrect Username and/or Password");
-            alert.setContentText("Enter valid Username and Password");
-            Optional<ButtonType> result = alert.showAndWait();
+        try {
+            if (!validateLogin(username, password)) {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Error");
+                alert.setHeaderText(myBundleTranslator.getString("USERNAME") + "Incorrect Username and/or Password");
+                alert.setContentText("Enter valid Username and Password");
+                Optional<ButtonType> result = alert.showAndWait();
 
-        } else {
+            } if (getApptsIn15Minutes().size() >= 1){
+                for (Appointment appt : getApptsIn15Minutes()){
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Upcoming Appointments");
+                    alert.setHeaderText("You have an appointment in 15 Minutes");
+                    alert.setContentText("Appointment to start in 15 Minutes:" + appt.getTitle() + appt.getId() +" Time: " + appt.getStart());
+                }
+            }
 
-            root = FXMLLoader.load(getClass().getResource("../Views/MainMenu.fxml"));
-            stage = (Stage) usernameTxt.getScene().getWindow();
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
-            stage.show();
+            else {
+                root = FXMLLoader.load(getClass().getResource("../Views/MainMenu.fxml"));
+                stage = (Stage) usernameTxt.getScene().getWindow();
+                Scene scene = new Scene(root);
+                stage.setScene(scene);
+                stage.show();
 
+            }
+        } catch(NullPointerException nullPointerException){
+            nullPointerException.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -94,6 +110,26 @@ public class LoginController implements Initializable {
             e.printStackTrace();
         }
         return false;
+    }
+
+    public ObservableList<Appointment> getApptsIn15Minutes() throws Exception {
+
+        ObservableList<Appointment> appointmentList = AppointmentDAO.getAllAppointments();
+        ObservableList<Appointment> approachingAppointments = FXCollections.observableArrayList();
+        if (appointmentList!= null){
+
+            for (Appointment a : appointmentList){
+                LocalDateTime apptStart = a.getStart();
+                LocalDateTime currentTime = Timestamp.from(Instant.now()).toLocalDateTime();
+
+                if (apptStart.isAfter(currentTime)) {
+                    if (apptStart.isBefore(currentTime.plusMinutes(15))){
+                        approachingAppointments.add(a);
+                    }
+                }
+            }
+        }
+        return approachingAppointments;
     }
 
 }
