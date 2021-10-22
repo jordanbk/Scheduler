@@ -24,6 +24,7 @@ import java.sql.*;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.Locale;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -65,13 +66,35 @@ public class LoginController implements Initializable {
 
             } if (getApptsIn15Minutes().size() >= 1){
                 for (Appointment appt : getApptsIn15Minutes()){
-                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                    alert.setTitle("Upcoming Appointments");
-                    alert.setHeaderText("You have an appointment in 15 Minutes");
-                    alert.setContentText("Appointment to start in 15 Minutes:" + appt.getTitle() + appt.getId() +" Time: " + appt.getStart());
+                    if(Locale.getDefault().toString().equals("en_US")){
+                        Alert alert = new Alert(Alert.AlertType.WARNING);
+                        alert.setTitle(myBundleTranslator.getString("WELCOME"));
+                        alert.setContentText("You have an Appointment in 15 minutes "+ "Appointment ID: "+ appt.getId()+" | Start: "+ appt.getStart());
+                        alert.showAndWait();
+                    }
+                    if(Locale.getDefault().toString().equals("fr_FR")) {
+                        Alert alert = new Alert(Alert.AlertType.WARNING);
+                        alert.setTitle("BIENVENU");
+                        alert.setContentText("Vous avez un rendez-vous à venir dans 15 minutes! "+ "ID de rendez-vous: "+ appt.getId()+" | Démarrer: "+ appt.getStart());
+                        alert.showAndWait();
+                    }
+
+                    else {
+                        if(Locale.getDefault().toString().equals("en_US")) {
+                            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                            alert.setTitle(myBundleTranslator.getString("Hello!"));
+                            alert.setContentText(myBundleTranslator.getString("You do not have any upcoming appointments"));
+                            alert.showAndWait();
+                        }
+                        if(Locale.getDefault().toString().equals("en_US")){
+                            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                            alert.setTitle("Bonjour!");
+                            alert.setContentText("Vous n'avez pas de rendez-vous à venir");
+                            alert.showAndWait();
+                        }
+                    }
                 }
             }
-
             else {
                 root = FXMLLoader.load(getClass().getResource("../Views/MainMenu.fxml"));
                 stage = (Stage) usernameTxt.getScene().getWindow();
