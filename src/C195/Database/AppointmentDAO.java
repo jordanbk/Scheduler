@@ -229,11 +229,14 @@ public class AppointmentDAO {
         for (Appointment appt : appointments) {
             if (appt.getId() == id) {
                 continue;
-            } else if ((newApptStart.isAfter(appt.getStart()) && newApptStart.isBefore(appt.getEnd())) ||
-                        (newApptEnd.isAfter(appt.getStart()) && newApptEnd.isBefore(appt.getEnd())) ||
-                    (newApptStart.isBefore(appt.getStart()) && newApptEnd.isAfter(appt.getStart())) ||
-                    (newApptStart.isEqual(appt.getStart()) && newApptEnd.isEqual(appt.getEnd())) ||
-                    (newApptStart.isEqual(appt.getStart()) || newApptEnd.isEqual(appt.getStart()))){
+            }
+            if((newApptStart.isAfter(appt.getStart()) || newApptStart.isEqual(appt.getStart())) && newApptStart.isBefore(appt.getEnd())){
+               return true;
+            }
+            if(newApptEnd.isAfter(appt.getStart()) && (newApptEnd.isBefore(appt.getEnd()) || newApptEnd.isEqual(appt.getEnd()))){
+                return true;
+            }
+            if((newApptStart.isBefore(appt.getStart()) || newApptStart.isEqual(appt.getStart())) && (newApptEnd.isAfter(appt.getEnd()) || newApptEnd.isEqual(appt.getEnd()))){
                 return true;
             }
 

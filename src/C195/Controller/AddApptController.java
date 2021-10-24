@@ -146,14 +146,17 @@ public class AddApptController implements Initializable {
      * Adding time in increments of 15 minutes to the combo boxes
      */
     private void populateTimeComboBox() {
+        LocalTime localTimeEnd = Time.getLocalEndTime();
+        LocalTime selectedStart = Time.getLocalStartTime();
+        LocalTime selectedStartDate = selectedStart;
 
-        LocalTime start = LocalTime.of(0, 0);
-
-        for (int i = 0; i < 100; i++) {
-            addApptStartTime.getItems().add(start);
-            addApptEndTime.getItems().add(start);
-            start = start.plusMinutes(15);
+        while (selectedStartDate.isBefore(localTimeEnd.minusSeconds(1))) {
+            addApptStartTime.getItems().add(LocalTime.from(selectedStartDate));
+            selectedStartDate = selectedStartDate.plusMinutes(15);
         }
+
+        addApptEndTime.setPromptText("Choose Start First");
+
     }
 
     public boolean inputIsEmpty(){
@@ -207,13 +210,6 @@ public class AddApptController implements Initializable {
             e.printStackTrace();
         }
 
-        LocalTime startEST = Time.getLocalStartTime();
-        LocalTime endEST = Time.getLocalEndTime();
-
-        while (startEST.isBefore(endEST)){
-            addApptStartTime.getItems().add(LocalTime.from(startEST));
-            startEST = startEST.plusHours(1);
-        }
     }
     @FXML
     public void addApptStartTimeA(ActionEvent actionEvent) {
@@ -221,11 +217,11 @@ public class AddApptController implements Initializable {
 
         LocalTime localTimeEnd = Time.getLocalEndTime();
         LocalTime selectedStart = addApptStartTime.getSelectionModel().getSelectedItem();
-        LocalTime selectedStartDate = selectedStart.plusHours(1);
+        LocalTime selectedStartDate = selectedStart.plusMinutes(15);
 
         while (selectedStartDate.isBefore(localTimeEnd.plusSeconds(1))) {
             addApptEndTime.getItems().add(LocalTime.from(selectedStartDate));
-            selectedStartDate = selectedStartDate.plusHours(1);
+            selectedStartDate = selectedStartDate.plusMinutes(15);
         }
         addApptEndTime.getSelectionModel().selectFirst();
     }
