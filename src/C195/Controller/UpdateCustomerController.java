@@ -46,7 +46,7 @@ public class UpdateCustomerController implements Initializable {
      * @return
      * @throws Exception
      */
-    public Division getDivisionFromCustomer(int id) throws Exception {
+    public Division getDivisionFromCustomer(int id     ) throws Exception {
         ObservableList<Division> divisions = DivisionDAO.getAllDivisions();
         Division divisionSelected = null;
 

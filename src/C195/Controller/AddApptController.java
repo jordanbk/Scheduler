@@ -105,14 +105,7 @@ public class AddApptController implements Initializable {
             LocalTime selectedEnd = addApptEndTime.getValue();
             LocalDateTime startDateTime = LocalDateTime.of(selectedDate, selectedStart);
             LocalDateTime endDateTime = LocalDateTime.of(selectedDate, selectedEnd);
-/*
-            if (startDateTime.isBefore(LocalDateTime.now()) || endDateTime.isBefore(LocalDateTime.now())) {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Error");
-                alert.setHeaderText("The time selected is before current time");
-                alert.setContentText("Select a time and date in the future.");
-                alert.showAndWait();
-            }*/
+
             if (AppointmentDAO.getOverlappingAppt(startDateTime, endDateTime, addApptCustID.getSelectionModel().getSelectedItem(), -1 )){
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Error");
@@ -171,10 +164,7 @@ public class AddApptController implements Initializable {
         );
     }
 
-    @FXML
-    void addApptCustID(ActionEvent event) {
-
-    }
+    @FXML void addApptCustID(ActionEvent event) { }
 
     @FXML
     void addApptEndTimeA(ActionEvent event) {
@@ -214,6 +204,7 @@ public class AddApptController implements Initializable {
     @FXML
     public void addApptStartTimeA(ActionEvent actionEvent) {
         addApptEndTime.getItems().clear();
+
 
         LocalTime localTimeEnd = Time.getLocalEndTime();
         LocalTime selectedStart = addApptStartTime.getSelectionModel().getSelectedItem();
