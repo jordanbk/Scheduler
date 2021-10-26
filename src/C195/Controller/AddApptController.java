@@ -205,7 +205,6 @@ public class AddApptController implements Initializable {
     public void addApptStartTimeA(ActionEvent actionEvent) {
         addApptEndTime.getItems().clear();
 
-
         LocalTime localTimeEnd = Time.getLocalEndTime();
         LocalTime selectedStart = addApptStartTime.getSelectionModel().getSelectedItem();
         LocalTime selectedStartDate = selectedStart.plusMinutes(15);

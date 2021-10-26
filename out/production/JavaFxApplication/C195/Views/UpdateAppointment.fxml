@@ -72,7 +72,7 @@
             <TextField fx:id="updateApptDesc" onAction="#updateApptDesc" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             <TextField fx:id="updateApptLocation" onAction="#updateApptLocation" GridPane.columnIndex="1" GridPane.rowIndex="3" />
             <DatePicker fx:id="updateApptStartDate" onAction="#updateApptStartDate" prefHeight="27.0" prefWidth="159.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-            <ComboBox fx:id="updateApptStartTime" onAction="#updateApptStartTime" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+            <ComboBox fx:id="updateApptStartTime" onAction="#updateApptStartTimeA" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
             <ComboBox fx:id="updateApptEndTime" onAction="#updateApptEndTime" prefWidth="150.0" GridPane.columnIndex="3" GridPane.rowIndex="6" />
             <Label alignment="CENTER_RIGHT" text="User:">
                <font>

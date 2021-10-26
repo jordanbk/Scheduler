@@ -2,6 +2,7 @@ package C195.Controller;
 
 import C195.Database.*;
 import C195.Model.*;
+import javafx.beans.Observable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -64,7 +65,6 @@ public class UpdateApptController implements Initializable {
     @FXML void updateApptID(ActionEvent event) { }
     @FXML void updateApptLocation(ActionEvent event) { }
     @FXML void updateApptStartDate(ActionEvent event) { }
-    @FXML void updateApptStartTime(ActionEvent event) { }
     @FXML void updateApptEndTime(ActionEvent event) { }
 
 
@@ -293,19 +293,24 @@ public class UpdateApptController implements Initializable {
     }
 
     @FXML
-    public void addApptStartTimeA(ActionEvent actionEvent) {
+    public void updateApptStartTimeA(ActionEvent actionEvent) {
         updateApptEndTime.getItems().clear();
-
 
         LocalTime localTimeEnd = Time.getLocalEndTime();
         LocalTime selectedStart = updateApptStartTime.getSelectionModel().getSelectedItem();
         LocalTime selectedStartDate = selectedStart.plusMinutes(15);
 
+        ObservableList<LocalTime> endTimes;
+        endTimes = updateApptEndTime.getItems();
         while (selectedStartDate.isBefore(localTimeEnd.plusSeconds(1))) {
-            updateApptEndTime.getItems().add(LocalTime.from(selectedStartDate));
+            endTimes.add(selectedStartDate);
             selectedStartDate = selectedStartDate.plusMinutes(15);
         }
+        updateApptEndTime.setItems(endTimes);
         updateApptEndTime.getSelectionModel().selectFirst();
+
     }
 }
+
+//updateApptEndTime.setItems();//getItems().add(LocalTime.from(selectedStartDate));
 
