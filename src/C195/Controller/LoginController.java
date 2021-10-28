@@ -30,14 +30,21 @@ import java.util.ResourceBundle;
 
 public class LoginController implements Initializable {
     Parent parent;
+    ResourceBundle myBundleTranslator;
     @FXML private PasswordField passwordTxt;
     @FXML private TextField usernameTxt;
     @FXML private Label loginMessageLabel;
     @FXML private Label zone;
     @FXML private Label loginPassword;
-    private ResourceBundle myBundleTranslator = ResourceBundle.getBundle("Bundle/lang");
+
+    /**
+     * This method initializes data
+     * Sets language to english or french based on users Language
+     * Displays users location
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourcebundle){
+        myBundleTranslator = ResourceBundle.getBundle("Bundle/lang_" + Locale.getDefault().getLanguage());
         loginMessageLabel.setText(myBundleTranslator.getString("USERNAME"));
         System.out.println(ZoneId.systemDefault());
         zone.setText(ZoneId.systemDefault().toString());
@@ -45,7 +52,16 @@ public class LoginController implements Initializable {
         loginMessageLabel.setText("");
     }
 
-
+    /**
+     *  Gets username and password and passes them as arguments to the validatelogin method
+     *  Reports login activity
+     *  Alerts user if username or password is incorrect and checks if user has an upcoming appointment (within 15 minutes)
+     *  using the
+     *  Alerts user whether or not they have an appointment in 15 minutes
+     *
+     * @param event
+     * @throws Exception
+     */
     @FXML
     public void handleLogin(ActionEvent event) throws Exception {
         Parent root;
@@ -59,14 +75,16 @@ public class LoginController implements Initializable {
         if (!login) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Error");
-            alert.setHeaderText(myBundleTranslator.getString("USERNAME") + "Incorrect Username and/or Password");
-            alert.setContentText("Enter valid Username and Password");
+            alert.setHeaderText(myBundleTranslator.getString("USERNAME"));
+            alert.setContentText(myBundleTranslator.getString("INVALIDLOGIN"));
             Optional<ButtonType> result = alert.showAndWait();
             return;
         }
         ObservableList<Appointment> fifteen = getApptsIn15Minutes();
 
         try {
+            Locale.setDefault(new Locale("en"));
+
             stage = (Stage) usernameTxt.getScene().getWindow();
             stage.hide();
              if (fifteen.size() >= 1) {
@@ -97,6 +115,13 @@ public class LoginController implements Initializable {
         }
     }
 
+    /**
+     *  Checks database for username and password
+     * @param username
+     * @param password
+     * @return boolean value based on username and password database check
+     * @throws SQLException alerts user if thrown
+     */
     public static boolean validateLogin(String username, String password) throws SQLException {
 
         try{
@@ -122,6 +147,11 @@ public class LoginController implements Initializable {
         return false;
     }
 
+    /**
+     *
+     * @return
+     * @throws Exception
+     */
     public ObservableList<Appointment> getApptsIn15Minutes() throws Exception {
 
         ObservableList<Appointment> appointmentList = AppointmentDAO.getAllAppointments();
