@@ -34,8 +34,11 @@ public class LoginController implements Initializable {
     @FXML private PasswordField passwordTxt;
     @FXML private TextField usernameTxt;
     @FXML private Label loginMessageLabel;
+    @FXML private Label username;
     @FXML private Label zone;
     @FXML private Label loginPassword;
+    @FXML private Label zoneID;
+    @FXML private Button loginBtn;
 
     /**
      * This method initializes data
@@ -45,11 +48,13 @@ public class LoginController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourcebundle){
         myBundleTranslator = ResourceBundle.getBundle("Bundle/lang_" + Locale.getDefault().getLanguage());
-        loginMessageLabel.setText(myBundleTranslator.getString("USERNAME"));
+        username.setText(myBundleTranslator.getString("Username"));
         System.out.println(ZoneId.systemDefault());
         zone.setText(ZoneId.systemDefault().toString());
-        loginPassword.setText("Password");
+        loginPassword.setText(myBundleTranslator.getString("Password"));
+        zoneID.setText(myBundleTranslator.getString("ZoneID"));
         loginMessageLabel.setText("");
+        loginBtn.setText(myBundleTranslator.getString("LoginBtn"));
     }
 
     /**
@@ -89,16 +94,16 @@ public class LoginController implements Initializable {
             stage.hide();
              if (fifteen.size() >= 1) {
                  for (Appointment appt : fifteen) {
-                     Alert alert = new Alert(Alert.AlertType.WARNING);
-                     alert.setTitle("WELCOME");
-                     alert.setContentText("You have an Appointment in 15 minutes " + "Appointment ID: " + appt.getId() + " | Start: " + appt.getStart());
+                     Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                     alert.setTitle(myBundleTranslator.getString("WELCOME"));
+                     alert.setContentText(myBundleTranslator.getString("AppointmentInFifteen") + " | " + myBundleTranslator.getString("AppointmentID") + appt.getId() + " | " + myBundleTranslator.getString("Start") + appt.getStart());
                      alert.showAndWait();
                  }
              }
              else{
                  Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                 alert.setTitle("Hello!");
-                 alert.setContentText("You do not have any upcoming appointments");
+                 alert.setTitle(myBundleTranslator.getString("WELCOME"));
+                 alert.setContentText(myBundleTranslator.getString("NoAppointments"));
                  alert.showAndWait();
              }
 

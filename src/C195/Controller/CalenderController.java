@@ -41,6 +41,7 @@ public class CalenderController implements Initializable {
     @FXML private TableColumn<Appointment, String> calStartTimeDateCol;
     @FXML private TableColumn<Appointment, String> calEndTimeDateCol;
     @FXML private TableColumn<Appointment, Integer> calCustIDCol;
+    @FXML private TableColumn<Appointment, Integer> calUserID;
     @FXML private TableColumn<Appointment, String> calTypeCol;
     @FXML private TableView<Appointment> calendarTableMain;
     static ObservableList<Appointment> appointments;
@@ -182,6 +183,7 @@ public class CalenderController implements Initializable {
             calEndTimeDateCol.setCellValueFactory(new PropertyValueFactory<>("end"));
             calCustIDCol.setCellValueFactory(new PropertyValueFactory<>("customerId"));
             calTypeCol.setCellValueFactory(new PropertyValueFactory<>("type"));
+            calUserID.setCellValueFactory(new PropertyValueFactory<>("userId"));
         } catch (Exception e) {
             e.printStackTrace();
         }

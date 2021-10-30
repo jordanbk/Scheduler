@@ -108,7 +108,7 @@ public class UpdateApptController implements Initializable {
             LocalDateTime startDateTime = LocalDateTime.of(selectedDate, selectedStart);
             LocalDateTime endDateTime = LocalDateTime.of(selectedDate, selectedEnd);
 
-            if (AppointmentDAO.getOverlappingAppt(startDateTime, endDateTime, updateApptCustID.getSelectionModel().getSelectedItem(), -1 )){
+            if (AppointmentDAO.getOverlappingAppt(startDateTime, endDateTime, updateApptCustID.getSelectionModel().getSelectedItem(), selectedAppointment.getId())){
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Error");
                 alert.setHeaderText("Scheduling Error");

@@ -37,9 +37,7 @@ public class Appointment {
     public Appointment() {
 
     }
-
-
-
+    //get start, get end format,
     public int getId() {
         return id;
     }
