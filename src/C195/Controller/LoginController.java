@@ -115,7 +115,6 @@ public class LoginController implements Initializable {
                 stage.setScene(scene);
                 stage.show();
 
-
         } catch(NullPointerException nullPointerException){
             nullPointerException.printStackTrace();
         } catch (Exception e) {
@@ -156,8 +155,8 @@ public class LoginController implements Initializable {
     }
 
     /**
-     *
-     * @return
+     * This method identifies appointments that are within 15 minutes of the current time
+     * @return list of appointments within 15 minutes
      * @throws Exception
      */
     public ObservableList<Appointment> getApptsIn15Minutes() throws Exception {

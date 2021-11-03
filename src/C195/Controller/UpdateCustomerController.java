@@ -45,12 +45,12 @@ public class UpdateCustomerController implements Initializable {
     private Customer customer = null;
 
     /**
-     *
-     * @param id
-     * @return
+     * This method gets the customer's division
+     * @param id customer ID
+     * @return division affiliated with customer
      * @throws Exception
      */
-    public Division getDivisionFromCustomer(int id     ) throws Exception {
+    public Division getDivisionFromCustomer(int id) throws Exception {
         ObservableList<Division> divisions = DivisionDAO.getAllDivisions();
         Division divisionSelected = null;
 
@@ -62,6 +62,12 @@ public class UpdateCustomerController implements Initializable {
         return divisionSelected;
     }
 
+    /**
+     * This method gets customer's country
+     * @param id customer ID
+     * @return country affiliated with customer
+     * @throws Exception
+     */
     public Country getCountryFromCustomer(int id) throws Exception {
         ObservableList<Country> countries = CountryDAO.getAllCountries();
         Country countrySelected = null;
@@ -74,6 +80,11 @@ public class UpdateCustomerController implements Initializable {
         return countrySelected;
     }
 
+    /**
+     * This method populates the fields with the Customer's data
+     * @param selectedCustomer customer selected by user
+     * @throws Exception
+     */
     public void populateCustomer(Customer selectedCustomer) throws Exception {
         customer = selectedCustomer;
         Division divisionSelected = getDivisionFromCustomer(customer.getDivisionID());
@@ -104,6 +115,13 @@ public class UpdateCustomerController implements Initializable {
         updateCustPhone.setText(customer.getPhone());
     }
 
+    /**
+     * This method saves the data from the fields and adds it to the database and brings user to Customer screen
+     * @param actionEvent button to update customer
+     * @throws SQLException
+     * @throws IOException
+     * Displays alert if fields are empty
+     */
     public void updateCustSubmitBtn(ActionEvent actionEvent) throws SQLException, IOException {
         if (updateCustName.getText().isEmpty() || updateCustPhone.getText().isEmpty() || updateCustAddress.getText().isEmpty()
                 || updateCustCountry.getSelectionModel().getSelectedItem() == null
@@ -134,6 +152,12 @@ public class UpdateCustomerController implements Initializable {
         }
     }
 
+    /**
+     * This method cancels the customer update and brings user to Customers screen
+     * @param event button to cancel update
+     * @throws IOException
+     * Displays alert to confirm update
+     */
     public void updateCustCancelBtn(ActionEvent event) throws IOException {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.initModality(Modality.NONE);
@@ -158,8 +182,8 @@ public class UpdateCustomerController implements Initializable {
 
     /**
      *  Get country id's
-     *  Load country id's
-     * @param countryID
+     *  Load country id's in combo box
+     * @param countryID country ID
      */
     public void loadDivisions(int countryID){
     filterDivisions = FXCollections.observableArrayList();

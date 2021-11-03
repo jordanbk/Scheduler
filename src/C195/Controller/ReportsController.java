@@ -30,17 +30,21 @@ public class ReportsController implements Initializable {
     Stage stage;
     Parent root;
     ReportObject report = new ReportObject();
-    @FXML private Tab tabCountApptTypeMonth;
+
+    /** sets up table tabs*/
     @FXML private TableView<ReportObject> tab1Table;
     @FXML private TableView<Appointment> tab2Table;
     @FXML private TableView<Appointment> tab3Table;
     @FXML private Button tab2ReportGen;
     @FXML private Button tab1MainMenu;
+    /** sets up tables with Report by Month and Type */
+    @FXML private Tab tabCountApptTypeMonth;
     @FXML private TableColumn<ReportObject, Integer> countCol;
     @FXML private TableColumn<ReportObject, String> MonthCol;
     @FXML private TableColumn<ReportObject, String> tab1TypeCol;
     @FXML private ComboBox<String> tab1Type;
     @FXML private ComboBox<String> tab1Month;
+    /** sets up tables with Report by Customer ID */
     @FXML private Tab tabApptByCustomer;
     @FXML private ComboBox<Integer> tab2Customer;
     @FXML private TableColumn<Appointment, Integer> apptIdCol;
@@ -52,6 +56,7 @@ public class ReportsController implements Initializable {
     @FXML private TableColumn<Appointment, Integer> contactIdCol;
     @FXML private Button tab2MainMenu;
     @FXML private Tab tabApptByContact;
+    /** sets up tables with Report by Contact ID */
     @FXML private TableColumn<Appointment, Integer> apptIdCol1;
     @FXML private TableColumn<Appointment, String> titleCol1;
     @FXML private TableColumn<Appointment, String> typeCol1;
@@ -75,16 +80,16 @@ public class ReportsController implements Initializable {
      * Create Observable list for Months & Types
      * Set items in combo boxes
      */
- public void setComboBoxesTab1() {
-     ObservableList<String> Months = FXCollections.observableArrayList("January", "February", "March",
-             "April", "May", "June", "July", "August", "September", "October", "November", "December");
+     public void setComboBoxesTab1() {
+         ObservableList<String> Months = FXCollections.observableArrayList("January", "February", "March",
+                 "April", "May", "June", "July", "August", "September", "October", "November", "December");
 
-     ObservableList<String> Types = FXCollections.observableArrayList("Stand Up", "All Hands", "Demos",
-             "Brain Storm");
+         ObservableList<String> Types = FXCollections.observableArrayList("Stand Up", "All Hands", "Demos",
+                 "Brain Storm");
 
-     tab1Month.setItems(Months);
-     tab1Type.setItems(Types);
- }
+         tab1Month.setItems(Months);
+         tab1Type.setItems(Types);
+     }
 
     /**
      *  Get all contacts from ContactDAO
@@ -127,8 +132,8 @@ public class ReportsController implements Initializable {
     }
 
     /**
-     *
-     * @param event switch to main menu fxml on click
+     * This method brings user from Tab 1 Main Menu screen
+     * @param event button to switch to main menu fxml on click
      * @throws IOException
      */
     public void mainMenuBtn1(javafx.event.ActionEvent event) throws IOException {
@@ -140,8 +145,8 @@ public class ReportsController implements Initializable {
     }
 
     /**
-     *
-     * @param event switch to main menu fxml on click
+     * This method brings user from Tab 2 Main Menu screen
+     * @param event button to switch to main menu fxml on click
      * @throws IOException
      */
     public void mainMenuBtn2(javafx.event.ActionEvent event) throws IOException {
@@ -153,8 +158,8 @@ public class ReportsController implements Initializable {
     }
 
     /**
-     *
-     * @param event switch to main menu fxml on click
+     * This method brings user from Tab 3 Main Menu screen
+     * @param event button to switch to main menu fxml on click
      * @throws IOException
      */
     public void mainMenuBtn3(javafx.event.ActionEvent event) throws IOException {
@@ -166,10 +171,9 @@ public class ReportsController implements Initializable {
     }
 
     /**
-     *
-     * @param event If month and type selection from combo boxes are not null, get value and add as arguments to method
-     *              getAppointmentByMonthAndType.
-     *              Populate table using ObservableList.
+     * If month and type selection from combo boxes are not null, get value and add as arguments to method getAppointmentByMonthAndType.
+     * Populate table using ObservableList.
+     * @param event button to generate report
      * @throws SQLException
      */
     @FXML
@@ -192,10 +196,9 @@ public class ReportsController implements Initializable {
     }
 
     /**
-     *
-     * @param event If customer selection from combo box is not null, get value and add as argument to method
-     *              getApptByCustomerId.
-     *              Populate table using ObservableList.
+     *If customer selection from combo box is not null, get value and add as argument to method getApptByCustomerId.
+     *Populate table using ObservableList.
+     * @param event button to generate report
      * @throws SQLException
      */
     @FXML
@@ -216,10 +219,9 @@ public class ReportsController implements Initializable {
     }
 
     /**
-     *
-     * @param actionEvent If contact selection from combo box is not null, get value and add as argument to method
-     *                    getApptByContactId.
-     *                    Populate table using ObservableList.
+     * If contact selection from combo box is not null, get value and add as argument to method getApptByContactId.
+     * Populate table using ObservableList.
+     * @param actionEvent button to generate report
      * @throws SQLException
      */
     @FXML

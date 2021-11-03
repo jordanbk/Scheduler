@@ -37,12 +37,11 @@ public class UpdateApptController implements Initializable {
     UserDAO userDAO = new UserDAO();
     CustomerDAO customerDAO = new CustomerDAO();
     private Appointment selectedAppointment = null;
-    //Customer customer;
+
     Stage stage;
     Parent scene;
     private boolean overlapping;
 
-    //private int appointmentID;
     @FXML private ComboBox<Contact> updateApptContact;
     @FXML private TextField updateApptTitle;
     @FXML private TextField updateApptDesc;
@@ -65,7 +64,9 @@ public class UpdateApptController implements Initializable {
     @FXML void updateApptStartDate(ActionEvent event) { }
     @FXML void updateApptEndTime(ActionEvent event) { }
 
-
+    /**
+     * @return start date and start time to localdatetime
+     */
     private LocalDateTime generateStartDateTime() {
 
         LocalDate startDate = updateApptStartDate.getValue();
@@ -74,6 +75,9 @@ public class UpdateApptController implements Initializable {
         return start;
     }
 
+    /**
+     * @return end date and time to localdatetime
+     */
     private LocalDateTime generateEndDateTime() {
 
         LocalDate endDate = updateApptStartDate.getValue();
@@ -82,10 +86,8 @@ public class UpdateApptController implements Initializable {
         return end;
     }
     /**
-     *
-     * @param event if any field is empty, throw an alert
-     *              Get time/date and check if they are in the future
-     *              Retrieve all input from user and send to updateAppointment method
+     * This method retrieves all input from user and updates the database
+     * @param event if any field are empty, throw an alert. Get time/date and check if they are in the future
      * @throws SQLException
      * @throws IOException
      */
@@ -141,7 +143,6 @@ public class UpdateApptController implements Initializable {
     }
 
     /**
-     *
      * @return method to check if fields are empty
      */
     private boolean inputIsEmpty() {
@@ -157,9 +158,8 @@ public class UpdateApptController implements Initializable {
     }
 
     /**
-     *
+     * This method brings user back to the Calendar screen
      * @param event if button is clicked, alert user and seek confirmation with modal
-     *              if result is OK, switch screen to calendar fxml
      * @throws IOException
      */
     @FXML
@@ -181,7 +181,7 @@ public class UpdateApptController implements Initializable {
     }
 
     /**
-     *
+     * This method populates the fields with appointment details
      * @param appointment display all fields from the selected appointment
      *                    Create objects & observable lists to store and retrieve ID's
      *                    for combo boxes. Use get methods to set text in text fields
@@ -250,7 +250,11 @@ public class UpdateApptController implements Initializable {
 
     }
 
-
+    /**
+     * Initializes the Update Appointment screen
+     * @param url
+     * @param resourceBundle
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
@@ -276,20 +280,11 @@ public class UpdateApptController implements Initializable {
             e.printStackTrace();
         }
 
-/*        LocalDateTime currentDateTime = LocalDateTime.now();
-        updateApptStartDate.setValue(LocalDate.from(currentDateTime));
-
-        LocalTime startEST = LocalTime.of(8, 0);
-        LocalTime endEST = LocalTime.of(22, 0);
-        LocalTime start = startEST;
-        LocalTime end = endEST;
-
-        while (startEST.isBefore(endEST.plusSeconds(1))){
-            updateApptStartTime.getItems().add(LocalTime.from(startEST));
-            startEST = startEST.plusHours(1);
-        }*/
     }
-
+    /**
+     * This method handles time conversion and increments time in combo boxes
+     * @param actionEvent
+     */
     @FXML
     public void updateApptStartTimeA(ActionEvent actionEvent) {
         updateApptEndTime.getItems().clear();
@@ -309,6 +304,4 @@ public class UpdateApptController implements Initializable {
 
     }
 }
-
-//updateApptEndTime.setItems();//getItems().add(LocalTime.from(selectedStartDate));
 

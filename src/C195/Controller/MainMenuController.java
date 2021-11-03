@@ -27,6 +27,11 @@ public class MainMenuController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
     }
 
+    /**
+     * This method brings the user to the Calendar screen
+     * @param event button to Calendar.fxml
+     * @throws IOException
+     */
     @FXML
     public void handleAppointments(ActionEvent event) throws IOException {
         Parent parent = FXMLLoader.load(getClass().getResource("../Views/Calendar.fxml"));
@@ -35,6 +40,12 @@ public class MainMenuController implements Initializable {
         window.setScene(scene);
         window.show();
     }
+
+    /**
+     * This method brings the user to the Customer screen
+     * @param event button to Customers.fxml
+     * @throws IOException
+     */
     @FXML
     public void handleCustomers(ActionEvent event) throws IOException {
         Parent parent = FXMLLoader.load(getClass().getResource("../Views/Customers.fxml"));
@@ -44,7 +55,11 @@ public class MainMenuController implements Initializable {
         window.show();
     }
 
-
+    /**
+     * This method brings the user to the Reports screen
+     * @param event button to Reports.fxml
+     * @throws IOException
+     */
     @FXML
     void handleReports(ActionEvent event) throws IOException {
         Parent parent = FXMLLoader.load(getClass().getResource("../Views/Reports.fxml"));

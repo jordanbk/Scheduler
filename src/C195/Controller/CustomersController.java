@@ -30,6 +30,7 @@ import java.util.logging.Logger;
  * @author Jordan Burke
  */
 public class CustomersController implements Initializable {
+    /** sets up table with customer details */
     @FXML private TableColumn<Customer, Integer> customersIdCol;
     @FXML private TableColumn<Customer, String> customersNameCol;
     @FXML private TableColumn<Customer, String> customersAddressCol;
@@ -41,7 +42,7 @@ public class CustomersController implements Initializable {
     ObservableList<Customer> customerTableView = FXCollections.observableArrayList();
 
     /**
-     *
+     *This method brings the user to the Add Customer screen
      * @param event button to take user to AddCustomer.fxml
      * @throws IOException
      */
@@ -55,7 +56,8 @@ public class CustomersController implements Initializable {
     }
 
     /**
-     * @param event button to delete customer that the user has selected
+     * This method removes the selected customer from the database
+     * @param event button to delete customer
      * @throws Exception
      * Confirmation alert with prompt to proceed. Error alert is a selection is not made
      */
@@ -96,6 +98,7 @@ public class CustomersController implements Initializable {
     }
 
     /**
+     * This method brings the user to the Update Customer screen
      * @param event button to edit (update) the customer that the user has selected
      * @throws Exception
      * Error alert if a customer is not selected
@@ -126,6 +129,7 @@ public class CustomersController implements Initializable {
     }
 
     /**
+     * This method brings the user to the Main Menu screen
      * @param event button to take user to MainMenu.fxml
      * @throws IOException
      */
@@ -139,7 +143,7 @@ public class CustomersController implements Initializable {
     }
 
     /**
-     *
+     *This method brings the user to the Reports screen
      * @param event button to take user to Reports.fxml
      */
     @FXML
@@ -151,6 +155,11 @@ public class CustomersController implements Initializable {
         window.show();
     }
 
+    /**
+     * Initializes the Customer screen and populates the table
+     * @param url
+     * @param resourceBundle
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
