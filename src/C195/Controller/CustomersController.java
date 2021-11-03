@@ -26,7 +26,7 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.logging.Logger;
 /**
- * This class handles the Customer screen
+ * This class controls the Customer screen
  * @author Jordan Burke
  */
 public class CustomersController implements Initializable {

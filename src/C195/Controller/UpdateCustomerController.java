@@ -28,7 +28,7 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 
 /**
- * This class handles the Update Customer screen
+ * This class controls the Update Customer screen
  * @author Jordan Burke
  */
 public class UpdateCustomerController implements Initializable {

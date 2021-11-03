@@ -12,8 +12,8 @@ import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+/** * This class controls the Division data * @author Jordan Burke */
 public class DivisionDAO {
-
     /**
      *  Retrieve all Division details listed in the database
      * @return All divisions objects in the database

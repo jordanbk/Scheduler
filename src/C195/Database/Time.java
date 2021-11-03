@@ -3,6 +3,7 @@ package C195.Database;
 import java.time.*;
 import java.util.TimeZone;
 
+/** * This class handles time * @author Jordan Burke */
 public class Time {
     static LocalDate localdate = LocalDate.now();
     static ZoneId estID = ZoneId.of("America/New_York");

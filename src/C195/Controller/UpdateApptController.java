@@ -27,7 +27,7 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 
 /**
- * This class handles the Update Appointment screen
+ * This class controls the Update Appointment screen
  * @author Jordan Burke
  */
 public class UpdateApptController implements Initializable {

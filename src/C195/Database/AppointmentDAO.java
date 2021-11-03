@@ -11,6 +11,8 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
+/**This class controls the Appointment data @author Jordan Burke*/
+
 public class AppointmentDAO {
     /**
      *  Connects to the database and uses SQL statement to select all appointment attributes

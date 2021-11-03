@@ -30,7 +30,7 @@ import java.util.ResourceBundle;
 
 import static javafx.fxml.FXMLLoader.load;
 /**
- * This class handles the Calendar screen
+ * This class controls the Calendar screen
  * @author Jordan Burke
  */
 public class CalenderController implements Initializable {

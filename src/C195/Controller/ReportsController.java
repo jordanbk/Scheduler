@@ -23,7 +23,7 @@ import java.util.ResourceBundle;
 
 import static javafx.fxml.FXMLLoader.load;
 /**
- * This class handles the Reports screen
+ * This class controls the Reports screen
  * @author Jordan Burke
  */
 public class ReportsController implements Initializable {

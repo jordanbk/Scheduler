@@ -9,6 +9,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/** * This class controls the Contact data * @author Jordan Burke */
+
 public class ContactDAO {
     /**
      *     Retrieve all contact details from the database by connecting to the database

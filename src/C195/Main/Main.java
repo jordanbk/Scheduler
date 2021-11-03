@@ -11,8 +11,13 @@ import java.sql.SQLException;
 import java.util.Locale;
 import java.util.Objects;
 
+/**This is the Main method * @author Jordan Burke*/
 public class Main extends Application {
-
+    /**
+     * This method sets up the JavaFX stage
+     * @param stage
+     * @throws Exception
+     */
     @Override
     public void start(Stage stage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("../Views/Login.fxml"));
@@ -20,9 +25,14 @@ public class Main extends Application {
         stage.setScene(new Scene(root));
         stage.show();
     }
-
+    /**
+     * This method establishes connection to the database
+     * @param args
+     * @throws Exception
+     */
     public static void main(String[] args) throws Exception {
-        Locale.setDefault(new Locale("fr"));
+        //The line below is for testing in French
+        //Locale.setDefault(new Locale("fr"));
         DatabaseConnection.openConnection();
         launch(args);
         DatabaseConnection.closeConnection();

@@ -16,16 +16,11 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 /**
- * This class handles the Main Menu screen
+ * This class controls the Main Menu screen
  * @author Jordan Burke
  */
 public class MainMenuController implements Initializable {
-    @FXML
-    private Button handleCustomers;
-
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-    }
+    @FXML private Button handleCustomers;
 
     /**
      * This method brings the user to the Calendar screen
@@ -68,6 +63,5 @@ public class MainMenuController implements Initializable {
         window.setScene(scene);
         window.show();
     }
-
-
+    @Override public void initialize(URL url, ResourceBundle rb) { }
 }

@@ -12,6 +12,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
+/** * This class controls the Customer data * @author Jordan Burke */
 public class CustomerDAO implements Initializable  {
 
     /**

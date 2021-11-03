@@ -28,7 +28,7 @@ import java.sql.SQLException;
 import java.util.Optional;
 import java.util.ResourceBundle;
 /**
- * This class handles the Add Customer screen
+ * This class controls the Add Customer screen
  * @author Jordan Burke
  */
 public class AddCustomerController implements Initializable {

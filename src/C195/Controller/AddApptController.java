@@ -28,7 +28,7 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 
 /**
- * This class handles the Add Appointment screen
+ * This class controls the Add Appointment screen
  * @author Jordan Burke
  */
 public class AddApptController implements Initializable {
