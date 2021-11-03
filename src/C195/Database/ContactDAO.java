@@ -12,7 +12,7 @@ import java.sql.SQLException;
 public class ContactDAO {
     /**
      *     Retrieve all contact details from the database by connecting to the database
-     *     and using sql to select all values from contacts table
+     *     and using SQL to SELECT all values from contacts table
      * @return
      * @throws SQLException
      */

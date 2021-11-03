@@ -29,7 +29,10 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 
 import static javafx.fxml.FXMLLoader.load;
-
+/**
+ * This class handles the Calendar screen
+ * @author Jordan Burke
+ */
 public class CalenderController implements Initializable {
     Stage stage;
     Parent root;

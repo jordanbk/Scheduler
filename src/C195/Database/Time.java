@@ -9,7 +9,8 @@ public class Time {
     static ZoneId localZone = ZoneId.of(TimeZone.getDefault().getID());
 
     /**
-     * @return business hours (start)
+     * This method returns the start of business hours
+     * @return business hours
      */
     public static LocalTime getLocalStartTime(){
         LocalTime startTime = LocalTime.of( 8, 0 );
@@ -20,7 +21,8 @@ public class Time {
     }
 
     /**
-     * @return Business hours (end)
+     * The method returns the end of business hours
+     * @return business hours
      */
     public static LocalTime getLocalEndTime(){
         LocalTime endTime = LocalTime.of(22, 0 );
@@ -28,11 +30,6 @@ public class Time {
         ZonedDateTime endLocal = endEst.withZoneSameInstant(localZone);
 
         return endLocal.toLocalTime();
-    }
-    //Functional Interface
-    public interface fifteenMinuteNotification{
-        //int value returning abstract method
-        int calculate(int n);
     }
 
 }

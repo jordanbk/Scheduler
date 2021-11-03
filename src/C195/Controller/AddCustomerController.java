@@ -27,7 +27,10 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.Optional;
 import java.util.ResourceBundle;
-
+/**
+ * This class handles the Add Customer screen
+ * @author Jordan Burke
+ */
 public class AddCustomerController implements Initializable {
     Stage stage;
     Parent scene;

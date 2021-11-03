@@ -25,7 +25,10 @@ import java.sql.SQLException;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.logging.Logger;
-
+/**
+ * This class handles the Customer screen
+ * @author Jordan Burke
+ */
 public class CustomersController implements Initializable {
     @FXML private TableColumn<Customer, Integer> customersIdCol;
     @FXML private TableColumn<Customer, String> customersNameCol;
@@ -37,7 +40,11 @@ public class CustomersController implements Initializable {
 
     ObservableList<Customer> customerTableView = FXCollections.observableArrayList();
 
-
+    /**
+     *
+     * @param event button to take user to AddCustomer.fxml
+     * @throws IOException
+     */
     @FXML
     public void customersAddCustBtn(ActionEvent event) throws IOException {
         Parent parent = FXMLLoader.load(getClass().getResource("../Views/AddCustomer.fxml"));
@@ -47,6 +54,11 @@ public class CustomersController implements Initializable {
         window.show();
     }
 
+    /**
+     * @param event button to delete customer that the user has selected
+     * @throws Exception
+     * Confirmation alert with prompt to proceed. Error alert is a selection is not made
+     */
     @FXML
     void customersDeleteCustBtn(ActionEvent event) throws Exception {
         Customer deleteCustomer = customerTable.getSelectionModel().getSelectedItem();
@@ -63,10 +75,8 @@ public class CustomersController implements Initializable {
             if (result.get() == ButtonType.OK){
                 Customer customerSelected = customerTable.getSelectionModel().getSelectedItem();
 
-                //removes customer
                 CustomerDAO.deleteCustomer(customerSelected.getId());
 
-                //refreshes table
                 customerTable.setItems(CustomerDAO.getAllCustomers());
 
                 Alert alerted = new Alert(Alert.AlertType.INFORMATION);
@@ -85,6 +95,11 @@ public class CustomersController implements Initializable {
 
     }
 
+    /**
+     * @param event button to edit (update) the customer that the user has selected
+     * @throws Exception
+     * Error alert if a customer is not selected
+     */
     @FXML
     public void customersEditCustBtn(ActionEvent event) throws Exception {
         if (customerTable.getSelectionModel().getSelectedItem() != null){
@@ -110,6 +125,10 @@ public class CustomersController implements Initializable {
         }
     }
 
+    /**
+     * @param event button to take user to MainMenu.fxml
+     * @throws IOException
+     */
     @FXML
     public void customersMainMenuBtn(ActionEvent event) throws IOException {
         Parent parent = FXMLLoader.load(getClass().getResource("../Views/MainMenu.fxml"));
@@ -119,10 +138,17 @@ public class CustomersController implements Initializable {
         window.show();
     }
 
+    /**
+     *
+     * @param event button to take user to Reports.fxml
+     */
     @FXML
-    void customersReportBtn(ActionEvent event) {
-
-
+    void customersReportBtn(ActionEvent event) throws IOException {
+        Parent parent = FXMLLoader.load(getClass().getResource("../Views/Reports.fxml"));
+        Scene scene = new Scene(parent);
+        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+        window.setScene(scene);
+        window.show();
     }
 
     @Override
@@ -138,9 +164,6 @@ public class CustomersController implements Initializable {
         customersZipCol.setCellValueFactory(new PropertyValueFactory<>("postalCode"));
         customersPhoneCol.setCellValueFactory(new PropertyValueFactory<>("phone"));
         customersDivCol.setCellValueFactory(new PropertyValueFactory<>("divisionID"));
-        //add customer
-        //division model & country model
-        //the key to keys (forget about generating keys) look at insert(add) section,
     }
 
 }

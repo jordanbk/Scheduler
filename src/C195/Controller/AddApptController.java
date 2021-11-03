@@ -27,7 +27,12 @@ import java.time.LocalTime;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+/**
+ * This class handles the Add Appointment screen
+ * @author Jordan Burke
+ */
 public class AddApptController implements Initializable {
+    /** sets up table with appointment details */
     @FXML private ComboBox<User> addApptUser;
     @FXML private ComboBox<LocalTime> addApptStartTime;
     @FXML private ComboBox<LocalTime> addApptEndTime;
@@ -40,12 +45,24 @@ public class AddApptController implements Initializable {
     @FXML private TextField addApptID;
     @FXML private ComboBox<Integer> addApptCustID;
 
+    @FXML void addApptContact(ActionEvent event) { }
+    @FXML void addApptCustID(ActionEvent event) { }
+    @FXML void addApptEndTimeA(ActionEvent event) { }
+    @FXML void addApptType(ActionEvent event) { }
+
     AppointmentDAO appointmentDAO = new AppointmentDAO();
     ContactDAO contactDAO = new ContactDAO();
     UserDAO userDAO = new UserDAO();
     CustomerDAO customerDAO = new CustomerDAO();
     Stage stage;
     Parent scene;
+
+    /**
+     * Confirmation alert confirms cancellation
+     * If button is clicked, adding appointment is cancelled and user is taken back to Calendar.fxml
+     * @param event button to cancel the add appointment request.
+     * @throws IOException
+     */
     @FXML
     void addApptCancelBtn(ActionEvent event) throws IOException {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -58,23 +75,15 @@ public class AddApptController implements Initializable {
         if (result.get() == ButtonType.OK) {
             Parent parent = FXMLLoader.load(getClass().getResource("../Views/Calendar.fxml"));
             Scene scene = new Scene(parent);
-
             Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
-
             window.setScene(scene);
             window.show();
         }
     }
 
-    @FXML
-    void addApptContact(ActionEvent event) {
-
-    }
-
-    @FXML
-    void addApptCustomer(ActionEvent event) {
-
-    }
+    /**
+     * @return start date and start time to localdatetime
+     */
     private LocalDateTime generateStartDateTime() {
 
         LocalDate startDate = addApptDate.getValue();
@@ -83,6 +92,9 @@ public class AddApptController implements Initializable {
         return start;
     }
 
+    /**
+     * @return end date and time to localdate time
+     */
     private LocalDateTime generateEndDateTime() {
 
         LocalDate endDate = addApptDate.getValue();
@@ -90,6 +102,14 @@ public class AddApptController implements Initializable {
         LocalDateTime end = LocalDateTime.of(endDate, endTime);
         return end;
     }
+
+    /**
+     * Checks for any empty fields
+     * Checks for overlapping appointments
+     * Adds appointment to the database and returns user to Calendar.fxml
+     * @param event button to save appointment details to database
+     * @throws Exception
+     */
     @FXML
     void addApptSubmitBtn(ActionEvent event) throws Exception {
         if (inputIsEmpty()){
@@ -136,7 +156,7 @@ public class AddApptController implements Initializable {
     }
 
     /**
-     * Adding time in increments of 15 minutes to the combo boxes
+     * This method adds time in increments of 15 minutes to the combo boxes
      */
     private void populateTimeComboBox() {
         LocalTime localTimeEnd = Time.getLocalEndTime();
@@ -147,11 +167,13 @@ public class AddApptController implements Initializable {
             addApptStartTime.getItems().add(LocalTime.from(selectedStartDate));
             selectedStartDate = selectedStartDate.plusMinutes(15);
         }
-
         addApptEndTime.setPromptText("Choose Start First");
-
     }
 
+    /**
+     * This method checks for empty fields
+     * @return
+     */
     public boolean inputIsEmpty(){
         return (addApptTitle.getText().isEmpty()
                 || addApptDesc.getText().isEmpty()
@@ -164,19 +186,11 @@ public class AddApptController implements Initializable {
         );
     }
 
-    @FXML void addApptCustID(ActionEvent event) { }
-
-    @FXML
-    void addApptEndTimeA(ActionEvent event) {
-
-    }
-
-
-    @FXML
-    void addApptType(ActionEvent event) {
-
-    }
-
+    /**
+     * Initializes the add appointment screen and populates the table, combo boxes and time conversions
+     * @param url
+     * @param resourceBundle
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
@@ -201,6 +215,11 @@ public class AddApptController implements Initializable {
         }
 
     }
+
+    /**
+     * This method handles time conversion and increments time in combo boxes
+     * @param actionEvent
+     */
     @FXML
     public void addApptStartTimeA(ActionEvent actionEvent) {
         addApptEndTime.getItems().clear();

@@ -27,10 +27,8 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 
 /**
- *
- * The UpdateApptController is a controller for the UpdateAppointment.fxml
+ * This class handles the Update Appointment screen
  * @author Jordan Burke
- *
  */
 public class UpdateApptController implements Initializable {
 

@@ -27,6 +27,10 @@ import java.sql.SQLException;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+/**
+ * This class handles the Update Customer screen
+ * @author Jordan Burke
+ */
 public class UpdateCustomerController implements Initializable {
     Stage stage;
     Parent scene;

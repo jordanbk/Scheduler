@@ -22,7 +22,10 @@ import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 import static javafx.fxml.FXMLLoader.load;
-
+/**
+ * This class handles the Reports screen
+ * @author Jordan Burke
+ */
 public class ReportsController implements Initializable {
     Stage stage;
     Parent root;

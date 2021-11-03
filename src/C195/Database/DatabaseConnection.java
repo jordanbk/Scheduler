@@ -4,6 +4,10 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
+/**
+ * This class establishes and closes the database connection
+ * @author Jordan Burke
+ */
 public class DatabaseConnection {
     private static final String protocol = "jdbc";
     private static final String vendor = ":mysql:";
@@ -17,6 +21,9 @@ public class DatabaseConnection {
     private static Connection connection = null;  // Connection Interface
     private static PreparedStatement preparedStatement;
 
+    /**
+     * This method initializes the connection to the database
+     */
     public static void openConnection() {
 
         try {
@@ -33,9 +40,17 @@ public class DatabaseConnection {
         }
     }
 
+    /**
+     * This method gets the connection with the database
+     * @return database connection
+     */
     public static Connection getConnection() {
         return connection;
     }
+
+    /**
+     * This method ends the connection to the database
+     */
     public static void closeConnection() {
         try {
             connection.close();
@@ -44,20 +59,5 @@ public class DatabaseConnection {
             System.out.println(e.getMessage());
         }
     }
-
-/*    public static void makePreparedStatement(String sqlStatement, Connection conn) throws SQLException {
-        if (conn != null)
-            preparedStatement = conn.prepareStatement(sqlStatement);
-        else
-            System.out.println("Prepared Statement Creation Failed!");
-    }
-    public static PreparedStatement getPreparedStatement() throws SQLException {
-        if (preparedStatement != null)
-            return preparedStatement;
-        else System.out.println("Null reference to Prepared Statement");
-        return ;
-    }*/
-
-
 
 }

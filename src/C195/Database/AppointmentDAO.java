@@ -15,7 +15,7 @@ public class AppointmentDAO {
     /**
      *  Connects to the database and uses SQL statement to select all appointment attributes
      *  create new appointment object and add to observable array list
-     * @return
+     * @return returns all appointments
      * @throws Exception
      */
     public static ObservableList<Appointment> getAllAppointments() throws Exception {
@@ -46,7 +46,7 @@ public class AppointmentDAO {
     }
 
     /**
-     * Connecs to database and uses SQL DELETE statement to remove an Appointment by the Appointment ID
+     * This method connects to database and uses SQL DELETE statement to remove an Appointment by the Appointment ID
      * @param appointmentId
      * @throws SQLException
      */
@@ -60,16 +60,16 @@ public class AppointmentDAO {
     }
 
     /**
-     * Connects to database and uses SQL INSERT statement to add an Appointment to
-     * @param title
-     * @param description
-     * @param location
-     * @param type
-     * @param start
-     * @param end
-     * @param customerId
-     * @param contactId
-     * @param userId
+     * This method uses a SQL INSERT statement to add an Appointment to the database.
+     * @param title title of the appointment
+     * @param description description of the appointment
+     * @param location location of the appointment
+     * @param type type of appointment
+     * @param start start date/time of the appointment
+     * @param end end date/time of the appointment
+     * @param customerId customer ID affiliated with appointment
+     * @param contactId contact ID affiliated with appointment
+     * @param userId user ID affiliated with the appointment
      * @throws SQLException
      */
     public static void addAppointment(String title, String description, String location,
@@ -94,6 +94,22 @@ public class AppointmentDAO {
         ps.execute();
     }
 
+    /**
+     * This method uses an UPDATE SQL statement to update the appointment and save it.
+     *
+     * @param title title of the appointment
+     * @param description description of the appointment
+     * @param location location of the appointment
+     * @param type type of appointment
+     * @param start start date/time of appointment
+     * @param end end date/time of appointment
+     * @param contactId contact ID affiliated with the appointment
+     * @param customerId customer ID affiliated with the appointment
+     * @param userId user ID affiliated with the appointment
+     * @param apptId appointment ID of the appointment
+     * @return
+     * @throws SQLException
+     */
     public static int updateAppointment(String title, String description, String location, String type, LocalDateTime start, LocalDateTime end, int contactId, int customerId, int userId, int apptId) throws SQLException {
 
         String insertStatement = "UPDATE appointments SET Title=?, Description=?, Location=?, Type=?, Start=?, End=?," +
@@ -116,7 +132,12 @@ public class AppointmentDAO {
         return ps.executeUpdate();
     }
 
-
+    /**
+     * Overloaded method
+     * This no-argument method uses an UPDATE SQL statement to update the appointment
+     *
+     * @param appointment
+     */
     public static void updateAppointment(Appointment appointment) {
 
         String sql = "UPDATE appointments SET Title=?, Description=?, Location=?, Type=?, Start=?, End=?, Customer_ID=?, Contact_ID=?, User_ID=? WHERE Appointment_ID = ?;";
@@ -142,6 +163,13 @@ public class AppointmentDAO {
         }
     }
 
+    /**
+     * This method uses a SQL COUNT function to output a report with the number of appointments by type and month
+     * @param selectedMonth month that user selected
+     * @param selectedType type that user selected
+     * @return
+     * @throws SQLException
+     */
     public static ObservableList<ReportObject> getAppointmentByMonthAndType(String selectedMonth, String selectedType) throws SQLException {
 
         ObservableList<ReportObject> generateMonthTypeReport = FXCollections.observableArrayList();
@@ -165,6 +193,12 @@ public class AppointmentDAO {
         return generateMonthTypeReport;
     }
 
+    /**
+     * This method uses a SQL SELECT statement to get all appointments based on the Customer ID selected
+     * @param customerId customer ID selected
+     * @return
+     * @throws SQLException
+     */
     public static ObservableList<Appointment> getApptByCustomerId(int customerId) throws SQLException {
         ObservableList<Appointment> generateReportByCustId = FXCollections.observableArrayList();
 
@@ -193,7 +227,12 @@ public class AppointmentDAO {
         return generateReportByCustId;
     }
 
-
+    /**
+     * This method uses a SQL SELECT statement to get all appointments based on the Contact ID selected
+     * @param contactId contact ID selected
+     * @return
+     * @throws SQLException
+     */
     public static ObservableList<Appointment> getApptByContactId(int contactId) throws SQLException {
         ObservableList<Appointment> generateReportByContactId = FXCollections.observableArrayList();
 
@@ -222,6 +261,15 @@ public class AppointmentDAO {
         return generateReportByContactId;
     }
 
+    /**
+     * This method checks that the new appointment does not interfere with an existing appointment
+     * @param newApptStart start of new appointment
+     * @param newApptEnd end of new appointment
+     * @param customerID customer ID affiliated with the appointment
+     * @param id appointment ID of the new appointment
+     * @return
+     * @throws Exception
+     */
     public static boolean getOverlappingAppt(LocalDateTime newApptStart, LocalDateTime newApptEnd, int customerID, int id) throws Exception {
 
         ObservableList<Appointment> appointments = AppointmentDAO.getApptByCustomerId(customerID);
@@ -245,17 +293,3 @@ public class AppointmentDAO {
     }
 
 }
-/*
-
-                    (newApptStart.isAfter(appt.getStart()) && newApptEnd.isBefore(appt.getEnd()))
-
-appointments.forEach(appt -> {
-            if (newApptEnd.isAfter(appt.getStart()) && newApptEnd.isBefore(appt.getEnd()) || newApptEnd.isEqual(appt.getEnd()) ||
-                    newApptStart.isBefore(appt.getStart()) || newApptStart.isEqual(appt.getStart()) &&
-                    newApptEnd.isAfter(appt.getEnd()) || newApptEnd.isEqual(appt.getEnd()) ||
-                    newApptStart.isBefore(appt.getStart()) || newApptStart.isEqual(appt.getStart()) &&
-                    newApptEnd.isAfter(appt.getEnd()) || newApptEnd.isEqual(appt.getEnd())) {
-
-            }
-        });*/
-

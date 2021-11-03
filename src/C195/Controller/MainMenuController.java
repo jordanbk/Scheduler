@@ -15,7 +15,10 @@ import java.net.URL;
 
 import java.util.ResourceBundle;
 
-
+/**
+ * This class handles the Main Menu screen
+ * @author Jordan Burke
+ */
 public class MainMenuController implements Initializable {
     @FXML
     private Button handleCustomers;

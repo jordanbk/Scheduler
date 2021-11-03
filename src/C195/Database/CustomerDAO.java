@@ -70,11 +70,11 @@ public class CustomerDAO implements Initializable  {
     /**
      *  Inserting new customer with customer attributes by connecting to database
      *  and inserting values retrieved from app fields with sql statement
-     * @param customerName
-     * @param customerAddress
-     * @param customerZip
-     * @param customerPhone
-     * @param divisionID
+     * @param customerName customer name
+     * @param customerAddress customer address
+     * @param customerZip customer zip code
+     * @param customerPhone customer phone number
+     * @param divisionID division ID affiliated with customer
      * @throws SQLException
      */
     public void addCustomer(String customerName, String customerAddress, String customerZip, String customerPhone, int divisionID) throws SQLException {
@@ -95,7 +95,7 @@ public class CustomerDAO implements Initializable  {
 
     /**
      *  Removing customer by connecting to the database and using the Delete statement in sql
-     * @param customerID
+     * @param customerID customer ID
      * @throws SQLException
      */
     public static void deleteCustomer(int customerID) throws SQLException {
@@ -106,19 +106,6 @@ public class CustomerDAO implements Initializable  {
         ps.execute();
     }
 
- /*   public static ObservableList<Appointment> getCustomerAppt(int custID) throws Exception {
-
-        ObservableList<Appointment> customerAppts = FXCollections.observableArrayList();
-        AppointmentDAO appt = new AppointmentDAO();
-
-        for (Appointment appointments : AppointmentDAO.getAllAppointments()){
-            if (appointments.getCustomerId() == custID){
-                customerAppts.add(appointments);
-            }
-        }
-        return customerAppts;
-    }
-*/
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 

@@ -27,7 +27,10 @@ import java.time.ZoneId;
 import java.util.Locale;
 import java.util.Optional;
 import java.util.ResourceBundle;
-
+/**
+ * This class handles the Login screen
+ * @author Jordan Burke
+ */
 public class LoginController implements Initializable {
     Parent parent;
     ResourceBundle myBundleTranslator;
