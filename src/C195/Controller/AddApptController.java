@@ -32,7 +32,6 @@ import java.util.ResourceBundle;
  * @author Jordan Burke
  */
 public class AddApptController implements Initializable {
-    /** sets up table with appointment details */
     @FXML private ComboBox<User> addApptUser;
     @FXML private ComboBox<LocalTime> addApptStartTime;
     @FXML private ComboBox<LocalTime> addApptEndTime;

@@ -36,6 +36,8 @@ import static javafx.fxml.FXMLLoader.load;
 public class CalenderController implements Initializable {
     Stage stage;
     Parent root;
+
+    /** sets up table with appointment details */
     @FXML private TableColumn<Appointment, Integer> calendarIDCol;
     @FXML private TableColumn<Appointment, String> calTitleCol;
     @FXML private TableColumn<Appointment, String> calDescriptionCol;
@@ -50,6 +52,11 @@ public class CalenderController implements Initializable {
     static ObservableList<Appointment> appointments;
     private static Appointment appointmentSelected = null;
 
+    /**
+     * This method brings the user to the Add Appointment screen
+     * @param event button to get to add appointment screen
+     * @throws IOException
+     */
     @FXML
     public void calAddApptBtn(ActionEvent event) throws IOException {
         Parent parent = load(getClass().getResource("../Views/AddAppointment.fxml"));
@@ -57,17 +64,25 @@ public class CalenderController implements Initializable {
         Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
         window.setScene(scene);
         window.show();
-
     }
 
+    /**
+     * This method gets the appointment that is selected, used in the Update Appointment class
+     * @return
+     */
     public static Appointment getAppointmentSelected(){
         return appointmentSelected;
     }
 
+    /**
+     * This method removes the selected appointment from the database
+     * Confirms the users wish to delete the appointment
+     * @param event button to delete appointment
+     * @throws Exception
+     */
     @FXML
     public void calDeleteApptBtn(ActionEvent event) throws Exception {
         if (calendarTableMain.getSelectionModel().getSelectedItem() != null) {
-
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setContentText("Continuing will delete the selected appointment.");
             alert.setHeaderText("Do you wish to continue?");
@@ -79,7 +94,6 @@ public class CalenderController implements Initializable {
                 try {
                     Appointment selectedApt = calendarTableMain.getSelectionModel().getSelectedItem();
                     AppointmentDAO.deleteAppointment(selectedApt.getId());
-
                     appointments = AppointmentDAO.getAllAppointments();
                     calendarTableMain.setItems(appointments);
                     calendarTableMain.refresh();
@@ -87,9 +101,7 @@ public class CalenderController implements Initializable {
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
-
             }
-
         } else { //Displays error message if no appointment is selected to be deleted
             Alert errorAlert = new Alert(Alert.AlertType.ERROR);
             errorAlert.setTitle("Appointment Selection Error");
@@ -99,6 +111,11 @@ public class CalenderController implements Initializable {
         }
     }
 
+    /**
+     * This method gets the appointment selected and directs user to the Update Appointment screen
+     * @param event button to update appointment
+     * @throws Exception
+     */
     @FXML
     public void calEditApptBtn(ActionEvent event) throws Exception {
         appointmentSelected = calendarTableMain.getSelectionModel().getSelectedItem();
@@ -112,7 +129,7 @@ public class CalenderController implements Initializable {
             window.setScene(scene);
             window.show();
         }
-        else {
+        else { //displays alert if no appointment is selected
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("No appointment selected");
             alert.setHeaderText("Please select an appointment");
@@ -121,6 +138,11 @@ public class CalenderController implements Initializable {
         }
     }
 
+    /**
+     * This method brings the user to the Main Menu screen
+     * @param event button to go to main menu
+     * @throws IOException
+     */
     @FXML
     public void calMainMenuBtn(ActionEvent event) throws IOException {
         Parent parent = load(getClass().getResource("../Views/MainMenu.fxml"));
@@ -130,6 +152,11 @@ public class CalenderController implements Initializable {
         window.show();
     }
 
+    /**
+     * This method brings the user to the Reports screen
+     * @param event button to go to reports screen
+     * @throws IOException
+     */
     @FXML
     void calReportBtn(ActionEvent event) throws IOException {
         Parent parent = load(getClass().getResource("../Views/Reports.fxml"));
@@ -139,17 +166,27 @@ public class CalenderController implements Initializable {
         window.show();
     }
 
+    /**
+     * This method gets all appointments from the database and sets the table with the data
+     * @param event
+     */
     @FXML
     public void filterAll(ActionEvent event) {
         try {
             ObservableList<Appointment> allAppts = AppointmentDAO.getAllAppointments();
-
             calendarTableMain.setItems(allAppts);
 
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
+    /**
+     * This Lambda expression sets the table with appointments with a filtered list of appointments within the week
+     * This method simplifies the filtering of data with
+     * @param event button to filter appointments within the week
+     * @throws Exception
+     */
     @FXML
     public void filterWeek(ActionEvent event) throws Exception {
 
@@ -157,23 +194,35 @@ public class CalenderController implements Initializable {
                 (LocalDateTime.now()) && a.getStartTime().isBefore(LocalDateTime.now().plusWeeks(1))));
     }
 
+    /**
+     * This Lambda expression sets the table with appointments with a filtered list of appointments within the month
+     * @param event button to filter appointments within the month
+     * @throws Exception
+     */
     @FXML
     public void filterMonth(ActionEvent event) throws Exception {
         calendarTableMain.setItems(AppointmentDAO.getAllAppointments().filtered(a -> a.getStartTime().getMonth()
                 == LocalDateTime.now().getMonth()));
     }
 
+    /**
+     * Initializes Calendar Screen
+     * @param url
+     * @param resourceBundle
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
         try {
             loadAppointments();
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 
+    /**
+     * This method loads the appointments in the table
+     * @throws Exception
+     */
     private void loadAppointments() throws Exception {
         try {
             calendarTableMain.setItems(AppointmentDAO.getAllAppointments());
@@ -191,6 +240,5 @@ public class CalenderController implements Initializable {
             e.printStackTrace();
         }
     }
-
 }
 

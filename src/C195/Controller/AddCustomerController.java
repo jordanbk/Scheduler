@@ -47,10 +47,15 @@ public class AddCustomerController implements Initializable {
             "New York","Washington DC","Miami","Dallas","Phoenix","Los Angeles","London","Liverpool","Manchester","Oxford");
 
     private ObservableList<Customer> addCustomer = FXCollections.observableArrayList();
-
     Customer newCustomer;
 
-
+    /**
+     * This method adds customer to the database and sends user back to Customer screen
+     * Alerts if fields are empty
+     * @param actionEvent button to save customer
+     * @throws IOException
+     * @throws SQLException
+     */
     public void addCustSubmitBtn(ActionEvent actionEvent) throws IOException, SQLException {
         if (addCustName.getText().isEmpty() || addCustPhone.getText().isEmpty() || addCustAddress.getText().isEmpty()
                 || addCustCountry.getSelectionModel().getSelectedItem() == null
@@ -68,7 +73,6 @@ public class AddCustomerController implements Initializable {
             String customerAddress = addCustAddress.getText();
             String customerZip = addCustZip.getText();
             String customerPhone = addCustPhone.getText();
-            //String customerCountry = addCustCountry.getValue();
             int customerDivisionID = addCustState.getValue().getDivisionID();
 
             addCustomerDAO.addCustomer(customerName, customerAddress, customerZip, customerPhone, customerDivisionID);
@@ -81,6 +85,12 @@ public class AddCustomerController implements Initializable {
         }
     }
 
+    /**
+     * This method cancels the Add Customer screen and brings user back to Customer screen
+     * Confirms user's wish to cancel
+     * @param event button to cancel
+     * @throws IOException
+     */
     public void addCustCancelBtn(ActionEvent event) throws IOException {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.initModality(Modality.NONE);
@@ -96,15 +106,18 @@ public class AddCustomerController implements Initializable {
             window.setScene(scene);
             window.show();
         }
-
     }
 
+    /**
+     * Initializes the add customer screen and populates the country and division combo box
+     * @param url
+     * @param resourceBundle
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         CountryDAO countryDao = new CountryDAO();
 
         try {
-            //populating Country ComboBox with data
             addCustCountry.setItems(countryDao.getAllCountries());
         } catch (SQLException e) {
             e.printStackTrace();
