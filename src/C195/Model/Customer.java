@@ -7,6 +7,7 @@ import javafx.collections.ObservableList;
 
 import java.sql.SQLException;
 
+/** * This class handles the Customer model * @author Jordan Burke */
 public class Customer {
     private static ObservableList<CustomerDAO> customers = FXCollections.observableArrayList();
     private int id;

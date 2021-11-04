@@ -3,22 +3,32 @@ package C195.Model;
 import java.security.Timestamp;
 import java.util.TimeZone;
 
+/** * This class handles the User model * @author Jordan Burke */
+
 public class User {
     public int userId;
     public String userName;
     public String password;
-    //public int active;
     public Timestamp createDate;
     public String createdBy;
     public Timestamp lastUpdate;
     public String lastUpdateBy;
     public TimeZone timeZone;
 
+    /**
+     *
+     * @param userId
+     * @param userName
+     * @param password
+     * @param createDate
+     * @param createdBy
+     * @param lastUpdate
+     * @param lastUpdateBy
+     */
     public User(int userId, String userName, String password, Timestamp createDate, String createdBy, Timestamp lastUpdate, String lastUpdateBy) {
         this.userId = userId;
         this.userName = userName;
         this.password = password;
-        //this.active = active;
         this.createDate = createDate;
         this.createdBy = createdBy;
         this.lastUpdate = lastUpdate;
@@ -29,7 +39,6 @@ public class User {
 
     }
 
-    //BEGIN GETTERS AND SETTERS
     public int getUserId() {
         return userId;
     }
@@ -53,16 +62,6 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
     }
-
-/*
-    public int getActive() {
-        return active;
-    }
-
-    public void setActive(int active) {
-        this.active = active;
-    }
-*/
 
     public Timestamp getCreateDate() {
         return createDate;

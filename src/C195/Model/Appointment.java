@@ -5,6 +5,7 @@ import javafx.collections.ObservableList;
 
 import java.time.LocalDateTime;
 
+/** * This class handles the Appointment model * @author Jordan Burke */
 public class Appointment {
     private int id;
     private String title;
@@ -17,9 +18,23 @@ public class Appointment {
     private int userId;
     private int contactId;
 
+    //loads types in observable list
     public static ObservableList<String> types = FXCollections.observableArrayList("Stand Up", "All Hands", "Demos",
             "Brain Storm");
 
+    /**
+     * Appointment constructor
+     * @param id appointment id
+     * @param title appointment title
+     * @param description appointment description
+     * @param location appointment location
+     * @param type appointment type
+     * @param start appointment start
+     * @param end  appointment end
+     * @param customerId
+     * @param userId
+     * @param contactId
+     */
     public Appointment(int id, String title, String description, String location, String type, LocalDateTime start,
                        LocalDateTime end, int customerId, int userId, int contactId) {
         this.id = id;

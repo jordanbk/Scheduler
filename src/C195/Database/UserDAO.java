@@ -7,7 +7,7 @@ import javafx.collections.ObservableList;
 import java.sql.*;
 import java.time.LocalDateTime;
 
-/** * This class controls the User data * @author Jordan Burke */
+
 public class UserDAO {
 
     /**

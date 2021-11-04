@@ -1,5 +1,7 @@
 package C195.Model;
 
+/** * This class handles the Report model * @author Jordan Burke */
+
 public class ReportObject {
     int count;
     String month;
@@ -10,11 +12,8 @@ public class ReportObject {
         this.month = month;
         this.type = type;
     }
-
     public ReportObject() {
-
     }
-
     public String getType() {
         return type;
     }

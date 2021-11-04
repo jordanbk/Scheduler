@@ -6,6 +6,8 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+/** * This class handles the Division model * @author Jordan Burke */
+
 public class Division {
 
     int id;

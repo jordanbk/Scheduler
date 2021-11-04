@@ -1,5 +1,6 @@
 package C195.Model;
 
+/** * This class handles the Contact model * @author Jordan Burke */
 public class Contact {
     private int id;
     private String name;
@@ -32,11 +33,4 @@ public class Contact {
         return name;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
 }
