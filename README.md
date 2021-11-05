@@ -1,6 +1,7 @@
 # Scheduler Application
 
-- Jordan Burke, Student ID: 001179962 
+- Jordan Burke, Student ID: 001179962
+  C195 / Software-II
 - Student application version 1.0.01
 - November 5th, 2021
 - IntelliJ Community 2021.1.1 x64
