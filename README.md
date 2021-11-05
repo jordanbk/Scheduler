@@ -1,11 +1,12 @@
-# Scheduler
-Scheduler Application
+# Scheduler Application
 
 - Jordan Burke, Student ID: 001179962 
-- Student application version
-- November 4th, 2021
-- IntelliJ Community 2020.01
-  full JDK of version 11 used (e.g., Java SE 11.0.4), and JavaFX version compatible with JDK 11 (e.g. JavaFX-SDK-11.0.2)
-- directions for how to run the program
-- a description of the additional report of your choice you ran in part A3f
-- the MySQL Connector driver version number, including the update number (e.g., mysql-connector-java-8.1.23)
+- Student application version 1.0.01
+- November 5th, 2021
+- IntelliJ Community 2021.1.1 x64
+- Java SDK 11.0.11
+- JavaFX-SDK-11.0.2
+- mysql-connector-java- 8.0.25
+- Run the program by selecting Run button and typing in a Username and Password (username: test | password: test)
+- The Report Screen includes an additional report that generates Appointments by Contact ID
+- Change language to French or english by removing or adding comment forward slashes from Main.Java line 35
