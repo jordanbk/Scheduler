@@ -76,7 +76,7 @@ public class LoginController implements Initializable {
         Stage stage;
         String username = usernameTxt.getText();
         String password = passwordTxt.getText();
-        loginMessageLabel.setText("You tried to login");
+        loginMessageLabel.setText(myBundleTranslator.getString("Failure"));
         boolean login = LoginController.validateLogin(username, password);
         Logger.AuditLogger(username, login);
 
